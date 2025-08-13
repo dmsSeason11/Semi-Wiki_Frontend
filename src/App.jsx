@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import Layout from "./Layout";
 import Board from "./pages/Board/board";
 import Login from "./pages/Login/login";
+import SignUp from "./pages/Sign_Up/sign_up";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -24,6 +25,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </>
   );
