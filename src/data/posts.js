@@ -35,4 +35,16 @@ export const posts = [
     category: ["전공", "기숙사", "논란"],
     modifier: "Brunkomachi",
   },
+  // {
+  //   id: 7,
+  //   title: "프론트엔드",
+  //   category: ["전공", "기숙사", "논란"],
+  //   modifier: "Brunkomachi",
+  // },
+  // {
+  //   id: 8,
+  //   title: "프론트엔드",
+  //   category: ["전공", "기숙사", "논란"],
+  //   modifier: "Brunkomachi",
+  // },
 ];

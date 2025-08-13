@@ -9,9 +9,6 @@ export const BoardListContainer = styled.div`
   min-height: 470px;
   height: auto;
 
-  left: 28px;
-  top: 232px;
-
   background: #353535;
   border: 1px solid #f9f9f9;
   border-radius: 24px;

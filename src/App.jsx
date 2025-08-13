@@ -17,8 +17,6 @@ function App() {
         <Route path="/" element={<Board />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-      <Header />
-      <Footer />
     </>
   );
 }
