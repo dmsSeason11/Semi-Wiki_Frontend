@@ -9,15 +9,13 @@ import {
 } from "./board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
 import CategoryList from "../../components/CategoryList/CategoryList.jsx";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
 
 function Board() {
   const [activeFilter, setActiveFilter] = useState("최신순");
 
   return (
     <>
-      <Header />
+      
         <Content>
           <BoardContainer>
             <BoardTitle>게시판</BoardTitle>
@@ -39,7 +37,7 @@ function Board() {
 
           <CategoryList>카테고리</CategoryList>
         </Content>
-      <Footer />
+
     </>
   );
 }
