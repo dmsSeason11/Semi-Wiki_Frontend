@@ -1,20 +1,35 @@
 import "../../styles/reset.css";
-import { BoardListContainer, BoardListTitle, BoardLIstCategory, BoardListModifier } from "./boardList.styles";
-import { BoardItemContainer } from "../boardItem/boardItem.styles";
+import {
+  BoardListContainer,
+  BoardListTitle,
+  BoardListCategory,
+  BoardListModifier,
+  BoardListHeader,
+} from "./boardList.styles";
+import BoardItem from "../../components/boardItem/boardItem.jsx";
+import { posts } from "../../data/posts.js";
 
 function BoardList() {
   return (
     <BoardListContainer>
+      <BoardListHeader>
+        <BoardListTitle>제목</BoardListTitle>
+        <BoardListCategory>카테고리</BoardListCategory>
+        <BoardListModifier>수정자</BoardListModifier>
+      </BoardListHeader>
 
-      <BoardListTitle>제목</BoardListTitle>
-      <BoardLIstCategory>카테고리</BoardLIstCategory>
-      <BoardListModifier>수정자</BoardListModifier>
-
-      <BoardItemContainer>
-
-      </BoardItemContainer>
+      {posts.map((post) => ( 
+        <BoardItem
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          categories={post.category}
+          modifier={post.modifier}
+        />
+      ))}
+      
     </BoardListContainer>
   );
-} 
+}
 
-export default BoardList; 
+export default BoardList;

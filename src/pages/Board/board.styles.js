@@ -4,9 +4,14 @@ import styled from "styled-components";
 export const BoardContainer = styled.div`
   position: absolute;
   width: 1100px;
-  height: 742px;
+  height: auto;
+  min-height: 742px;
   left: calc(50% - 1100px/2 - 170px);
   top: 128px;
+
+  padding-left: 28px;
+  padding-top: 232px;
+  padding-bottom: 40px;
 
   background: #4C4C4C;
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -49,6 +54,10 @@ export const Boardfiler = styled.div`
 
 // 게시판 필터 제목
 export const Boardfilertitle = styled.h2`
+  cursor: pointer;
+  padding-bottom: 45px;
+  position: relative;
+
   width: 85px;
   height: 38px;
   margin-left: 36px;
@@ -61,8 +70,23 @@ export const Boardfilertitle = styled.h2`
   line-height: 38px;
 
   color: #DBDBDB;
+  /* border-bottom: ${({ $active }) => ($active ? "4px solid #D9D9D9" : "none")}; */
+  /* border-radius: 0 30px 0 0; */
 
   &:first-child {
     margin-left: 24px;
+  }
+
+  &::after {
+    content: "";
+    background-color: ${({ $active }) => ($active ? "#D9D9D9" : "transparent")};
+    
+    position: absolute;
+    width: 51px;
+    height: 4px;
+    left: 15px;
+    bottom: -7%;
+
+    border-radius:30px;
   }
 `;
