@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import Layout from "./Layout";
 import Board from "./pages/Board/board";
 import Login from "./pages/Login/login";
 
@@ -14,11 +15,16 @@ function App() {
     <>
       <GlobalStyle />
       <Routes>
-        <Route path="/" element={<Board />} />
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Board />
+            </Layout>
+          }
+        />
         <Route path="/login" element={<Login />} />
       </Routes>
-      <Header />
-      <Footer />
     </>
   );
 }
