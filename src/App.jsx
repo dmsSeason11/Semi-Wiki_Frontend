@@ -5,6 +5,7 @@ import Board from "./pages/Board/board";
 import Login from "./pages/Login/login";
 import SignUp from "./pages/Sign_Up/sign_up";
 import Mypage from "./pages/Mypage/mypage";
+import PostDetail from "./pages/PostDetail/postDetail";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -30,6 +31,14 @@ function App() {
           element={
             <Layout>
               <Mypage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/board/:id"
+          element={
+            <Layout>
+              <PostDetail />
             </Layout>
           }
         />
