@@ -19,13 +19,13 @@ function BoardList() {
       </BoardListHeader>
 
       {posts.map((post) => ( 
-        <BoardItem
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          categories={post.category}
-          modifier={post.modifier}
-        />
+          <BoardItem
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            categories={post.category}
+            modifier={post.modifier}
+          />
       ))}
       
     </BoardListContainer>
