@@ -29,6 +29,7 @@ export const LoveLabel = styled.label`
   }
 `;
 
+//추천 카운트
 export const Lovecount = styled.span`
   position: absolute;
   width: 62px;
@@ -47,6 +48,7 @@ export const Lovecount = styled.span`
   user-select: none;
 `;
 
+// 카테고리 제목
 export const CategoryTitle = styled.h2`
   position: absolute;
   width: 115px;
@@ -63,6 +65,7 @@ export const CategoryTitle = styled.h2`
   color: #f9f9f9;
 `;
 
+//카테고리 컨테이너
 export const Categorycontainer = styled.div`
   position: absolute;
   width: 1044px;
@@ -74,9 +77,31 @@ export const Categorycontainer = styled.div`
 
   border: 1px solid #f9f9f9;
   border-radius: 24px;
+
+  cursor: pointer;
 `;
 
-export const Contents = styled.div`
+export const Categories = styled.div`
+  display: flex;
+  gap: 10px;
+
+  margin-top: 10px;
+  margin-left: 15px;
+`;
+
+//카테코리 태그
+export const CategoryTag = styled.span`
+  padding: 5px 3px;
+  border: 1px solid #ff9e3d;
+  border-radius: 8px;
+  font-size: 18px;
+  color: #ff9e3d;
+
+  font-family: "Pretendard";
+`;
+
+//목차
+export const TableOfContentscontainer = styled.div`
   position: absolute;
   width: 200px;
   height: 164px;
@@ -89,12 +114,31 @@ export const Contents = styled.div`
   border-radius: 12px;
 `;
 
+//목차 제목
+export const TableOfContentsTitle = styled.h2`
+  position: absolute;
+  width: 32px;
+  height: 21px;
+  left: 16px;
+  top: 16px;
+
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #f9f9f9;
+`;
+
+//본문 컨테이너
 export const Contentcontainer = styled.div`
   width: 1044px;
-  height: 639px;
+  min-height: 639px;
   margin-top: 220px;
+  padding-bottom: 40px;
 
   background: #353535;
-  border: 1px solid #F9F9F9;
+  border: 1px solid #f9f9f9;
   border-radius: 24px;
 `;
