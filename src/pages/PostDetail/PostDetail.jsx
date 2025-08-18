@@ -1,5 +1,6 @@
 import "../../styles/reset.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { BoardContainer, BoardTitle, Content } from "../Board/board.styles.js";
 import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import {
@@ -17,7 +18,8 @@ import {
 import Love from "../../assets/board/Love.svg";
 import Article from "../../components/Article/Article.jsx"
 import TableOfContents from "../../components/TableOfContents/TableOfContents.jsx";
-import { sections } from "../../data/sections.js"
+import { sections as allSection } from "../../data/sections.js"
+import { posts } from "../../data/posts.js";
 
 function PostDetail() {
   const [loveCount, setLoveCount] = useState(0);
@@ -33,10 +35,20 @@ function PostDetail() {
     }
   };
 
+  const { id } = useParams();
+  const postId = parseInt(id, 10);
+
+  const post = posts.find((v)=>v.id === postId);
+  const section = allSection[postId] || [];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <Content>
       <BoardContainer>
-        <BoardTitle>백엔드</BoardTitle>
+        <BoardTitle>{post.title}</BoardTitle>
         <LoveLabel>
           <HiddenButton onClick={handleLoveClick} />
           <img src={Love} alt="좋아요" $isClick={isClicked} />
@@ -46,19 +58,19 @@ function PostDetail() {
         <CategoryTitle>카테고리</CategoryTitle>
         <Categorycontainer>
           <Categories>
-            <CategoryTag>전공</CategoryTag>
-            <CategoryTag>기숙사</CategoryTag>
-            <CategoryTag>논란</CategoryTag>
+            {post.category.map((category) => (
+              <CategoryTag key={category}>{category}</CategoryTag>
+            ))}
           </Categories>
         </Categorycontainer>
 
         <TableOfContentscontainer>
           <TableOfContentsTitle>목차</TableOfContentsTitle>
-          <TableOfContents contents={sections} />
+          <TableOfContents contents={section} />
         </TableOfContentscontainer>
 
         <Contentcontainer>
-            {sections.map((section) => (
+            {section.map((section) => (
               <Article key={section.number} Numberprop={section.number} Titleprop={section.title} childrenprop={section.content} subSections={section.children} />
             ))}
         </Contentcontainer>

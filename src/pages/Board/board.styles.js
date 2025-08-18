@@ -23,7 +23,7 @@ export const BoardContainer = styled.div`
 // 게시판 제목
 export const BoardTitle = styled.h1`
   position: absolute;
-  width: 110px;
+  width: auto;
   height: 50px;
   left: 28px;
   top: 28px;
