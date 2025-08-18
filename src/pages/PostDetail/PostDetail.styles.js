@@ -102,21 +102,24 @@ export const CategoryTag = styled.span`
 
 //목차
 export const TableOfContentscontainer = styled.div`
-  position: absolute;
+  margin-top: 5px;
+  
   width: 200px;
-  height: 164px;
-  left: 27px;
-  top: 257px;
+  min-height: 164px;
+  height: auto;
 
   background: #353535;
 
   border: 1px solid #f9f9f9;
   border-radius: 12px;
+
+  padding-bottom: 16px;
+
 `;
 
 //목차 제목
 export const TableOfContentsTitle = styled.h2`
-  position: absolute;
+  position: relative;
   width: 32px;
   height: 21px;
   left: 16px;
@@ -135,7 +138,7 @@ export const TableOfContentsTitle = styled.h2`
 export const Contentcontainer = styled.div`
   width: 1044px;
   min-height: 639px;
-  margin-top: 220px;
+  margin-top: 20px;
   padding-bottom: 40px;
 
   background: #353535;
