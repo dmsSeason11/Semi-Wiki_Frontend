@@ -16,6 +16,7 @@ import {
 } from "./PostDetail.styles.js";
 import Love from "../../assets/board/Love.svg";
 import Article from "../../components/Article/Article.jsx"
+import TableOfContents from "../../components/TableOfContents/TableOfContents.jsx";
 import { sections } from "../../data/sections.js"
 
 function PostDetail() {
@@ -53,11 +54,12 @@ function PostDetail() {
 
         <TableOfContentscontainer>
           <TableOfContentsTitle>목차</TableOfContentsTitle>
+          <TableOfContents contents={sections} />
         </TableOfContentscontainer>
 
         <Contentcontainer>
             {sections.map((section) => (
-              <Article key={section.number} Numberprop={section.number} Titleprop={section.title} childrenprop={section.content} />
+              <Article key={section.number} Numberprop={section.number} Titleprop={section.title} childrenprop={section.content} subSections={section.children} />
             ))}
         </Contentcontainer>
 

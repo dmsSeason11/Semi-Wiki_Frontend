@@ -8,7 +8,7 @@ import {
   ArticleContentWrapper,
 } from "./Article.styles";
 
-function Article({Numberprop, Titleprop, childrenprop}) {
+function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
   return (
     <Wrapper>
       <ArtcileTopWrapper>
@@ -20,6 +20,20 @@ function Article({Numberprop, Titleprop, childrenprop}) {
       <ArticleContentWrapper>
         <ArticleContent>{childrenprop}</ArticleContent>
       </ArticleContentWrapper>
+
+      {subSections && subSections.length > 0 && (
+        <div>
+          {subSections.map((sub) => (
+            <Article
+              key={sub.number}
+              Numberprop={sub.number}
+              Titleprop={sub.title}
+              childrenprop={sub.content}
+              subSections={sub.children}
+            />
+          ))}
+        </div>
+      )}
     </Wrapper>
   );
 }
