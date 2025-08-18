@@ -1,5 +1,4 @@
 import "../../styles/reset.css";
-import { Link } from "react-router-dom";
 import {
   BoardItemContainer,
   Title,

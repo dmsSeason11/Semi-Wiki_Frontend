@@ -8,11 +8,15 @@ import {
   Lovecount,
   CategoryTitle,
   Categorycontainer,
-  Contents,
-  Contentcontainer
+  TableOfContentscontainer,
+  TableOfContentsTitle,
+  Contentcontainer,
+  CategoryTag,
+  Categories
 } from "./PostDetail.styles.js";
-
 import Love from "../../assets/board/Love.svg";
+import Article from "../../components/Article/Article.jsx"
+import { sections } from "../../data/sections.js"
 
 function PostDetail() {
   const [loveCount, setLoveCount] = useState(0);
@@ -39,10 +43,23 @@ function PostDetail() {
         </LoveLabel>
 
         <CategoryTitle>카테고리</CategoryTitle>
-        <Categorycontainer></Categorycontainer>
-        <Contents></Contents>
+        <Categorycontainer>
+          <Categories>
+            <CategoryTag>전공</CategoryTag>
+            <CategoryTag>기숙사</CategoryTag>
+            <CategoryTag>논란</CategoryTag>
+          </Categories>
+        </Categorycontainer>
 
-        <Contentcontainer></Contentcontainer>
+        <TableOfContentscontainer>
+          <TableOfContentsTitle>목차</TableOfContentsTitle>
+        </TableOfContentscontainer>
+
+        <Contentcontainer>
+            {sections.map((section) => (
+              <Article key={section.number} Numberprop={section.number} Titleprop={section.title} childrenprop={section.content} />
+            ))}
+        </Contentcontainer>
 
       </BoardContainer>
 
