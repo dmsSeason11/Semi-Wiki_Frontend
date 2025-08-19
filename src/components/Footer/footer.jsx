@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Div, Member, P, Img } from "./footer.styles";
-import favicon from "../../assets/logo/favicon.svg";
+import favicon from "../../assets/logo/logo_white.svg";
 import github from "../../assets/github.png";
 
 const Footer = () => {
