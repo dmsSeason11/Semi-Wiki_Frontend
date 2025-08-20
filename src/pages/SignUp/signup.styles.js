@@ -17,7 +17,7 @@ export const SignUpDiv = styled.div`
   border-radius: 24px;
   padding: 40px;
   width: 800px;
-  height: 100vh;
+  height: 880px;
 
   form {
     width: 100%;
@@ -29,7 +29,7 @@ export const SignUpDiv = styled.div`
 
 export const SignUptitle = styled.h2`
   color: #f9f9f9;
-  font-size: 48px;
+  font-size: 60px;
   margin-bottom: 30px;
   font-weight: 500;
 `;
@@ -62,6 +62,14 @@ export const Input = styled.input`
   font-weight: 500;
 `;
 
+export const Icon = styled.img`
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: 20px;
+  bottom: 17px;
+`;
+
 export const Button = styled.button`
   width: 400px;
   height: 50px;
@@ -82,10 +90,4 @@ export const SubText = styled.p`
   color: white;
   font-size: 16px;
   margin-top: 30px;
-`;
-
-export const LinkText = styled.a`
-  color: white;
-  text-decoration: underline;
-  cursor: pointer;
 `;

@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import Layout from "./Layout";
 import Board from "./pages/Board/board";
 import Login from "./pages/Login/login";
-import SignUp from "./pages/Sign_Up/sign_up";
+import SignUpContainer from "./pages/SignUp/signupContainer";
 import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/postDetail";
 
@@ -43,7 +43,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<SignUpContainer />} />
       </Routes>
     </>
   );
