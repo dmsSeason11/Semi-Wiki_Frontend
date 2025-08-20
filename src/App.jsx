@@ -6,6 +6,7 @@ import Login from "./pages/Login/login";
 import SignUpContainer from "./pages/SignUp/signupContainer";
 import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/postDetail";
+import Writeboard from "./pages/Write Board/Writeboard.jsx";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -39,6 +40,14 @@ function App() {
           element={
             <Layout>
               <PostDetail />
+            </Layout>
+          }
+        />
+        <Route
+          path="/writeboard"
+          element={
+            <Layout>
+              <Writeboard />
             </Layout>
           }
         />

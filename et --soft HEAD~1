@@ -1,0 +1,45 @@
+[33m8114f0d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mupload[m[33m)[m 회원가입 백엔드 연동
+[33m18203d6[m Merge pull request #19 from JAEJUN090210/main
+[33m8f69777[m 푸터 로고 변경, 배경색 수정
+[33m197314b[m Merge pull request #18 from yunho09/main
+[33mf22618b[m 게시글 수정
+[33m9353a7d[m Merge pull request #17 from yunho09/main
+[33ma4d63f3[m 게시글 퍼블리싱 완료
+[33m147c41c[m Merge pull request #16 from yunho09/main
+[33m9127284[m 게시글 퍼블리싱
+[33m6978af1[m Merge pull request #15 from yunho09/main
+[33m51d1ccf[m 게시판 퍼블리싱, 게시글 퍼블리싱
+[33ma7a5140[m Merge pull request #14 from JAEJUN090210/main
+[33m00ad811[m mypage 퍼블리싱
+[33m5e2a2c6[m Merge pull request #13 from yunho09/main
+[33mcf41ca0[m 의미없는 파일 삭제, 오류 수정
+[33m72c9833[m Merge pull request #10 from yunho09/main
+[33mdee28ef[m Merge pull request #11 from jsl0118/upload
+[33me4562f1[m[33m ([m[1;31morigin/upload[m[33m, [m[1;32mfeature/change[m[33m)[m 로컬 변경사항 저장
+[33m43879ea[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m 회원가입 추가
+[33mf8e2bc2[m 로컬 변경사항 저장
+[33me93710f[m 푸터 수정, 게시판 퍼블리싱
+[33mcf3f015[m Merge pull request #9 from yunho09/main
+[33me3a254a[m Merge pull request #8 from jsl0118/main
+[33ma79562f[m 게시판 페이지 퍼블리싱
+[33m711039e[m 헤더&푸터 추가, Layout 파일 추가
+[33mfc7388d[m 헤더&푸터 추가, Layout 파일 추가
+[33m27b2260[m Merge branch 'main' of https://github.com/dmsSeason11/Semi-Wiki_Frontend
+[33m39ab974[m Merge pull request #7 from JAEJUN090210/main
+[33m4aebc76[m 로그인 페이지 퍼블리싱 및 라우터에 login 추가
+[33m324592a[m 헤더, 푸터 추가
+[33md609a22[m Merge pull request #6 from yunho09/main
+[33mb03e98f[m 라우터 추가, 폴더 추가, 게시판 페이지 추가, 컴포넌트 추가,
+[33m28269aa[m Merge pull request #5 from JAEJUN090210/main
+[33mb2c16d1[m "Change package manager from npm to yarn"
+[33m0aac970[m Merge pull request #4 from JAEJUN090210/main
+[33mbb913f0[m 오탈자 수정& reset.css 추가 & 디렉토리 추가
+[33m71f874d[m 오탈자 수정& reset.css 추가 & 디렉토리 추가
+[33ma3a8c6d[m Merge pull request #3 from JAEJUN090210/main
+[33m5a232bd[m favicon, logo 추가 및 수정
+[33m5439f22[m Merge pull request #2 from JAEJUN090210/main
+[33mb85fd81[m Merge remote-tracking branch 'origin/main'
+[33mc1306d0[m test
+[33m7ff5618[m Merge pull request #1 from JAEJUN090210/main
+[33md02f50b[m React 프로젝트 생성
+[33mf9488e3[m Initial commit

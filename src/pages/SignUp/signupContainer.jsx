@@ -14,7 +14,7 @@ function SignUpContainer() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (Password != ConfirmPassword) {
+    if (Password !== ConfirmPassword) {
       return alert("비밀번호가 일치하지 않습니다.");
     }
 
@@ -32,7 +32,7 @@ function SignUpContainer() {
           alert("회원가입이 완료되었습니다.");
           navigate("/login");
         } else {
-          alert("회원가입이 실패했습니다. 다시 시도해주세요.햣");
+          alert("회원가입이 실패했습니다. 다시 시도해주세요.");
         }
       });
   };
@@ -64,6 +64,7 @@ function SignUpContainer() {
       setConfirmPassword={setConfirmPassword}
       onSubmitHandler={onSubmitHandler}
       checkId={checkId}
+      idValidation={idValidation}
     />
   );
 }
