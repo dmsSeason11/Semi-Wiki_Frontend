@@ -13,12 +13,12 @@ import {
   TableOfContentsTitle,
   Contentcontainer,
   CategoryTag,
-  Categories
+  Categories,
 } from "./PostDetail.styles.js";
 import Love from "../../assets/board/Love.svg";
-import Article from "../../components/Article/Article.jsx"
+import Article from "../../components/Article/Article.jsx";
 import TableOfContents from "../../components/TableOfContents/TableOfContents.jsx";
-import { sections as allSection } from "../../data/sections.js"
+import { sections as allSection } from "../../data/sections.js";
 import { posts } from "../../data/posts.js";
 
 function PostDetail() {
@@ -38,8 +38,24 @@ function PostDetail() {
   const { id } = useParams();
   const postId = parseInt(id, 10);
 
-  const post = posts.find((v)=>v.id === postId);
-  const section = allSection[postId] || [];
+  const post = posts.find((v) => v.id === postId);
+
+  const groupedSections = [];
+  let current = [];
+
+  allSection.noticeBoardHeaders.forEach((h) => {
+    if (h.headerNumber === "1") {
+      if (current.length > 0) {
+        groupedSections.push(current);
+      }
+      current = [h];
+    } else {
+      current.push(h);
+    }
+  });
+  if (current.length > 0) groupedSections.push(current);
+
+  const postSections = groupedSections[postId - 1];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,15 +82,20 @@ function PostDetail() {
 
         <TableOfContentscontainer>
           <TableOfContentsTitle>목차</TableOfContentsTitle>
-          <TableOfContents contents={section} />
+          <TableOfContents sections={postSections} />
         </TableOfContentscontainer>
 
         <Contentcontainer>
-            {section.map((section) => (
-              <Article key={section.number} Numberprop={section.number} Titleprop={section.title} childrenprop={section.content} subSections={section.children} />
-            ))}
+          {postSections.map((section) => (
+            <Article
+              key={section.id}
+              Numberprop={section.headerNumber}
+              Titleprop={section.title}
+              childrenprop={section.contents}
+              subSections={section.children}
+            />
+          ))}
         </Contentcontainer>
-
       </BoardContainer>
 
       <CategoryList>카테고리</CategoryList>

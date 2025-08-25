@@ -42,7 +42,7 @@ export const Boardfiler = styled.div`
   display: flex;
 
   position: absolute;
-  width: 369px;
+  width: 250px;
   height: 62px;
   left: 28px;
   top: 118px;
