@@ -21,7 +21,7 @@ function Board() {
             <BoardTitle>게시판</BoardTitle>
 
             <Boardfiler>
-              {["최신순", "인기순", "댓글순"].map((filter) => (
+              {["최신순", "추천순"].map((filter) => (
                 <Boardfilertitle
                   key={filter}
                   $active={activeFilter === filter}

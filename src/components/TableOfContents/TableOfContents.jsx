@@ -1,16 +1,16 @@
 import { TOCContents, TOCsubContents } from "./TableOfContents.styles";
 
-function TableOfContents({ contents }) {
+function TableOfContents({ sections }) {
   return (
     <TOCContents>
-      {contents.map((item) => (
-        <li key={item.number}>
-          {item.number}. {item.title}
+      {sections.map((item) => (
+        <li key={item.id}>
+          {item.headerNumber}. {item.title}
           {item.children && item.children.length > 0 && (
             <TOCsubContents>
               {item.children.map((sub) => (
-                <li key={sub.number}>
-                  {sub.number} {sub.title}
+                <li key={sub.id}>
+                  {sub.headerNumber} {sub.title}
                 </li>
               ))}
             </TOCsubContents>

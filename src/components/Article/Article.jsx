@@ -28,7 +28,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
               key={sub.number}
               Numberprop={sub.number}
               Titleprop={sub.title}
-              childrenprop={sub.content}
+              childrenprop={sub.contents}
               subSections={sub.children}
             />
           ))}
