@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../../styles/color";
 
 // 게시판 전체 컨테이너
 export const BoardContainer = styled.div`
@@ -15,7 +16,7 @@ export const BoardContainer = styled.div`
   padding-bottom: 40px;
 
 
-  background: #4c4c4c;
+  background: ${colors.gray[900]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 24px;
 `;
@@ -34,7 +35,7 @@ export const BoardTitle = styled.h1`
   font-size: 42px;
   line-height: 50px;
 
-  color: #f9f9f9;
+  color: ${colors.gray[50]};
 `;
 
 // 게시판 필터
@@ -47,8 +48,8 @@ export const Boardfiler = styled.div`
   left: 28px;
   top: 118px;
 
-  background: #353535;
-  border: 1px solid #f9f9f9;
+  background: ${colors.gray[950]};
+  border: 1px solid ${colors.gray[500]};
   border-radius: 24px;
 `;
 
@@ -69,7 +70,7 @@ export const Boardfilertitle = styled.h2`
   font-size: 32px;
   line-height: 38px;
 
-  color: #dbdbdb;
+  color: ${colors.gray[200]};
 
   &:first-child {
     margin-left: 24px;
@@ -77,7 +78,7 @@ export const Boardfilertitle = styled.h2`
 
   &::after {
     content: "";
-    background-color: ${({ $active }) => ($active ? "#D9D9D9" : "transparent")};
+    background-color: ${({ $active }) => ($active ? colors.gray[500] : "transparent")};
 
     position: absolute;
     width: 51px;
