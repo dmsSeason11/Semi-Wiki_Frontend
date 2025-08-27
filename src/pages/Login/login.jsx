@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/reset.css";
 import LogoImage from "../../assets/logo/logo_vertical.svg";
 import {
@@ -20,7 +21,14 @@ import {
 function Login() {
   const [form, setForm] = useState({ accountId: "", password: "" });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (error) {
+      alert(error + "\n잠시 후 다시 시도해주세요.");
+    }
+  }, [error]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,54 +36,49 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
     setError("");
 
-    const [loading, setLoading] = useState(false);
+    try {
+      const response = await fetch("http://43.201.199.73:8080/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-
-      if (loading) return;
-      setLoading(true);
-
-      try {
-        const response = await fetch("http://43.201.199.73:8080/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        });
-
-        if (response.status === 400) {
-          console.error("Error response:", response);
-          throw new Error("잘못된 요청입니다.");
-        }
-        if (response.status === 401) {
-          console.error("Error response:", response);
-          throw new Error("비밀번호가 잘못되었습니다.");
-        }
-        if (response.status === 404) {
-          console.error("Error response:", response);
-          throw new Error("아이디를 찾을 수 없습니다.");
-        }
-        if (!response.ok) {
-          console.error("Error response:", response);
-          throw new Error("알 수 없는 오류가 발생했습니다.");
-        }
-
-        const data = await response.json();
-
-        localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("refresh_token", data.refresh_token);
-
-        navigate("/");
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (response.status === 400) {
+        console.error("Error response:", response);
+        throw new Error("잘못된 요청입니다.");
       }
-    };
+      if (response.status === 401) {
+        console.error("Error response:", response);
+        throw new Error("비밀번호가 잘못되었습니다.");
+      }
+      if (response.status === 404) {
+        console.error("Error response:", response);
+        throw new Error("아이디를 찾을 수 없습니다.");
+      }
+      if (!response.ok) {
+        console.error("Error response:", response);
+        throw new Error("알 수 없는 오류가 발생했습니다.");
+      }
+
+      const data = await response.json();
+
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("refresh_token", data.refresh_token);
+
+      setForm({ accountId: "", password: "" });
+
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -114,8 +117,6 @@ function Login() {
               {loading ? "로딩 중..." : "로그인"}
             </Button>
           </form>
-
-          {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
 
           <SubText>
             아직 회원이 아니신가요?{" "}
