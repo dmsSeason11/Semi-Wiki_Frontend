@@ -1,15 +1,16 @@
 import styled from "styled-components";
+import { colors } from "../../styles/color";
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: white;
+  background-color: ${colors.gray[50]};
 `;
 
 export const SignUpDiv = styled.div`
-  background-color: #4c4c4c;
+  background-color: ${colors.gray[900]};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,7 +29,7 @@ export const SignUpDiv = styled.div`
 `;
 
 export const SignUptitle = styled.h2`
-  color: #f9f9f9;
+  color: ${colors.gray[50]};
   font-size: 48px;
   margin-bottom: 30px;
   font-weight: 500;
@@ -42,7 +43,7 @@ export const InputBox = styled.div`
 `;
 
 export const Inputtext = styled.label`
-  color: white;
+  color: ${colors.gray[50]};
   font-size: 22px;
   margin: 10px 0 5px;
   width: 56%;
@@ -55,7 +56,7 @@ export const Input = styled.input`
   padding: 10px;
   margin: 6px 0;
   border-radius: 8px;
-  background-color: #606060;
+  background-color: ${colors.gray[800]};
   border: none;
   outline: none;
   font-size: 20px;
@@ -66,20 +67,20 @@ export const Button = styled.button`
   width: 400px;
   height: 50px;
   margin-top: 40px;
-  background-color: #353535;
-  color: white;
+  background-color: ${colors.gray[950]};
+  color: ${colors.gray[50]};
   border: none;
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
 
   &:hover {
-    background-color: #222;
+    background-color: ${colors.gray[800]};
   }
 `;
 
 export const SubText = styled.p`
-  color: white;
+  color: ${colors.gray[50]};
   font-size: 16px;
   margin-top: 30px;
 `;
