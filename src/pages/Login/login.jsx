@@ -20,6 +20,7 @@ import {
 function Login() {
   const [form, setForm] = useState({ accountId: "", password: "" });
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,33 +30,52 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    try {
-      const response = await fetch("http://43.201.199.73:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+    const [loading, setLoading] = useState(false);
 
-      if (response.status === 400) 
-        throw new Error("잘못된 요청입니다.");
-      if (response.status === 401)
-        throw new Error("비밀번호가 잘못되었습니다.");
-      if (response.status === 404)
-        throw new Error("아이디를 찾을 수 없습니다.");
-      if (!response.ok) 
-        throw new Error("알 수 없는 오류가 발생했습니다.");
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
-      const data = await response.json();
+      if (loading) return;
+      setLoading(true);
 
-      localStorage.setItem("access_token", data.access_token);
-      localStorage.setItem("refresh_token", data.refresh_token);
+      try {
+        const response = await fetch("http://43.201.199.73:8080/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
 
-      navigate("/");
-    } catch (err) {
-      setError(err.message);
-    }
+        if (response.status === 400) {
+          console.error("Error response:", response);
+          throw new Error("잘못된 요청입니다.");
+        }
+        if (response.status === 401) {
+          console.error("Error response:", response);
+          throw new Error("비밀번호가 잘못되었습니다.");
+        }
+        if (response.status === 404) {
+          console.error("Error response:", response);
+          throw new Error("아이디를 찾을 수 없습니다.");
+        }
+        if (!response.ok) {
+          console.error("Error response:", response);
+          throw new Error("알 수 없는 오류가 발생했습니다.");
+        }
+
+        const data = await response.json();
+
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("refresh_token", data.refresh_token);
+
+        navigate("/");
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
   };
 
   return (
@@ -90,13 +110,18 @@ function Login() {
               placeholder="비밀번호를 입력해주세요"
               required
             />
-            <Button type="submit">로그인</Button>
+            <Button type="submit" disabled={loading}>
+              {loading ? "로딩 중..." : "로그인"}
+            </Button>
           </form>
 
           {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
 
           <SubText>
-            아직 회원이 아니신가요? <LinkText href="#">회원가입</LinkText>
+            아직 회원이 아니신가요?{" "}
+            <LinkText as={Link} to="/signup">
+              회원가입
+            </LinkText>
           </SubText>
         </LoginDiv>
       </Loginarea>
