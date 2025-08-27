@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../styles/color";
+import colors from "../../styles/color";
 
 //전체를 감싸는 래퍼
 export const Wrapper = styled.div`

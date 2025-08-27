@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Love from "../../assets/board/Love.svg";
-import { colors } from "../../styles/color";
+import colors from "../../styles/color";
 
 // 버튼 숨김
 export const HiddenButton = styled.button`

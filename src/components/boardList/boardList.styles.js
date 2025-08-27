@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../styles/color";
+import colors from "../../styles/color";
 
 // 게시판 리스트 컨테이너
 export const BoardListContainer = styled.div`

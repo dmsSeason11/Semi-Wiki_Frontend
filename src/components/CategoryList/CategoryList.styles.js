@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../styles/color";
+import colors from "../../styles/color";
 
 // 카테고리 리스트 컨테이너
 export const CategoryListContainer = styled.div`
