@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../styles/color";
+import colors from "../../styles/color";
 
 export const Container = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ export const Loginarea = styled.div`
   border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: 5px solid ${colors.orange[900]};
+  border: 5px solid ${colors.gray[900]};
 `;
 
 export const Left_area = styled.div`

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { colors } from "../../styles/color";
+import colors from "../../styles/color";
 
 // 게시판 아이템 컨테이너
 export const BoardItemContainer = styled.div`

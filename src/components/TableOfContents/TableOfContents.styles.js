@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../styles/color";
+import colors from "../../styles/color";
 
 //목차 글
 export const TOCContents = styled.ul`
