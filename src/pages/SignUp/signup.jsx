@@ -10,8 +10,10 @@ import {
   Inputtext,
   Input,
   Icon,
+  PasswordSubText,
   Button,
   SubText,
+  LoginLink,
 } from "./signup.styles";
 
 function SignUp({
@@ -28,6 +30,9 @@ function SignUp({
   onSubmitHandler,
   checkId,
   idValidation,
+  isMatch,
+  passwordChangeHandler,
+  confirmChangeHandler,
 }) {
   return (
     <Container>
@@ -67,14 +72,14 @@ function SignUp({
                 placeholder="아이디를 입력해주세요"
                 style={{
                   width: "285px",
-                  border: idValidation
-                    ? "1px solid #2ECC71"
-                    : "1px solid #FF645B",
+                  border:
+                    idValidation !== null &&
+                    (idValidation ? "1px solid #2ECC71" : "1px solid #FF645B"),
                 }}
                 value={Id}
                 onChange={(e) => setId(e.target.value)}
               />
-              {Id &&
+              {idValidation !== null &&
                 (idValidation ? (
                   <Icon src={check} alt="check" />
                 ) : (
@@ -95,20 +100,36 @@ function SignUp({
             type="password"
             placeholder="사용할 비밀번호를 입력해주세요"
             value={Password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={passwordChangeHandler}
           />
-          <Inputtext>비밀번호</Inputtext>
+          <Inputtext>비밀번호 확인</Inputtext>
           <Input
             name="confirmPassword"
             type="password"
             placeholder="비밀번호를 다시 입력해주세요"
             value={ConfirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={confirmChangeHandler}
+            style={{
+              border:
+                isMatch !== null &&
+                (isMatch ? "1px solid #2ECC71" : "1px solid #FF645B"),
+            }}
           />
+          {isMatch !== null && (
+            <PasswordSubText
+              style={{
+                color: isMatch ? "#2ECC71" : "#FF645B",
+              }}
+            >
+              {isMatch
+                ? "비밀번호가 일치합니다"
+                : "비밀번호가 일치하지 않습니다"}
+            </PasswordSubText>
+          )}
           <Button type="submit">등록하기</Button>
         </form>
         <SubText>
-          이미 계정이 있으신가요? <Link to={"/login"}>로그인</Link>
+          이미 계정이 있으신가요? <LoginLink to={"/login"}>로그인</LoginLink>
         </SubText>
       </SignUpDiv>
     </Container>

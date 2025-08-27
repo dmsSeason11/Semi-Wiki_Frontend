@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Love from "../../assets/board/Love.svg";
+import colors from "../../styles/color";
 
 // 버튼 숨김
 export const HiddenButton = styled.button`
@@ -25,7 +26,7 @@ export const LoveLabel = styled.label`
     left: 978px;
     top: 52px;
 
-    fill: ${($isClick) => ($isClick ? "#FF0000" : "#4C4C4C")};
+    fill: ${($isClick) => ($isClick ? colors.orange[900] : colors.gray[900])};
   }
 `;
 
@@ -43,7 +44,7 @@ export const Lovecount = styled.span`
   font-size: 24px;
   line-height: 29px;
 
-  color: #dbdbdb;
+  color: ${colors.gray[200]};
 
   user-select: none;
 `;
@@ -62,7 +63,7 @@ export const CategoryTitle = styled.h2`
   font-size: 32px;
   line-height: 38px;
 
-  color: #f9f9f9;
+  color: ${colors.gray[50]};
 `;
 
 //카테고리 컨테이너
@@ -73,9 +74,9 @@ export const Categorycontainer = styled.div`
   left: 28px;
   top: 184px;
 
-  background: #353535;
+  background: ${colors.gray[950]};
 
-  border: 1px solid #f9f9f9;
+  border: 1px solid ${colors.gray[50]};
   border-radius: 24px;
 
   cursor: pointer;
@@ -92,10 +93,10 @@ export const Categories = styled.div`
 //카테코리 태그
 export const CategoryTag = styled.span`
   padding: 5px 3px;
-  border: 1px solid #ff9e3d;
+  border: 1px solid ${colors.orange[900]};
   border-radius: 8px;
   font-size: 18px;
-  color: #ff9e3d;
+  color: ${colors.orange[900]};
 
   font-family: "Pretendard";
 `;
@@ -108,9 +109,9 @@ export const TableOfContentscontainer = styled.div`
   min-height: 164px;
   height: auto;
 
-  background: #353535;
+  background: ${colors.gray[950]};
 
-  border: 1px solid #f9f9f9;
+  border: 1px solid ${colors.gray[50]};
   border-radius: 12px;
 
   padding-bottom: 16px;
@@ -131,7 +132,7 @@ export const TableOfContentsTitle = styled.h2`
   font-size: 18px;
   line-height: 21px;
 
-  color: #f9f9f9;
+  color: ${colors.gray[50]};
 `;
 
 //본문 컨테이너
@@ -141,7 +142,7 @@ export const Contentcontainer = styled.div`
   margin-top: 20px;
   padding-bottom: 40px;
 
-  background: #353535;
-  border: 1px solid #f9f9f9;
+  background: ${colors.gray[950]};
+  border: 1px solid ${colors.gray[50]};
   border-radius: 24px;
 `;

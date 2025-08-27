@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../styles/color";
 
 //목차 글
 export const TOCContents = styled.ul`
@@ -6,7 +7,7 @@ export const TOCContents = styled.ul`
   flex-direction: column;
   gap: 5px;
 
-  color: #f9f9f9;
+  color: ${colors.gray[50]};
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
@@ -22,7 +23,7 @@ export const TOCsubContents = styled.ul`
   flex-direction: column;
   gap: 5px;
 
-  color: #f9f9f9;
+  color: ${colors.gray[50]};
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;

@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import colors from "../../styles/color";
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: white;
+  background-color: ${colors.gray[50]};
 `;
 
 export const Loginarea = styled.div`
@@ -15,13 +16,13 @@ export const Loginarea = styled.div`
   border-radius: 22px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  border: 5px solid #4c4c4c;
+  border: 5px solid ${colors.gray[900]};
 `;
 
 export const Left_area = styled.div`
   flex: 1;
   box-sizing: border-box;
-  background-color: f9f9f9;
+  background-color: ${colors.gray[50]};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +37,7 @@ export const Logo = styled.img`
 
 export const Slogan = styled.p`
   font-size: 21px;
-  color: #4c4c4c;
+  color: ${colors.gray[900]};
   margin: 3px 0;
   text-align: center;
 
@@ -47,7 +48,7 @@ export const Slogan = styled.p`
 
 export const LoginDiv = styled.div`
   flex: 1;
-  background-color: #4c4c4c;
+  background-color: ${colors.gray[900]};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,14 +64,14 @@ export const LoginDiv = styled.div`
 `;
 
 export const Logintitle = styled.h2`
-  color: #f9f9f9;
+  color: ${colors.gray[50]};
   font-size: 48px;
   margin-bottom: 30px;
   font-weight: 500;
 `;
 
 export const Inputtext = styled.label`
-  color: white;
+  color: ${colors.gray[50]};
   font-size: 22px;
   margin: 10px 0 5px;
   width: 84%;
@@ -83,7 +84,7 @@ export const Input = styled.input`
   padding: 10px;
   margin: 6px 0;
   border-radius: 8px;
-  background-color: #606060;
+  background-color: ${colors.gray[800]};
   border: none;
   outline: none;
   font-size: 20px;
@@ -94,26 +95,26 @@ export const Button = styled.button`
   width: 380px;
   height: 50px;
   margin-top: 40px;
-  background-color: #353535;
-  color: white;
+  background-color: ${colors.gray[950]};
+  color: ${colors.gray[50]};
   border: none;
   border-radius: 4px;
   font-size: 20px;
   cursor: pointer;
 
   &:hover {
-    background-color: #222;
+    background-color: ${colors.gray[800]};
   }
 `;
 
 export const SubText = styled.p`
-  color: white;
+  color: ${colors.gray[50]};
   font-size: 16px;
   margin-top: 30px;
 `;
 
 export const LinkText = styled.a`
-  color: white;
+  color: ${colors.gray[50]};
   text-decoration: underline;
   cursor: pointer;
 `;

@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
 import LogoImage from "../../assets/logo/logo_vertical.svg";
 import {
@@ -12,10 +14,50 @@ import {
   Input,
   Button,
   SubText,
-  LinkText
+  LinkText,
 } from "./login.styles";
 
 function Login() {
+  const [form, setForm] = useState({ accountId: "", password: "" });
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await fetch("http://43.201.199.73:8080/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (response.status === 400) 
+        throw new Error("잘못된 요청입니다.");
+      if (response.status === 401)
+        throw new Error("비밀번호가 잘못되었습니다.");
+      if (response.status === 404)
+        throw new Error("아이디를 찾을 수 없습니다.");
+      if (!response.ok) 
+        throw new Error("알 수 없는 오류가 발생했습니다.");
+
+      const data = await response.json();
+
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("refresh_token", data.refresh_token);
+
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <Container>
       <Loginarea>
@@ -29,13 +71,30 @@ function Login() {
 
         <LoginDiv>
           <Logintitle>로그인</Logintitle>
-          <form>
+          <form onSubmit={handleSubmit}>
             <Inputtext>아이디</Inputtext>
-            <Input type="text" placeholder="아이디를 입력해주세요" />
+            <Input
+              type="text"
+              name="accountId"
+              value={form.accountId}
+              onChange={handleChange}
+              placeholder="아이디를 입력해주세요"
+              required
+            />
             <Inputtext>비밀번호</Inputtext>
-            <Input type="password" placeholder="비밀번호를 입력해주세요" />
+            <Input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              placeholder="비밀번호를 입력해주세요"
+              required
+            />
             <Button type="submit">로그인</Button>
           </form>
+
+          {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
+
           <SubText>
             아직 회원이 아니신가요? <LinkText href="#">회원가입</LinkText>
           </SubText>

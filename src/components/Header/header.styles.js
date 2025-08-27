@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../styles/color";
 
 export const Container = styled.div`
   display: flex;
@@ -29,7 +30,7 @@ export const Button = styled.button`
   height: 32px;
 `;
 export const Input = styled.input`
-  border: 1px solid #9e9e9e;
+  border: 1px solid ${colors.gray[500]};
   border-radius: 30px;
   font-size: 24px;
   padding: 10px 65px;

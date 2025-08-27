@@ -1,21 +1,22 @@
 import styled from "styled-components";
+import colors from "../../styles/color";
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: white;
+  background: ${colors.gray[50]};
 `;
 
 export const MypageCard = styled.div`
   display: flex;
-  background: #333;
+  background: ${colors.gray[900]};
   border-radius: 12px;
   padding: 20px 60px;
   width: 1200px;
   height: 450px;
-  color: white;
+  color: ${colors.gray[50]};
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 `;
 
@@ -28,19 +29,19 @@ export const LeftBox = styled.div`
 export const ProfileCard = styled.div`
   display: flex;
   align-items: flex-start;
-  background: #353535;
+  background: ${colors.gray[950]};
   border-radius: 10px;
   padding: 80px 50px;
   width: 600px;
   height: 340px;
-  border: 1px solid white;
+  border: 1px solid ${colors.gray[50]};
 `;
 
 export const ProfileImage = styled.div`
   width: 145px;
   height: 145px;
   border-radius: 50%;
-  background: gray;
+  background: ${colors.gray[800]};
   margin-right: 45px;
 `;
 
@@ -58,9 +59,9 @@ export const IdText = styled.div`
 export const PostCount = styled.div`
   font-size: 25px;
   margin: 4px 0;
-  color: #c6c6c6;
+  color: ${colors.gray[300]};
   span {
-    color: #ff9e3d;
+    color: ${colors.orange[900]};
     font-weight: bold;
   }
 `;
@@ -69,7 +70,7 @@ export const Logout = styled.button`
   display: flex;
   background: none;
   border: none;
-  color: #ff645b;
+  color: ${colors.error};
   font-size: 23px;
   jusstify-content: flex-start;
   cursor: pointer;
@@ -96,7 +97,7 @@ export const MenuItem = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #ff9e3d;
+  color: ${colors.orange[900]};
   font-size: 35px;
   font-weight: 500;
   cursor: pointer;
