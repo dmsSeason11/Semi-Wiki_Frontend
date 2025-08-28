@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
   display: flex;
@@ -18,7 +19,7 @@ export const SignUpDiv = styled.div`
   border-radius: 24px;
   padding: 40px;
   width: 800px;
-  height: 100vh;
+  height: 880px;
 
   form {
     width: 100%;
@@ -33,6 +34,7 @@ export const SignUptitle = styled.h2`
   font-size: 48px;
   margin-bottom: 30px;
   font-weight: 500;
+  font-family: Pretendard, sans-serif;
 `;
 
 export const InputBox = styled.div`
@@ -48,6 +50,7 @@ export const Inputtext = styled.label`
   margin: 10px 0 5px;
   width: 56%;
   display: block;
+  font-family: Pretendard, sans-serif;
 `;
 
 export const Input = styled.input`
@@ -61,6 +64,24 @@ export const Input = styled.input`
   outline: none;
   font-size: 20px;
   font-weight: 500;
+  font-family: Pretendard, sans-serif;
+`;
+
+export const Icon = styled.img`
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: 20px;
+  bottom: 17px;
+`;
+
+export const PasswordSubText = styled.p`
+  width: 400px;
+  text-align: left;
+  margin-top: 5px;
+  color: ${colors.gray[50]};
+  font-size: 15px;
+  font-family: Pretendard, sans-serif;
 `;
 
 export const Button = styled.button`
@@ -73,6 +94,7 @@ export const Button = styled.button`
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
+  font-family: Pretendard, sans-serif;
 
   &:hover {
     background-color: ${colors.gray[800]};
@@ -83,10 +105,15 @@ export const SubText = styled.p`
   color: ${colors.gray[50]};
   font-size: 16px;
   margin-top: 30px;
+  font-family: Pretendard, sans-serif;
 `;
 
-export const LinkText = styled.a`
-  color: white;
-  text-decoration: underline;
-  cursor: pointer;
+export const LoginLink = styled(Link)`
+  color: ${colors.gray[50]};
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `;
