@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
   background: ${colors.gray[50]};
 `;
 
@@ -14,7 +14,8 @@ export const MypageCard = styled.div`
   background: ${colors.gray[900]};
   border-radius: 12px;
   padding: 20px 60px;
-  width: 1200px;
+  max-width: 1200px;
+  width: 100%;
   height: 450px;
   color: ${colors.gray[50]};
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -32,17 +33,18 @@ export const ProfileCard = styled.div`
   background: ${colors.gray[950]};
   border-radius: 10px;
   padding: 80px 50px;
-  width: 600px;
+  width: 100%;
   height: 340px;
   border: 1px solid ${colors.gray[50]};
 `;
 
-export const ProfileImage = styled.div`
+export const ProfileImage = styled.img`
   width: 145px;
   height: 145px;
   border-radius: 50%;
   background: ${colors.gray[800]};
   margin-right: 45px;
+  object-fit: cover;
 `;
 
 export const ProfileText = styled.div`
@@ -72,10 +74,14 @@ export const Logout = styled.button`
   border: none;
   color: ${colors.error};
   font-size: 23px;
-  jusstify-content: flex-start;
+  justify-content: flex-start;
   cursor: pointer;
   padding: 0;
   align-items: center;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   img {
     width: 20px;
@@ -101,6 +107,10 @@ export const MenuItem = styled.div`
   font-size: 35px;
   font-weight: 500;
   cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export const MenuIcon = styled.img`
