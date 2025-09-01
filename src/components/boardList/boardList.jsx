@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import "../../styles/reset.css";
 import {
   BoardListContainer,
@@ -7,9 +8,40 @@ import {
   BoardListHeader,
 } from "./boardList.styles";
 import BoardItem from "../../components/boardItem/boardItem.jsx";
+import Pagination from "../Pagination/Pagination.jsx";
 import { posts } from "../../data/posts.js";
 
-function BoardList() {
+<<<<<<< Updated upstream
+function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
+  const [items, setItems] = useState([]); //현재 게시글 배열
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/notice-board/list`)
+=======
+function BoardList({sort, page, pageSize = 10, setTotalPages }) {
+  const [items, setItems] = useState([]); //현재 게시글 배열
+
+  useEffect(() => {
+    fetch(`http://54.180.153.221:8080/notice-board/list`)
+>>>>>>> Stashed changes
+      .then((r) => r.json())
+      .then((data) => {
+        setItems(data.items || []);
+        // 총 페이지 계산
+        const total = data.totalCount ?? 0;
+        setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
+      })
+      .catch(() => {
+        setItems([]);
+        setTotalPages(1);
+      });
+  }, [page, sort, pageSize, setTotalPages]);
+
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
   return (
     <BoardListContainer>
       <BoardListHeader>
@@ -18,16 +50,28 @@ function BoardList() {
         <BoardListModifier>수정자</BoardListModifier>
       </BoardListHeader>
 
-      {posts.map((post) => ( 
+<<<<<<< Updated upstream
+      {items.map((post) => (
+        <BoardItem
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          categories={post.categories}
+          modifier={post.userPreview?.accountId || "알 수 없음"}
+        />
+      ))}
+=======
+      {items.map((post) => ( 
           <BoardItem
             key={post.id}
             id={post.id}
             title={post.title}
-            categories={post.category}
-            modifier={post.modifier}
+            categories={post.categories}
+            modifier={post.userPreview?.accountId || "알 수 없음"}
           />
       ))}
-      
+
+>>>>>>> Stashed changes
     </BoardListContainer>
   );
 }

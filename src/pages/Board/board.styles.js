@@ -13,7 +13,7 @@ export const BoardContainer = styled.div`
 
   padding-left: 28px;
   padding-top: 232px;
-  padding-bottom: 40px;
+  padding-bottom: 50px;
 
 
   background: ${colors.gray[900]};

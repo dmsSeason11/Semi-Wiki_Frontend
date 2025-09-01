@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   FormContainer,
   FormLayout,
-  ContentPanel,
-  TitleSection,
-  SectionTitle,
+  FormMain,
+  TitleContainer,
   TitleInput,
-  CategorySection,
+  CategoryContainer,
+  SectionTitle,
   CategoryInput,
-  BodySection,
+  BodyContainer,
   BodyTextarea,
-  CompleteButton,
+  SubmitButton,
   Sidebar,
   SidebarTitle,
   CheckboxGrid,
   CheckboxItem,
-  FormLayout,
 } from "./PostForm.styles";
 
 function PostForm() {
@@ -54,20 +53,22 @@ function PostForm() {
     // 여기에 폼 제출 로직 추가
   };
 
+  const textarea = useRef();
+
   return (
     <FormContainer>
       <FormLayout>
-        <ContentPanel>
-          <TitleSection>
+        <FormMain>
+          <TitleContainer>
             <TitleInput
               type="text"
               placeholder="제목"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => setCategory(e.target.value)}
             />
-          </TitleSection>
+          </TitleContainer>
 
-          <CategoryCo>
+          <CategoryContainer>
             <SectionTitle>카테고리</SectionTitle>
             <CategoryInput
               type="text"
@@ -75,19 +76,25 @@ function PostForm() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             />
-          </CategorySection>
+          </CategoryContainer>
 
-          <BodySection>
+          <BodyContainer>
             <SectionTitle>본문</SectionTitle>
             <BodyTextarea
+              ref={textarea}
               placeholder="본문을 추가해주세요"
               value={body}
-              onChange={(e) => setBody(e.target.value)}
+              onChange={(e) => {
+                setBody(e.target.value);
+                textarea.current.style.height = "auto";
+                textarea.current.style.height =
+                  textarea.current.scrollHeight + "px";
+              }}
             />
-          </BodySection>
+          </BodyContainer>
 
-          <CompleteButton onClick={handleSubmit}>완료</CompleteButton>
-        </ContentPanel>
+          <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
+        </FormMain>
 
         <Sidebar>
           <SidebarTitle>추가할 전공</SidebarTitle>

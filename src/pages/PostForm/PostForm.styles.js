@@ -9,45 +9,43 @@ export const FormContainer = styled.div`
 `;
 
 export const FormLayout = styled.div`
+  width: 1100px;
+  min-height: 998px;
+
   flex: 1;
   display: flex;
   gap: 24px;
   padding: 24px;
-  max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
 `;
 
 export const FormMain = styled.div`
   flex: 1;
-  background-color: ${colors.gray[950]};
-  border-radius: 12px;
+  background-color: ${colors.gray[900]};
+  border-radius: 24px;
   padding: 32px;
   display: flex;
   flex-direction: column;
   gap: 24px;
 `;
 
-export const TitleSection = styled.div`
+export const TitleContainer = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 12px;
 `;
 
 export const TitleInput = styled.input`
+  width: 100%;
   background-color: transparent;
   border: none;
   color: white;
   font-size: 32px;
   font-weight: 600;
-  width: 100%;
-  padding: 0;
-  margin: 0;
 
   &::placeholder {
-    color: ${colors.gray[400]};
+    color: white;
     font-size: 32px;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   &:focus {
@@ -61,24 +59,26 @@ export const CategoryContainer = styled.div`
   gap: 12px;
 `;
 
-export const CategoryTitle = styled.h2`
+export const SectionTitle = styled.h2`
   color: white;
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
 `;
 
 export const CategoryInput = styled.input`
-  background-color: ${colors.gray[900]};
-  border: none;
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: white;
-  font-size: 14px;
   width: 100%;
 
+  background-color: ${colors.gray[900]};
+  border: 1px solid ${colors.gray[50]};
+  border-radius: 24px;
+
+  padding: 12px 16px;
+
+  color: white;
+  font-size: 14px;
+
   &::placeholder {
-    color: ${colors.gray[400]};
+    color: ${colors.gray[500]};
   }
 
   &:focus {
@@ -87,7 +87,7 @@ export const CategoryInput = styled.input`
   }
 `;
 
-export const BodySection = styled.div`
+export const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -95,19 +95,21 @@ export const BodySection = styled.div`
 `;
 
 export const BodyTextarea = styled.textarea`
+  width: 100%;
+  min-height: 300px;
+  resize: none;
+  overflow: hidden;
+
   background-color: ${colors.gray[900]};
-  border: none;
-  border-radius: 8px;
+  border: 1px solid ${colors.gray[50]};
+  border-radius: 24px;
   padding: 12px 16px;
   color: white;
   font-size: 14px;
-  width: 100%;
-  min-height: 300px;
-  resize: vertical;
-  font-family: inherit;
+  font-family: "Pretendard";
 
   &::placeholder {
-    color: ${colors.gray[400]};
+    color: ${colors.gray[500]};
   }
 
   &:focus {
@@ -116,7 +118,7 @@ export const BodyTextarea = styled.textarea`
   }
 `;
 
-export const CompleteButton = styled.button`
+export const SubmitButton = styled.button`
   background-color: ${colors.orange[50]};
   color: white;
   border: none;

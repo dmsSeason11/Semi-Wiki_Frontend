@@ -8,7 +8,7 @@ import {
   LinkStyle
 } from "./boardItem.styles";
 
-function BoardItem({ id, title, categories, modifier }) {
+function BoardItem({ id, title, categories = [], modifier }) {
   return (
     <BoardItemContainer $isFirst={id===1}>
       <LinkStyle to={`/board/${id}`} style={{ textDecoration: 'none' }}>
