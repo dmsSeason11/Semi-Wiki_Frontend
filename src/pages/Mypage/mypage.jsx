@@ -40,7 +40,7 @@ export default function MyPage() {
         }
 
         const res = await fetch(
-          `http://54.180.153.221:8080/api/mypage/${accountId}`,
+          `${process.env.REACT_APP_API_BASE_URL}/user/${accountId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
