@@ -41,7 +41,7 @@ function Login() {
     setError("");
 
     try {
-      const response = await fetch("http://43.201.199.73:8080/auth/login", {
+      const response = await fetch("http://54.180.153.221:8080/auth/sign-in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
