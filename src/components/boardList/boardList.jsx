@@ -15,7 +15,7 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
   const [items, setItems] = useState([]); //현재 게시글 배열
 
   useEffect(() => {
-    fetch(`${import.meta.env.REACT_APP_API_BASE_URL}/notice-board/list`)
+    fetch(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/notice-board/list`)
       .then((r) => r.json())
       .then((data) => {
         setItems(data.items || []);
