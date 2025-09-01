@@ -7,8 +7,10 @@ const CheckId = ({ Id, setIdValidation }) => {
       return;
     }
 
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/check-accountId/${Id}`)
-      .then((resp) => resp.text())
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/check-accountId/${Id}`, {
+      method: "GET",
+    })
+      .then((resp) => resp.json())
       .then((result) => {
         setIdValidation(Number(result) === 0);
       })
