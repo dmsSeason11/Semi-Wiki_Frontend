@@ -47,7 +47,7 @@ function SignUpContainer() {
       password: Password,
     };
 
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/sign-up`, {
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
