@@ -29,7 +29,7 @@ function App() {
           }
         />
         <Route
-          path="/mypage"
+          path="/mypage/:accountId"
           element={
             <Layout>
               <Mypage />

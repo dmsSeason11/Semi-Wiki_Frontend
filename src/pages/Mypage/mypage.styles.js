@@ -13,10 +13,10 @@ export const MypageCard = styled.div`
   display: flex;
   background: ${colors.gray[900]};
   border-radius: 12px;
-  padding: 20px 60px;
-  max-width: 1200px;
+  padding: 20px 120px;
+  max-width: 1500px;
   width: 100%;
-  height: 450px;
+  height: 550px;
   color: ${colors.gray[50]};
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 `;
@@ -33,8 +33,8 @@ export const ProfileCard = styled.div`
   background: ${colors.gray[950]};
   border-radius: 10px;
   padding: 80px 50px;
-  width: 100%;
-  height: 340px;
+  width: 750px;
+  height: 350px;
   border: 1px solid ${colors.gray[50]};
 `;
 
