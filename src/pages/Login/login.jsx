@@ -41,13 +41,16 @@ function Login() {
     setError("");
 
     try {
-      const response = await fetch("http://54.180.153.221:8080/auth/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_BASE_URL}/auth/sign-in`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
 
       if (response.status === 400) {
         console.error("Error response:", response);
