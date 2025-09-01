@@ -42,7 +42,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/signin`,
+        `${import.meta.env.REACT_APP_API_BASE_URL}/auth/signin`,
         {
           method: "POST",
           headers: {

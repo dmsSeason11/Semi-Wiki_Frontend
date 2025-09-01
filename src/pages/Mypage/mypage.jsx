@@ -40,7 +40,7 @@ export default function MyPage() {
         }
 
         const res = await fetch(
-          `${process.env.REACT_APP_API_BASE_URL}/user/${accountId}`,
+          `${import.meta.env.REACT_APP_API_BASE_URL}/user/${accountId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
