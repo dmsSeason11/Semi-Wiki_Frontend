@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../styles/reset.css";
@@ -42,13 +42,15 @@ function Login() {
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_BASE_URL}/auth/signin`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signin`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(form),
+          mode: "cors", // cross-origin 요청 허용
+          credentials: "include", // 쿠키를 보내야 하는 경우
         }
       );
 

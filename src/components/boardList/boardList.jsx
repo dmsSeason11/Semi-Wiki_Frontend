@@ -16,14 +16,7 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
   const [items, setItems] = useState([]); //현재 게시글 배열
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_BASE_URL}/notice-board/list`)
-=======
-function BoardList({sort, page, pageSize = 10, setTotalPages }) {
-  const [items, setItems] = useState([]); //현재 게시글 배열
-
-  useEffect(() => {
-    fetch(`http://54.180.153.221:8080/notice-board/list`)
->>>>>>> Stashed changes
+    fetch(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/notice-board/list`)
       .then((r) => r.json())
       .then((data) => {
         setItems(data.items || []);
