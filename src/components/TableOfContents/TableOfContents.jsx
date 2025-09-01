@@ -7,7 +7,7 @@ function TableOfContents({ sections }) {
         <li key={item.id}>
           {item.headerNumber}. {item.title}
           {item.children && item.children.length > 0 && (
-            <TOCsubContents>
+            <TOCsubContents> 
               {item.children.map((sub) => (
                 <li key={sub.id}>
                   {sub.headerNumber} {sub.title}
