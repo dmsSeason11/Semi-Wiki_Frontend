@@ -35,3 +35,7 @@ export const Input = styled.input`
   font-size: 24px;
   padding: 10px 65px;
 `;
+
+export const Link1 = styled.div`
+  cursor: pointer;
+`;
