@@ -7,7 +7,7 @@ const CheckId = ({ Id, setIdValidation }) => {
       return;
     }
 
-    fetch("/check-accountId/" + Id)
+    fetch("http://54.180.153.221:8080/auth/check-accountId/" + Id)
       .then((resp) => resp.text())
       .then((result) => {
         setIdValidation(Number(result) === 0);

@@ -47,7 +47,7 @@ function SignUpContainer() {
       password: Password,
     };
 
-    fetch("/sign-up", {
+    fetch("http://54.180.153.221:8080/auth/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
