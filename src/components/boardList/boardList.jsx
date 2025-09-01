@@ -11,11 +11,11 @@ import BoardItem from "../../components/boardItem/boardItem.jsx";
 import Pagination from "../Pagination/Pagination.jsx";
 import { posts } from "../../data/posts.js";
 
-function BoardList({sort, page, pageSize = 10, setTotalPages }) {
+function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
   const [items, setItems] = useState([]); //현재 게시글 배열
 
   useEffect(() => {
-    fetch(`http://54.180.153.221:8080/notice-board/list`)
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/notice-board/list`)
       .then((r) => r.json())
       .then((data) => {
         setItems(data.items || []);
@@ -29,8 +29,6 @@ function BoardList({sort, page, pageSize = 10, setTotalPages }) {
       });
   }, [page, sort, pageSize, setTotalPages]);
 
-
-
   return (
     <BoardListContainer>
       <BoardListHeader>
@@ -39,16 +37,15 @@ function BoardList({sort, page, pageSize = 10, setTotalPages }) {
         <BoardListModifier>수정자</BoardListModifier>
       </BoardListHeader>
 
-      {items.map((post) => ( 
-          <BoardItem
-            key={post.id}
-            id={post.id}
-            title={post.title}
-            categories={post.categories}
-            modifier={post.userPreview?.accountId || "알 수 없음"}
-          />
+      {items.map((post) => (
+        <BoardItem
+          key={post.id}
+          id={post.id}
+          title={post.title}
+          categories={post.categories}
+          modifier={post.userPreview?.accountId || "알 수 없음"}
+        />
       ))}
-
     </BoardListContainer>
   );
 }
