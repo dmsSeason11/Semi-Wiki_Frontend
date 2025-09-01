@@ -51,7 +51,7 @@ export const CheckboxLabel = styled.label`
   justify-content: space-between;
   width: calc(50% - 10px); 
 
-  color: ${({ check }) => (check ? colors.orange[50] : colors.orange[900])};
+  color: ${({ $check }) => ($check ? colors.orange[50] : colors.orange[900])};
 
   font-size: 18px;
   font-family: "PretendardsemiBold";
@@ -79,20 +79,20 @@ export const StyledCheckbox = styled.div`
   background: transparent;
   border-radius: 4px;
 
-  border: 2px solid ${({ check }) => (check ? colors.orange[50] : colors.orange[900])};
+  border: 2px solid ${({ $check }) => ($check ? colors.orange[50] : colors.orange[900])};
 
   &::after {
     content: '';
     position: absolute;
     width: 3px;
     height: 10px;
-    border: solid ${({ check }) => (check ? colors.orange[50] : colors.orange[900])};
+    border: solid ${({ $check }) => ($check ? colors.orange[50] : colors.orange[900])};
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
 
     margin-bottom: 2px;
-    
-    opacity: ${({ check }) => (check ? 1 : 0)}; 
+
+    opacity: ${({ $check }) => ($check ? 1 : 0)}; 
     transition: 0.2s;
   }
 `;
