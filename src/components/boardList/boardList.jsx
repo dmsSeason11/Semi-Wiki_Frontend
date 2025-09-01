@@ -11,6 +11,7 @@ import BoardItem from "../../components/boardItem/boardItem.jsx";
 import Pagination from "../Pagination/Pagination.jsx";
 import { posts } from "../../data/posts.js";
 
+<<<<<<< Updated upstream
 function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
   const [items, setItems] = useState([]); //현재 게시글 배열
 
@@ -29,6 +30,11 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
       });
   }, [page, sort, pageSize, setTotalPages]);
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
   return (
     <BoardListContainer>
       <BoardListHeader>
@@ -37,6 +43,7 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
         <BoardListModifier>수정자</BoardListModifier>
       </BoardListHeader>
 
+<<<<<<< Updated upstream
       {items.map((post) => (
         <BoardItem
           key={post.id}
@@ -46,6 +53,18 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
           modifier={post.userPreview?.accountId || "알 수 없음"}
         />
       ))}
+=======
+      {items.map((post) => ( 
+          <BoardItem
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            categories={post.categories}
+            modifier={post.userPreview?.accountId || "알 수 없음"}
+          />
+      ))}
+
+>>>>>>> Stashed changes
     </BoardListContainer>
   );
 }
