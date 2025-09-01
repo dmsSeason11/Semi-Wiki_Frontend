@@ -52,7 +52,7 @@ function Login() {
       );
 
       if (response.status === 400) throw new Error("잘못된 요청입니다.");
-      if (response.status === 401)
+      if (response.status === 403)
         throw new Error("비밀번호가 잘못되었습니다.");
       if (response.status === 404)
         throw new Error("아이디를 찾을 수 없습니다.");
