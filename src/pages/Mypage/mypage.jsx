@@ -20,6 +20,14 @@ import {
   MenuLabel,
 } from "./mypage.styles";
 
+// 쿠키에서 토큰 읽는 유틸
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+  return null;
+}
+
 export default function MyPage() {
   const { accountId } = useParams();
   const navigate = useNavigate();
@@ -30,35 +38,49 @@ export default function MyPage() {
     profileImg: null,
   });
 
+  // 유저 정보 요청
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
+        // localStorage 먼저, 없으면 쿠키
+        const token =
+          localStorage.getItem("accessToken") || getCookie("accessToken");
+        console.log("MyPage에서 사용되는 토큰:", token);
+
         if (!token) {
           navigate("/login");
           return;
         }
 
-        const res = await fetch(
+        const response = await fetch(
           `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/user/${accountId}`,
           {
+            method: "GET",
             headers: {
-              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // 토큰 헤더
             },
+            mode: "cors",
+            credentials: "include", // 쿠키 포함
           }
         );
 
-        if (!res.ok) {
-          const errorText = await res.text();
-          console.log(errorText);
-          if (res.status === 401) {
+        if (!response.ok) {
+          if (response.status === 401) {
+            // 토큰 만료 시 로그아웃
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            document.cookie = "accessToken=; path=/; max-age=0";
+            document.cookie = "refreshToken=; path=/; max-age=0";
             navigate("/login");
+            return;
           }
-          return;
+          const errorText = await response.text();
+          throw new Error(errorText || "유저 정보 요청 실패");
         }
 
-        const data = await res.json();
-        console.log(data);
+        const data = await response.json();
+        console.log("MyPage API 응답 데이터:", data);
 
         setUserData({
           accountId: data.accountId,
@@ -66,15 +88,21 @@ export default function MyPage() {
           profileImg: data.profileImg || null,
         });
       } catch (err) {
-        console.error(err);
+        console.error("MyPage fetchData 에러:", err);
       }
     };
 
     fetchData();
   }, [accountId, navigate]);
 
+  // 로그아웃
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
+    document.cookie = "accessToken=; path=/; max-age=0";
+    document.cookie = "refreshToken=; path=/; max-age=0";
+
     navigate("/login");
   };
 
