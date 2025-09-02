@@ -7,10 +7,8 @@ const CheckId = ({ Id, setIdValidation }) => {
       return;
     }
 
-    fetch(
-      `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/checkaccountid/${Id}`
-    )
-      .then((resp) => resp.text())
+    fetch(`${process.env.REACT_APP_API_BASE_URL}/auth/checkaccountid/${Id}`)
+      .then((resp) => resp.json())
       .then((result) => {
         setIdValidation(Number(result) === 0);
       })

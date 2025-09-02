@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../../styles/reset.css";
 import LogoImage from "../../assets/logo/logo_vertical.svg";
 import {
@@ -45,39 +44,35 @@ function Login() {
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signin`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
-          mode: "cors", // cross-origin 요청 허용
-          credentials: "include", // 쿠키를 보내야 하는 경우
+          mode: "cors",
+          credentials: "include",
         }
       );
 
-      if (response.status === 400) {
-        console.error("Error response:", response);
-        throw new Error("잘못된 요청입니다.");
-      }
-      if (response.status === 401) {
-        console.error("Error response:", response);
+      if (response.status === 400) throw new Error("잘못된 요청입니다.");
+      if (response.status === 403)
         throw new Error("비밀번호가 잘못되었습니다.");
-      }
-      if (response.status === 404) {
-        console.error("Error response:", response);
+      if (response.status === 404)
         throw new Error("아이디를 찾을 수 없습니다.");
-      }
-      if (!response.ok) {
-        console.error("Error response:", response);
-        throw new Error("알 수 없는 오류가 발생했습니다.");
-      }
+      if (!response.ok) throw new Error("알 수 없는 오류가 발생했습니다.");
 
-      const data = await response.json();
+      const data = await response.json(); // { accessToken, refreshToken }
+      console.log("로그인 응답:", data);
 
-      localStorage.setItem("access_token", data.access_token);
-      localStorage.setItem("refresh_token", data.refresh_token);
+      // localStorage
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("accountId", form.accountId);
 
-      setForm({ accountId: "", password: "" });
+      // 쿠키 저장
+      document.cookie = `accessToken=${data.accessToken}; path=/; max-age=3600`; // 1시간
+      document.cookie = `refreshToken=${data.refreshToken}; path=/; max-age=604800`; // 7일
 
+      console.log("localStorage 확인:", localStorage.getItem("accessToken"));
+
+      // 저장 후 바로 홈으로 이동
       navigate("/");
     } catch (err) {
       setError(err.message);

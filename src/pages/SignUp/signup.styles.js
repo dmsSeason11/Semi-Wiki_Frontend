@@ -65,6 +65,10 @@ export const Input = styled.input`
   font-size: 20px;
   font-weight: 500;
   font-family: Pretendard, sans-serif;
+
+  &:focus {
+    background-color: ${colors.gray[800]};
+  }
 `;
 
 export const Icon = styled.img`

@@ -80,6 +80,16 @@ function BoardList({ sort, page, pageSize = 10, token, selectedCategories = [] }
           $check={post.checked}
         />
       ))}
+      {items.map((post) => ( 
+          <BoardItem
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            categories={post.categories}
+            modifier={post.userPreview?.accountId || "알 수 없음"}
+          />
+      ))}
+
     </BoardListContainer>
   );
 }

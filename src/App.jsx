@@ -7,6 +7,7 @@ import SignUpContainer from "./pages/SignUp/signupContainer";
 import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/postDetail";
 import Writeboard from "./pages/Write Board/Writeboard.jsx";
+import PostForm from "./pages/PostForm/PostForm.jsx";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -28,7 +29,7 @@ function App() {
           }
         />
         <Route
-          path="/mypage"
+          path="/mypage/:accountId"
           element={
             <Layout>
               <Mypage />
@@ -48,6 +49,14 @@ function App() {
           element={
             <Layout>
               <Writeboard />
+            </Layout>
+          }
+        />
+        <Route
+          path="/postform"
+          element={
+            <Layout>
+              <PostForm />
             </Layout>
           }
         />
