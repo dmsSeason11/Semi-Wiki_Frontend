@@ -9,28 +9,22 @@ import {
   StyledCheckbox,
 } from "./CategoryList.styles.js";
 
-function CategoryList() {
-  const [checkItem, setCheckItem] = useState({
-    전공: false,
-    기숙사: false,
-    학생: false,
-    선생님: false,
-    동아리: false,
-    논란: false,
-    프로젝트: false,
-    창체동아리: false,
-    자율동아리: false,
-    밴드부: false,
-    배구부: false,
-    기타: false,
-  });
+function CategoryList({ selectedCategories = [], onSelectedCategories }) {
+  const categories = [
+    "전공", "기숙사", "학생", "선생님",
+    "동아리", "논란", "프로젝트",
+    "창체동아리", "자율동아리", "밴드부",
+    "배구부", "기타",
+  ];
 
-  const handleCheckboxChange = (name) => {
-    setCheckItem((prev) => ({
-      ...prev,
-      [name]: !prev[name],
-    }));
+  const handleCategoryClick = (category) => {
+    console.log('카테고리 클릭:', category); // 디버깅용
+    if (onSelectedCategories) {
+      onSelectedCategories(category);
+    }
   };
+
+  
 
   return (
     <>
@@ -38,19 +32,28 @@ function CategoryList() {
         <CategoryListTitle>카테고리</CategoryListTitle>
 
         <CategoryItem>
-          {Object.keys(checkItem).map((category) => (
-            <CheckboxLabel key={category} check={checkItem[category]}>
-              <HiddenCheckbox
-                type="checkbox"
-                checked={checkItem[category]}
-                onChange={() => handleCheckboxChange(category)}
-              />
-              <span>{category}</span>
-              <StyledCheckbox check={checkItem[category]} />
-            </CheckboxLabel>
-          ))}
+          {categories.map((category) => {
+            const isChecked = selectedCategories.includes(category);
+            return (
+              <CheckboxLabel 
+                key={category} 
+                $check={isChecked}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCategoryClick(category);
+                }}
+              >
+                <HiddenCheckbox
+                  type="checkbox"
+                  checked={isChecked}
+                  readOnly
+                />
+                <span>{category}</span>
+                <StyledCheckbox $check={isChecked} />
+              </CheckboxLabel>
+            );
+          })}
         </CategoryItem>
-
       </CategoryListContainer>
     </>
   );

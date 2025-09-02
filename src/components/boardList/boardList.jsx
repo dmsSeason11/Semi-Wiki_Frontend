@@ -11,30 +11,57 @@ import BoardItem from "../../components/boardItem/boardItem.jsx";
 import Pagination from "../Pagination/Pagination.jsx";
 import { posts } from "../../data/posts.js";
 
-<<<<<<< Updated upstream
-function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
+function BoardList({ sort, page, pageSize = 10, token, selectedCategories = [] }) {
   const [items, setItems] = useState([]); //현재 게시글 배열
 
+  const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/notice-board/list`)
-      .then((r) => r.json())
-      .then((data) => {
-        setItems(data.items || []);
-        // 총 페이지 계산
-        const total = data.totalCount ?? 0;
-        setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
-      })
-      .catch(() => {
+    const fetchList = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/notice-board/list`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            categories: selectedCategories,
+            offset: page * pageSize,
+            limit: pageSize,
+          }),
+        });
+        const text = await res.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          console.error("JSON 파싱 실패:", text);
+          data = [];
+        }
+
+        if (!res.ok) {
+          console.error("서버 오류:", text);
+          setError(text);
+          setItems([]);
+          setTotalPages(1);
+          return;
+        }
+
+        setItems(data || []);
+        setTotalPages(Math.ceil((data?.length || 0) / pageSize));
+        setError(null);
+      } catch (err) {
+        console.error("데이터 fetch 중 오류:", err);
+        setError(err.message);
         setItems([]);
         setTotalPages(1);
-      });
-  }, [page, sort, pageSize, setTotalPages]);
+      }
+    };
 
-<<<<<<< Updated upstream
-=======
+    if (token) fetchList();
+  }, [page, sort, pageSize, token, API_BASE, selectedCategories]);
 
-
->>>>>>> Stashed changes
   return (
     <BoardListContainer>
       <BoardListHeader>
@@ -43,7 +70,6 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
         <BoardListModifier>수정자</BoardListModifier>
       </BoardListHeader>
 
-<<<<<<< Updated upstream
       {items.map((post) => (
         <BoardItem
           key={post.id}
@@ -51,9 +77,9 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
           title={post.title}
           categories={post.categories}
           modifier={post.userPreview?.accountId || "알 수 없음"}
+          $check={post.checked}
         />
       ))}
-=======
       {items.map((post) => ( 
           <BoardItem
             key={post.id}
@@ -64,7 +90,6 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
           />
       ))}
 
->>>>>>> Stashed changes
     </BoardListContainer>
   );
 }

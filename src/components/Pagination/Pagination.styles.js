@@ -4,7 +4,7 @@ import colors from "../../styles/color";
 //페이지네이션 컨테이너
 export const PaginationContainer = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 4px;
   justify-content: center;
   margin-top: 40px;
 `;
@@ -13,11 +13,19 @@ export const PaginationContainer = styled.div`
 export const PageButton = styled.button`
   border: none;
   background: none;
+  color: ${({ $active }) => ($active ? "#FF9E3D" : colors.gray[50])};
   font-size: 24px;
-  color: ${colors.gray[50]};
   font-weight: 600;
   font-family: 'pretendard';
+  border-radius: 6px;
+  cursor: pointer;
+
+  &:disabled {
+    color: ${colors.gray[500]};
+    cursor: not-allowed;
+  }
 `;
+
 
 //화살표 버튼
 export const ArrowButton = styled.button`

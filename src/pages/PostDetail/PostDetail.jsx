@@ -18,12 +18,16 @@ import {
 import Love from "../../assets/board/Love.svg";
 import Article from "../../components/Article/Article.jsx";
 import TableOfContents from "../../components/TableOfContents/TableOfContents.jsx";
-import { sections as allSection } from "../../data/sections.js";
-import { posts } from "../../data/posts.js";
 
 function PostDetail() {
+  const { id } = useParams();
+  const postId = parseInt(id, 10);
+
   const [loveCount, setLoveCount] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
+  const [post, setPost] = useState(null);
+
+  const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
   const handleLoveClick = () => {
     if (!isClicked) {
@@ -35,31 +39,26 @@ function PostDetail() {
     }
   };
 
-  const { id } = useParams();
-  const postId = parseInt(id, 10);
-
-  const post = posts.find((v) => v.id === postId);
-
-  const groupedSections = [];
-  let current = [];
-
-  allSection.noticeBoardHeaders.forEach((h) => {
-    if (h.headerNumber === "1") {
-      if (current.length > 0) {
-        groupedSections.push(current);
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/notice-board/${postId}`);
+        const data = await res.json();
+        setPost(data);
+      } catch (err) {
+        console.error(err);
       }
-      current = [h];
-    } else {
-      current.push(h);
-    }
-  });
-  if (current.length > 0) groupedSections.push(current);
-
-  const postSections = groupedSections[postId - 1];
+    };
+    fetchPost();
+  }, [postId, API_BASE]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (!post) return <div>로딩 중...</div>; // 수정: null 안전 처리
+
+  const postSections = post.sections || []; // 수정: postSections 정의
 
   return (
     <Content>
