@@ -8,6 +8,7 @@ import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/postDetail";
 import Writeboard from "./pages/Write Board/Writeboard.jsx";
 import PostForm from "./pages/PostForm/PostForm.jsx";
+import PostEditForm from "./pages/PostEditForm/PostEditForm.jsx";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -57,6 +58,14 @@ function App() {
           element={
             <Layout>
               <PostForm />
+            </Layout>
+          }
+        />
+        <Route
+          path="/posteditform"
+          element={
+            <Layout>
+              <PostEditForm />
             </Layout>
           }
         />
