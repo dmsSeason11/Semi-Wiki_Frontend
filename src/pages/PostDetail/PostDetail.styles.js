@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Love from "../../assets/board/Love.svg";
 import colors from "../../styles/color";
 
 // 버튼 숨김
@@ -26,7 +25,7 @@ export const LoveLabel = styled.label`
     left: 978px;
     top: 52px;
 
-    fill: ${($isClick) => ($isClick ? colors.orange[900] : colors.gray[900])};
+    fill: ${($isClick) => ($isClick ? "#FF6600" : colors.gray[900])};
   }
 `;
 
@@ -51,11 +50,10 @@ export const Lovecount = styled.span`
 
 // 카테고리 제목
 export const CategoryTitle = styled.h2`
-  position: absolute;
+  position: relative;
   width: 115px;
   height: 38px;
-  left: 28px;
-  top: 138px;
+  bottom: 210px;
 
   font-family: "Pretendard";
   font-style: normal;
@@ -68,11 +66,10 @@ export const CategoryTitle = styled.h2`
 
 //카테고리 컨테이너
 export const Categorycontainer = styled.div`
-  position: absolute;
+  position: relative;
   width: 1044px;
   height: 53px;
-  left: 28px;
-  top: 184px;
+  bottom: 200px;
 
   background: ${colors.gray[950]};
 
@@ -103,8 +100,7 @@ export const CategoryTag = styled.span`
 
 //목차
 export const TableOfContentscontainer = styled.div`
-  margin-top: 5px;
-  
+  position: relative;
   width: 200px;
   min-height: 164px;
   height: auto;
@@ -116,6 +112,7 @@ export const TableOfContentscontainer = styled.div`
 
   padding-bottom: 16px;
 
+  bottom: 180px;
 `;
 
 //목차 제목
@@ -137,6 +134,8 @@ export const TableOfContentsTitle = styled.h2`
 
 //본문 컨테이너
 export const Contentcontainer = styled.div`
+  position: relative;
+  bottom: 150px;
   width: 1044px;
   min-height: 639px;
   margin-top: 20px;

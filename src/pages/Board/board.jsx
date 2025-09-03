@@ -17,9 +17,8 @@ function Board() {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]); // 추가
 
-  const pageSize = 10;
-  // const token = localStorage.getItem("accessToken");
-  const token = "eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzX3Rva2VuIiwic3ViIjoiTmFtd29vMjgiLCJpYXQiOjE3NTY3MzY0MzcsImV4cCI6MTc1NjczNzMzN30.VgcWmAhvzho9X1RCTekOApGM0EomFLGHnCzj7MZQCg0";
+  const pageSize = 2;
+  const token = localStorage.getItem("accessToken");
 
   console.log("현재 저장된 토큰:", token);
 
@@ -49,15 +48,27 @@ function Board() {
 
     const fetchTotalCount = async () => {
       try {
-        const res = await fetch(`${API_BASE}/notice-board/count`, {
-          method: "POST",
+        const query = new URLSearchParams();
+
+        selectedCategories.forEach((v) => query.append("categories", v));
+
+        const res = await fetch(`${API_BASE}/notice-board/count?${query.toString()}`, {
+          method: "GET",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,
           },
-          body: JSON.stringify({ title: "", categories: selectedCategories }),
         });
+
+        if (res.status === 401) {
+          console.error("토큰이 만료되었거나 유효하지 않습니다.");
+          alert("로그인이 필요합니다. 다시 로그인해주세요.");
+          localStorage.removeItem("accessToken");
+          window.location.href = "/login";
+          return;
+        }
+
         const total = await res.json() || 0;
+        console.log("📌 총 게시글 수:", total, " / 총 페이지:", Math.ceil(total / pageSize));
         setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
       } catch (error) {
         console.error(error);

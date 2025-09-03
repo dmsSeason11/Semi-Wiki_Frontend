@@ -23,11 +23,14 @@ export const BoardContainer = styled.div`
 
 // 게시판 제목
 export const BoardTitle = styled.h1`
-  position: absolute;
+  position: relative;
+  max-width: 900px;
   width: auto;
-  height: 50px;
-  left: 28px;
-  top: 28px;
+  height: auto;
+  min-height: 50px;
+  bottom: 210px;
+  margin-bottom: 50px;
+
 
   font-family: "Pretendard";
   font-style: normal;
