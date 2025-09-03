@@ -70,8 +70,6 @@ export default function MyPage() {
             // 토큰 만료 시 로그아웃
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
-            document.cookie = "accessToken=; path=/; max-age=0";
-            document.cookie = "refreshToken=; path=/; max-age=0";
             navigate("/login");
             return;
           }
@@ -99,9 +97,6 @@ export default function MyPage() {
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-
-    document.cookie = "accessToken=; path=/; max-age=0";
-    document.cookie = "refreshToken=; path=/; max-age=0";
 
     navigate("/login");
   };
