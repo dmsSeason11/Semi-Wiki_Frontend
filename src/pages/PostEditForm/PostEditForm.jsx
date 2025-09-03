@@ -19,9 +19,9 @@ import {
   StyledCheckbox,
   Categories,
   CategoryTag,
-} from "./PostForm.styles";
+} from "./PostEditForm.styles";
 
-function PostForm() {
+function PostEditForm() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
@@ -118,7 +118,7 @@ function PostForm() {
         </FormMain>
 
         <Sidebar>
-          <SidebarTitle>추가할 전공</SidebarTitle>
+          <SidebarTitle>카테고리 수정</SidebarTitle>
           <CategoryItem>
             {Object.keys(checkItem).map((category) => (
               <CheckboxLabel key={category} check={checkItem[category]}>
@@ -138,4 +138,4 @@ function PostForm() {
   );
 }
 
-export default PostForm;
+export default PostEditForm;
