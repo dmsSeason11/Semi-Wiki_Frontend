@@ -11,7 +11,13 @@ import BoardItem from "../../components/boardItem/boardItem.jsx";
 import Pagination from "../Pagination/Pagination.jsx";
 import { posts } from "../../data/posts.js";
 
-function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
+function BoardList({
+  sort,
+  page,
+  pageSize = 10,
+  token,
+  selectedCategories = [],
+}) {
   const [items, setItems] = useState([]); //현재 게시글 배열
 
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
@@ -23,7 +29,7 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             categories: selectedCategories,
@@ -58,6 +64,9 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
         setTotalPages(1);
       }
     };
+
+    if (token) fetchList();
+  }, [page, sort, pageSize, token, API_BASE, selectedCategories]);
 
   return (
     <BoardListContainer>

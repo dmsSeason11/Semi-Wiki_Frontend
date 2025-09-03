@@ -95,8 +95,10 @@ export default function MyPage() {
 
   // 로그아웃
   const handleLogout = () => {
+    localStorage.removeItem("accountId");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    deleteCookie("accessTokenNumber");
 
     navigate("/login");
   };
