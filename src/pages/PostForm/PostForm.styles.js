@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
+import { Editor } from "@toast-ui/react-editor";
+import { createGlobalStyle } from "styled-components";
 
 export const FormContainer = styled.div`
   min-height: 100vh;
@@ -61,7 +63,7 @@ export const TitleInput = styled.input`
 export const CategoryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 `;
 
 export const SectionTitle = styled.h2`
@@ -91,31 +93,52 @@ export const CategoryInput = styled.div`
 export const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 `;
 
-export const BodyTextarea = styled.textarea`
+export const StyledBodyWrapper = styled.div`
   width: 100%;
   min-height: 577px;
-  resize: none;
-  overflow: hidden;
+`;
 
-  background-color: ${colors.gray[900]};
-  border: 1px solid ${colors.gray[50]};
-  border-radius: 24px;
-
-  color: white;
-  font-size: 20px;
-  font-family: "Pretendard";
-
-  padding: 12px 18px;
-
-  &::placeholder {
-    color: ${colors.gray[500]};
+export const GlobalEditorStyle = createGlobalStyle`
+  .toastui-editor-defaultUI {
+    background-color: ${colors.gray[900]};
+    border: 1px solid ${colors.gray[50]};
+    border-radius: 24px;
   }
 
-  &:focus {
-    outline: none;
+  .toastui-editor-main {
+    border: none !important;
+    border-radius: 0 0 24px 24px !important;
+    background-color: ${colors.gray[900]} !important;
+  }
+
+  .toastui-editor-ww-container{
+    border: none !important;
+    background-color: transparent !important;
+  }
+
+  /* 툴바 스타일 */
+  .toastui-editor-defaultUI-toolbar {
+    background-color: ${colors.gray[50]} !important;
+    border: none !important;
+    border-radius: 24px 24px 0 0 !important;
+  }
+
+  /* 본문 입력 초기값 */
+  .toastui-editor-contents h1,
+  .toastui-editor-contents h2,
+  .toastui-editor-contents h3,
+  .toastui-editor-contents h4,
+  .toastui-editor-contents h5,
+  .toastui-editor-contents h6,
+  .toastui-editor-contents p {
+    color: ${colors.gray[50]} !important;
+    font-size: 20px;
+    font-family: "Pretendard";
+
+    margin: 0;
   }
 `;
 

@@ -23,7 +23,7 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             categories: selectedCategories,
@@ -58,6 +58,7 @@ function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
         setTotalPages(1);
       }
     };
+  }, []);
 
   return (
     <BoardListContainer>

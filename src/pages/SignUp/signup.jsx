@@ -28,7 +28,7 @@ function SignUp({
   ConfirmPassword,
   setConfirmPassword,
   onSubmitHandler,
-  checkId,
+  handleCheckClick,
   idValidation,
   isMatch,
   passwordChangeHandler,
@@ -89,7 +89,7 @@ function SignUp({
             <Button
               style={{ width: "100px", marginTop: "36px" }}
               type="button"
-              onClick={checkId}
+              onClick={handleCheckClick}
             >
               중복 확인
             </Button>

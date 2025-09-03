@@ -1,4 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
+import { Editor } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor.css";
+import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import {
   FormContainer,
   FormLayout,
@@ -9,7 +12,7 @@ import {
   SectionTitle,
   CategoryInput,
   BodyContainer,
-  BodyTextarea,
+  StyledBodyWrapper,
   SubmitButton,
   Sidebar,
   SidebarTitle,
@@ -20,13 +23,13 @@ import {
   Categories,
   CategoryTag,
 } from "./PostForm.styles";
+import colors from "../../styles/color";
 
 function PostForm() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
-  const [selectedMajors, setSelectedMajors] = useState([]); // 선택한 전공들 상태
-
+  const [selectedCategories, setSelectedCategories] = useState([]); // 선택한 전공들 상태
   const [checkItem, setCheckItem] = useState({
     전공: false,
     기숙사: false,
@@ -42,34 +45,78 @@ function PostForm() {
     기타: false,
   }); // 카테고리 체크 상태
 
+  const editorRef = useRef();
+
   const handleCheckboxChange = (category) => {
     setCheckItem((prev) => ({
       ...prev,
       [category]: !prev[category],
     }));
 
-    // 선택된 전공들을 selectedMajors에 업데이트
+    // 선택된 전공들을 selectedCategories에 업데이트
     setSelectedMajors((prev) => {
-      const newSelectedMajors = prev.includes(category)
+      const newSelectedCategories = prev.includes(category)
         ? prev.filter((m) => m !== category)
         : [...prev, category];
 
-      console.log("선택된 전공들:", newSelectedMajors);
-      return newSelectedMajors;
+      console.log("선택된 전공:", newSelectedCategories);
+      return newSelectedCategories;
     });
   };
 
-  const handleSubmit = () => {
-    console.log({
-      title,
-      category,
-      body,
-      selectedMajors,
-    });
-    // 여기에 폼 제출 로직 추가
-  };
+  const handleEditorChange = useCallback(() => {
+    try {
+      if (editorRef.current) {
+        const editorInstance = editorRef.current.getInstance();
+        if (editorInstance) {
+          const markdownContent = editorInstance.getMarkdown();
+          setBody(markdownContent);
+        }
+      }
+    } catch (error) {
+      console.error("Editor change error: ", error);
+    }
+  }, []);
 
-  const textarea = useRef();
+  const handleSubmit = async () => {
+    const postData = {
+      title: title,
+      categories: selectedCategories,
+      content: body,
+    };
+
+    console.log(postData);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/post`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(postData),
+        }
+      );
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          throw new Error("잘못된 요청입니다.");
+        }
+        if (response.status === 401) {
+          throw new Error("유효하지 않은 사용자입니다.");
+        }
+        if (response.status === 409) {
+          throw new Error(
+            "이미 생성되었거나 동시 생성 요청이 발생한 게시물입니다."
+          );
+        }
+        throw new Error(
+          `알 수 없는 오류가 발생했습니다. (상태 코드: ${response.status}`
+        );
+      }
+    } catch (error) {
+      alert("게시물 생성을 실패했습니다. 다시 시도해주세요.");
+    }
+  };
 
   return (
     <FormContainer>
@@ -87,9 +134,9 @@ function PostForm() {
           <CategoryContainer>
             <SectionTitle>카테고리</SectionTitle>
             <CategoryInput>
-              {selectedMajors.length > 0 ? (
+              {selectedCategories.length > 0 ? (
                 <Categories>
-                  {selectedMajors.map((category) => (
+                  {selectedCategories.map((category) => (
                     <CategoryTag key={category}>{category}</CategoryTag>
                   ))}
                 </Categories>
@@ -101,17 +148,18 @@ function PostForm() {
 
           <BodyContainer>
             <SectionTitle>본문</SectionTitle>
-            <BodyTextarea
-              ref={textarea}
-              placeholder="본문을 추가해주세요"
-              value={body}
-              onChange={(e) => {
-                setBody(e.target.value);
-                textarea.current.style.height = "auto";
-                textarea.current.style.height =
-                  textarea.current.scrollHeight + "px";
-              }}
-            />
+            <StyledBodyWrapper>
+              <Editor
+                ref={editorRef}
+                initialEditType="wysiwyg"
+                initialValue="본문을 추가해주세요"
+                height="577px"
+                previewStyle="none"
+                hideModeSwitch={true} // 모드 전환 버튼 숨기기
+                useCommandShortcut={false} // 단축키 비활성화
+                onChange={handleEditorChange}
+              />
+            </StyledBodyWrapper>
           </BodyContainer>
 
           <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
