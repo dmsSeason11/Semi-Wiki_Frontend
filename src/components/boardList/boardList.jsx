@@ -42,11 +42,6 @@ function BoardList({
         });
 
         const data = await res.json();
-        try {
-          data = JSON.parse(data);
-        } catch {
-          console.error("JSON 파싱 실패:", data);
-        }
 
         if (!res.ok) {
           if (res.status === 401) {
