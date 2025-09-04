@@ -1,36 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SignUp from "./signup.jsx";
 import CheckId from "./checkId.jsx";
 import { useNavigate } from "react-router-dom";
 
 function SignUpContainer() {
-  const [StNumber, setStNumber] = useState("");
-  const [Name, setName] = useState("");
-  const [Id, setId] = useState("");
-  const [Password, setPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [form, setForm] = useState({
+    studentNum: "",
+    username: "",
+    accountId: "",
+  });
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [idValidation, setIdValidation] = useState(null);
   const [isMatch, setIsMatch] = useState(null);
   const [checkId, setCheckId] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    if (password === "" || confirmPassword === "") {
+      setIsMatch(null);
+    } else {
+      setIsMatch(password === confirmPassword);
+    }
+  }, [password, confirmPassword]);
 
   const handleCheckClick = () => {
     setCheckId(true);
-  };
-
-  const passwordChangeHandler = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-
-    setIsMatch(ConfirmPassword === "" ? null : value === ConfirmPassword);
-  };
-
-  const confirmChangeHandler = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-
-    setIsMatch(value === "" ? null : Password === value);
   };
 
   const onSubmitHandler = async (e) => {
@@ -39,7 +40,13 @@ function SignUpContainer() {
     setLoading(true);
     setError("");
 
-    if (!StNumber || !Name || !Id || !Password || !ConfirmPassword) {
+    if (
+      !form.studentNum ||
+      !form.username ||
+      !form.accountId ||
+      !password ||
+      !confirmPassword
+    ) {
       return;
     }
     if (idValidation === false) {
@@ -50,12 +57,11 @@ function SignUpContainer() {
     }
 
     let body = {
-      stNumber: StNumber,
-      name: Name,
-      id: Id,
-      password: Password,
+      studentNum: form.studentNum,
+      username: form.username,
+      accountId: form.accountId,
+      password: password,
     };
-
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signup`,
@@ -84,32 +90,28 @@ function SignUpContainer() {
       navigate("/login");
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
       <SignUp
-        StNumber={StNumber}
-        setStNumber={setStNumber}
-        Name={Name}
-        setName={setName}
-        Id={Id}
-        setId={setId}
-        Password={Password}
+        form={form}
+        password={password}
         setPassword={setPassword}
-        ConfirmPassword={ConfirmPassword}
+        confirmPassword={confirmPassword}
         setConfirmPassword={setConfirmPassword}
+        handleChange={handleChange}
         onSubmitHandler={onSubmitHandler}
         handleCheckClick={handleCheckClick}
         idValidation={idValidation}
         isMatch={isMatch}
-        passwordChangeHandler={passwordChangeHandler}
-        confirmChangeHandler={confirmChangeHandler}
         loading={loading}
       />
       <CheckId
-        Id={Id}
+        accountId={form.accountId}
         setIdValidation={setIdValidation}
         checkId={checkId}
         setCheckId={setCheckId}

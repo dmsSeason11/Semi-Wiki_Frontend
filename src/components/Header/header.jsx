@@ -59,5 +59,5 @@ function Header() {
   };
 }
 
-export const search = searchTerm;
+// export const search = searchTerm;
 export default Header;

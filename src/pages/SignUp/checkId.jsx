@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
+const CheckId = ({ accountId, setIdValidation, checkId, setCheckId }) => {
   useEffect(() => {
     if (!checkId) {
       return;
@@ -9,14 +9,14 @@ const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
     const checkIdValidation = async () => {
       setCheckId(false);
 
-      if (!Id) {
+      if (!accountId) {
         setIdValidation(null);
         return;
       }
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/${Id}`
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/${accountId}`
         );
 
         if (!response.ok) {
@@ -38,7 +38,7 @@ const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
     };
 
     checkIdValidation();
-  }, [Id, setIdValidation, checkId, setCheckId]);
+  }, [accountId, setIdValidation, checkId, setCheckId]);
 
   return null;
 };

@@ -16,25 +16,18 @@ import {
   SubText,
   LoginLink,
 } from "./signup.styles";
-import react from "@vitejs/plugin-react-swc";
 
 function SignUp({
-  StNumber,
-  setStNumber,
-  Name,
-  setName,
-  Id,
-  setId,
-  Password,
+  form,
+  password,
   setPassword,
-  ConfirmPassword,
+  confirmPassword,
   setConfirmPassword,
+  handleChange,
   onSubmitHandler,
   handleCheckClick,
   idValidation,
   isMatch,
-  passwordChangeHandler,
-  confirmChangeHandler,
   loading,
 }) {
   return (
@@ -46,23 +39,23 @@ function SignUp({
             <div>
               <Inputtext>학번</Inputtext>
               <Input
-                name="stnumber"
+                name="studentNum"
                 type="text"
                 placeholder="학번을 입력해주세요"
                 style={{ width: "195px" }}
-                value={StNumber}
-                onChange={(e) => setStNumber(e.target.value)}
+                value={form.studentNum}
+                onChange={handleChange}
               />
             </div>
             <div>
               <Inputtext>이름</Inputtext>
               <Input
-                name="name"
+                name="username"
                 type="text"
                 placeholder="이름을 입력해주세요"
                 style={{ width: "195px" }}
-                value={Name}
-                onChange={(e) => setName(e.target.value)}
+                value={form.username}
+                onChange={handleChange}
               />
             </div>
           </InputBox>
@@ -70,7 +63,7 @@ function SignUp({
             <div style={{ position: "relative" }}>
               <Inputtext>아이디</Inputtext>
               <Input
-                name="id"
+                name="accountId"
                 type="text"
                 placeholder="아이디를 입력해주세요"
                 style={{
@@ -79,8 +72,8 @@ function SignUp({
                     idValidation !== null &&
                     (idValidation ? "1px solid #2ECC71" : "1px solid #FF645B"),
                 }}
-                value={Id}
-                onChange={(e) => setId(e.target.value)}
+                value={form.accountId}
+                onChange={handleChange}
               />
               {idValidation !== null &&
                 (idValidation ? (
@@ -102,16 +95,16 @@ function SignUp({
             name="password"
             type="password"
             placeholder="사용할 비밀번호를 입력해주세요"
-            value={Password}
-            onChange={passwordChangeHandler}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Inputtext>비밀번호 확인</Inputtext>
           <Input
-            name="confirmPassword"
+            username="confirmPassword"
             type="password"
             placeholder="비밀번호를 다시 입력해주세요"
-            value={ConfirmPassword}
-            onChange={confirmChangeHandler}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             style={{
               border:
                 isMatch !== null &&
