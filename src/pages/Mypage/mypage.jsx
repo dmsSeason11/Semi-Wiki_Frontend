@@ -4,6 +4,7 @@ import "../../styles/reset.css";
 import LogoutImg from "../../assets/logout.svg";
 import BookImg from "../../assets/book.svg";
 import PenImg from "../../assets/pen.svg";
+import DefaultProfileImg from "../../assets/user.png"; // 기본 프로필 이미지
 import {
   Container,
   MypageCard,
@@ -20,12 +21,17 @@ import {
   MenuLabel,
 } from "./mypage.styles";
 
-// 쿠키에서 토큰 읽는 유틸
+// 쿠키에서 토큰 읽기
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
   return null;
+}
+
+// 쿠키 삭제
+function deleteCookie(name) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
 }
 
 export default function MyPage() {
@@ -42,11 +48,8 @@ export default function MyPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // localStorage 먼저, 없으면 쿠키
         const token =
           localStorage.getItem("accessToken") || getCookie("accessToken");
-        console.log("MyPage에서 사용되는 토큰:", token);
-
         if (!token) {
           navigate("/login");
           return;
@@ -58,18 +61,17 @@ export default function MyPage() {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // 토큰 헤더
+              Authorization: `Bearer ${token}`,
             },
-            mode: "cors",
-            credentials: "include", // 쿠키 포함
           }
         );
 
         if (!response.ok) {
           if (response.status === 401) {
-            // 토큰 만료 시 로그아웃
+            // 토큰 만료 시 로그아웃 처리
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
+            deleteCookie("accessTokenNumber");
             navigate("/login");
             return;
           }
@@ -78,15 +80,15 @@ export default function MyPage() {
         }
 
         const data = await response.json();
-        console.log("MyPage API 응답 데이터:", data);
 
         setUserData({
           accountId: data.accountId,
           noticeBoardCount: data.noticeBoardCount,
-          profileImg: data.profileImg || null,
+          profileImg: data.profileImg || DefaultProfileImg,
         });
       } catch (err) {
         console.error("MyPage fetchData 에러:", err);
+        alert("유저 정보를 불러올 수 없습니다.");
       }
     };
 
@@ -108,11 +110,7 @@ export default function MyPage() {
       <MypageCard>
         <LeftBox>
           <ProfileCard>
-            {userData.profileImg ? (
-              <ProfileImage src={userData.profileImg} alt="프로필 이미지" />
-            ) : (
-              <ProfileImage />
-            )}
+            <ProfileImage src={userData.profileImg} alt="프로필 이미지" />
 
             <ProfileText>
               <IdText>아이디: {userData.accountId}</IdText>
@@ -128,11 +126,11 @@ export default function MyPage() {
         </LeftBox>
 
         <RightBox>
-          <MenuItem as={Link} to={`/mypage/${accountId}/posts`}>
+          <MenuItem as={Link} to={`/mypage/${accountId}/list`}>
             <MenuIcon src={BookImg} alt="책 아이콘" />
             <MenuLabel>내가 작성한 게시글</MenuLabel>
           </MenuItem>
-          <MenuItem as={Link} to="/posts/new">
+          <MenuItem as={Link} to="/postform">
             <MenuIcon src={PenImg} alt="연필 아이콘" />
             <MenuLabel>새 게시글 작성</MenuLabel>
           </MenuItem>

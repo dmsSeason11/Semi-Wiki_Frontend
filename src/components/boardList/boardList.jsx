@@ -6,73 +6,59 @@ import {
   BoardListCategory,
   BoardListModifier,
   BoardListHeader,
-  Line,
 } from "./boardList.styles";
 import BoardItem from "../../components/boardItem/boardItem.jsx";
+import Pagination from "../Pagination/Pagination.jsx";
+import { posts } from "../../data/posts.js";
 
-function BoardList({
-  sort,
-  page,
-  pageSize = 10,
-  token,
-  selectedCategories = [],
-}) {
+function BoardList({ sort, page, pageSize = 10, setTotalPages }) {
   const [items, setItems] = useState([]); //현재 게시글 배열
 
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    if (!token) return;
-
     const fetchList = async () => {
       try {
-        const query = new URLSearchParams()
-
-        selectedCategories.forEach((v) => query.append("categories", v));
-
-        query.append("orderBy", sort === "최신순" ? "recent" : "like");
-        query.append("offset", page - 1)
-        query.append("limit", pageSize)
-
-        const res = await fetch(`${API_BASE}/notice-board/list?${query.toString()}`, {
-          method: "GET",
+        const res = await fetch(`${API_BASE}/notice-board/list`, {
+          method: "POST",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+          body: JSON.stringify({
+            categories: selectedCategories,
+            offset: page * pageSize,
+            limit: pageSize,
+          }),
         });
-
-        const data = await res.json();
+        const text = await res.text();
+        let data;
         try {
-          data = JSON.parse(data);
+          data = JSON.parse(text);
         } catch {
-          console.error("JSON 파싱 실패:", data);
+          console.error("JSON 파싱 실패:", text);
+          data = [];
         }
 
         if (!res.ok) {
-          if (res.status === 401) {
-            alert("로그인이 필요합니다. 다시 로그인해주세요.");
-            localStorage.removeItem("accessToken");
-            window.location.href = "/login";
-            return;
-          }
           console.error("서버 오류:", text);
           setError(text);
           setItems([]);
+          setTotalPages(1);
           return;
         }
 
         setItems(data || []);
+        setTotalPages(Math.ceil((data?.length || 0) / pageSize));
         setError(null);
       } catch (err) {
         console.error("데이터 fetch 중 오류:", err);
         setError(err.message);
         setItems([]);
+        setTotalPages(1);
       }
     };
   }, []);
-
-    if (token) fetchList();
-  }, [page, sort, pageSize, token, API_BASE, selectedCategories]);
 
   return (
     <BoardListContainer>
@@ -81,7 +67,6 @@ function BoardList({
         <BoardListCategory>카테고리</BoardListCategory>
         <BoardListModifier>수정자</BoardListModifier>
       </BoardListHeader>
-      <Line />
 
       {items.map((post) => (
         <BoardItem
