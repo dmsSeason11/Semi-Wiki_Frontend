@@ -54,7 +54,7 @@ function MyBoard() {
         const res = await fetch(
           `${
             import.meta.env.VITE_REACT_APP_API_BASE_URL
-          }/${accountId}/list?${query.toString()}`,
+          }/user/${accountId}/list?${query.toString()}`,
           {
             method: "GET",
             headers: {
@@ -121,7 +121,13 @@ function MyBoard() {
             ))}
           </Boardfiler>
 
-          <BoardList posts={posts} />
+          <BoardList
+            sort={activeFilter}
+            page={currentPage}
+            pageSize={pageSize}
+            token={token}
+            selectedCategories={selectedCategories}
+          />
 
           <Pagination
             currentPage={currentPage}
