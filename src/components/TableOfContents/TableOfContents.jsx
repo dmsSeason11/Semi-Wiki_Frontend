@@ -1,21 +1,25 @@
 import { TOCContents, TOCsubContents } from "./TableOfContents.styles";
 
+function TableOfContentsItem({ section }) {
+  return (
+    <li>
+      {section.headerNumber}. {section.title}
+      {section.children && section.children.length > 0 && (
+        <TOCsubContents>
+          {section.children.map((sub) => (
+            <TableOfContentsItem key={sub.id} section={sub} />
+          ))}
+        </TOCsubContents>
+      )}
+    </li>
+  );
+}
+
 function TableOfContents({ sections }) {
   return (
     <TOCContents>
-      {sections.map((item) => (
-        <li key={item.id}>
-          {item.headerNumber}. {item.title}
-          {item.children && item.children.length > 0 && (
-            <TOCsubContents> 
-              {item.children.map((sub) => (
-                <li key={sub.id}>
-                  {sub.headerNumber} {sub.title}
-                </li>
-              ))}
-            </TOCsubContents>
-          )}
-        </li>
+      {sections.map((section) => (
+        <TableOfContentsItem key={section.id} section={section} />
       ))}
     </TOCContents>
   );
