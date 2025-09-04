@@ -17,7 +17,7 @@ function Pagination({ currentPage, totalPages, onPageChange, groupSize = 10 }) {
   const canGoPrev = groupStart > 1;
   const canGoNext = groupEnd < safeTotal;
 
-  console.log("📌 Pagination 상태:", {
+  console.log("Pagination 상태:", {
     currentPage,
     safeTotal,
     groupStart,
@@ -33,7 +33,6 @@ function Pagination({ currentPage, totalPages, onPageChange, groupSize = 10 }) {
   const goNextGroup = () => {
     if (canGoNext) onPageChange(groupEnd + 1);
   };
-  
 
   return (
     <PaginationContainer>

@@ -6,10 +6,10 @@ import Login from "./pages/Login/login";
 import SignUpContainer from "./pages/SignUp/signupContainer";
 import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/postDetail";
-import Writeboard from "./pages/Write Board/Writeboard.jsx";
 import PostForm from "./pages/PostForm/PostForm.jsx";
 import PostEditForm from "./pages/PostEditForm/PostEditForm.jsx";
 import { GlobalEditorStyle } from "./pages/PostForm/PostForm.styles.js";
+import MyBoard from "./pages/Write Board/writeboard.jsx";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -47,10 +47,10 @@ function App() {
           }
         />
         <Route
-          path="/writeboard"
+          path="/mypage/:accountId/list"
           element={
             <Layout>
-              <Writeboard />
+              <MyBoard />
             </Layout>
           }
         />

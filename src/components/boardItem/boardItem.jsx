@@ -25,7 +25,6 @@ function BoardItem({ id, title, categories = [], modifier}) {
                 {categories.slice(0, 2).map((category, index) => (
                   <CategoryTag key={index}>{category}</CategoryTag>
                 ))}
-                {/* 마지막은 항상 ... 표시, 테두리 없음 */}
                 <span
                   style={{
                     padding: "7px 5px",

@@ -13,7 +13,7 @@ import BoardItem from "../../components/boardItem/boardItem.jsx";
 function BoardList({
   sort,
   page,
-  pageSize = 10,
+  pageSize = 2,
   token,
   selectedCategories = [],
 }) {
@@ -42,11 +42,6 @@ function BoardList({
         });
 
         const data = await res.json();
-        try {
-          data = JSON.parse(data);
-        } catch {
-          console.error("JSON 파싱 실패:", data);
-        }
 
         if (!res.ok) {
           if (res.status === 401) {
@@ -56,20 +51,16 @@ function BoardList({
             return;
           }
           console.error("서버 오류:", text);
-          setError(text);
           setItems([]);
           return;
         }
 
         setItems(data || []);
-        setError(null);
       } catch (err) {
         console.error("데이터 fetch 중 오류:", err);
-        setError(err.message);
         setItems([]);
       }
     };
-  }, []);
 
     if (token) fetchList();
   }, [page, sort, pageSize, token, API_BASE, selectedCategories]);

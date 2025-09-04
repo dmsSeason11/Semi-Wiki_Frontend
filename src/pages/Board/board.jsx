@@ -15,7 +15,7 @@ function Board() {
   const [activeFilter, setActiveFilter] = useState("최신순");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedCategories, setSelectedCategories] = useState([]); // 추가
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
   const pageSize = 2;
   const token = localStorage.getItem("accessToken");
@@ -68,11 +68,10 @@ function Board() {
         }
 
         const total = await res.json() || 0;
-        console.log("📌 총 게시글 수:", total, " / 총 페이지:", Math.ceil(total / pageSize));
+        console.log("총 게시글 수:", total, " / 총 페이지:", Math.ceil(total / pageSize));
         setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
       } catch (error) {
         console.error(error);
-        // setTotalPages(1);
       }
     };
 
