@@ -64,6 +64,7 @@ function BoardList({
         setTotalPages(1);
       }
     };
+  }, []);
 
     if (token) fetchList();
   }, [page, sort, pageSize, token, API_BASE, selectedCategories]);

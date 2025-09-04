@@ -1,4 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
+import { Editor } from "@toast-ui/react-editor";
+import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
 import {
   FormContainer,
   FormLayout,
@@ -9,7 +13,7 @@ import {
   SectionTitle,
   CategoryInput,
   BodyContainer,
-  BodyTextarea,
+  StyledBodyWrapper,
   SubmitButton,
   Sidebar,
   SidebarTitle,
@@ -19,14 +23,13 @@ import {
   StyledCheckbox,
   Categories,
   CategoryTag,
-} from "./PostEditForm.styles";
+} from "../PostForm/PostForm.styles";
 
 function PostEditForm() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
-  const [selectedMajors, setSelectedMajors] = useState([]); // 선택한 전공들 상태
-
+  const [selectedCategories, setSelectedCategories] = useState([]); // 선택한 전공들 상태
   const [checkItem, setCheckItem] = useState({
     전공: false,
     기숙사: false,
@@ -42,34 +45,103 @@ function PostEditForm() {
     기타: false,
   }); // 카테고리 체크 상태
 
+  let postId; //게시물 페이지에서 받아와야함, 삭제 에정
+  const editorRef = useRef();
+  const loacation = useLocation();
+  const postData = location.state?.post;
+
+  useEffect(() => {
+    setTitle(postData?.title);
+    setBody(postData?.body);
+
+    const newCheckItem = { ...checkItem };
+    postData?.selectedCategories.forEach((category) => {
+      if (newCheckItem.hasOwnProperty(category)) {
+        newCheckItem[category] = true;
+      }
+    });
+    setCheckItem(newCheckItem);
+  }, [postId]); // postId가 변경될 때마다 실행
+
   const handleCheckboxChange = (category) => {
     setCheckItem((prev) => ({
       ...prev,
       [category]: !prev[category],
     }));
 
-    // 선택된 전공들을 selectedMajors에 업데이트
+    // 선택된 전공들을 selectedCategories에 업데이트
     setSelectedMajors((prev) => {
-      const newSelectedMajors = prev.includes(category)
+      const newSelectedCategories = prev.includes(category)
         ? prev.filter((m) => m !== category)
         : [...prev, category];
 
-      console.log("선택된 전공들:", newSelectedMajors);
-      return newSelectedMajors;
+      console.log("선택된 전공:", newSelectedCategories);
+      return newSelectedCategories;
     });
   };
 
-  const handleSubmit = () => {
-    console.log({
-      title,
-      category,
-      body,
-      selectedMajors,
-    });
-    // 여기에 폼 제출 로직 추가
-  };
+  const handleEditorChange = useCallback(() => {
+    try {
+      if (editorRef.current) {
+        const editorInstance = editorRef.current.getInstance();
+        if (editorInstance) {
+          const markdownContent = editorInstance.getMarkdown();
+          setBody(markdownContent);
+        }
+      }
+    } catch (error) {
+      console.error("Editor change error: ", error);
+    }
+  }, []);
 
-  const textarea = useRef();
+  const handleSubmit = async () => {
+    if (!title | !selectedCategories | !body) {
+      alert("모든 항목을 입력해주세요.");
+      return;
+    }
+
+    const updatedPostData = {
+      id: postId,
+      title: title,
+      categories: selectedCategories,
+      content: body,
+    };
+
+    console.log(updatedPostData);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/put`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedPostData),
+        }
+      );
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          throw new Error("잘못된 요청입니다.");
+        }
+        if (response.status === 401) {
+          throw new Error("유효하지 않은 사용자입니다.");
+        }
+        if (response.status === 401) {
+          throw new Error("수정하려는 게시물이 유효하지 않습니다.");
+        }
+        if (response.status === 409) {
+          throw new Error(
+            "이미 삭제되었거나 동시 수정 요청이 발생한 게시물입니다."
+          );
+        }
+        throw new Error(
+          `알 수 없는 오류가 발생했습니다. (상태 코드: ${response.status}`
+        );
+      }
+    } catch (error) {
+      alert("게시물 수정을 실패했습니다. 다시 시도해주세요.");
+    }
+  };
 
   return (
     <FormContainer>
@@ -87,9 +159,9 @@ function PostEditForm() {
           <CategoryContainer>
             <SectionTitle>카테고리</SectionTitle>
             <CategoryInput>
-              {selectedMajors.length > 0 ? (
+              {selectedCategories.length > 0 ? (
                 <Categories>
-                  {selectedMajors.map((category) => (
+                  {selectedCategories.map((category) => (
                     <CategoryTag key={category}>{category}</CategoryTag>
                   ))}
                 </Categories>
@@ -101,24 +173,25 @@ function PostEditForm() {
 
           <BodyContainer>
             <SectionTitle>본문</SectionTitle>
-            <BodyTextarea
-              ref={textarea}
-              placeholder="본문을 추가해주세요"
-              value={body}
-              onChange={(e) => {
-                setBody(e.target.value);
-                textarea.current.style.height = "auto";
-                textarea.current.style.height =
-                  textarea.current.scrollHeight + "px";
-              }}
-            />
+            <StyledBodyWrapper>
+              <Editor
+                ref={editorRef}
+                initialEditType="wysiwyg"
+                initialValue="본문을 추가해주세요"
+                height="577px"
+                previewStyle="none"
+                hideModeSwitch={true} // 모드 전환 버튼 숨기기
+                useCommandShortcut={false} // 단축키 비활성화
+                onChange={handleEditorChange}
+              />
+            </StyledBodyWrapper>
           </BodyContainer>
 
           <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
         </FormMain>
 
         <Sidebar>
-          <SidebarTitle>카테고리 수정</SidebarTitle>
+          <SidebarTitle>추가할 전공</SidebarTitle>
           <CategoryItem>
             {Object.keys(checkItem).map((category) => (
               <CheckboxLabel key={category} check={checkItem[category]}>
