@@ -12,6 +12,7 @@ function SignUpContainer() {
   const [idValidation, setIdValidation] = useState(null);
   const [isMatch, setIsMatch] = useState(null);
   const [checkId, setCheckId] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleCheckClick = () => {
@@ -34,9 +35,12 @@ function SignUpContainer() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
+    setError("");
 
     if (!StNumber || !Name || !Id || !Password || !ConfirmPassword) {
-      return alert("모든 항목을 입력해주세요.");
+      return;
     }
     if (idValidation === false) {
       return;
@@ -65,9 +69,13 @@ function SignUpContainer() {
       if (!response.ok) {
         if (response.status === 400) throw new Error("잘못된 요청입니다.");
         if (response.status === 409)
-          throw new Error("이미 존재하는 아이디 또는 비밀번호입니다.");
+          throw new Error("이미 존재하는 회원 정보입니다.");
+        if (response.status === 500)
+          throw new Error(
+            "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+          );
         throw new Error(
-          `알 수 없는 오류가 발생했습니다. (상태 코드: ${response.status}`
+          `알 수 없는 오류가 발생했습니다. (상태 코드 ${response.status}`
         );
       }
 
@@ -75,7 +83,7 @@ function SignUpContainer() {
       console.log("회원가입 성공:", responseData);
       navigate("/login");
     } catch (error) {
-      alert("회원가입이 실패했습니다. 다시 시도해주세요.");
+      alert(error.message);
     }
   };
 
@@ -98,6 +106,7 @@ function SignUpContainer() {
         isMatch={isMatch}
         passwordChangeHandler={passwordChangeHandler}
         confirmChangeHandler={confirmChangeHandler}
+        loading={loading}
       />
       <CheckId
         Id={Id}

@@ -16,7 +16,7 @@ const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/check/${Id}`
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/${Id}`
         );
 
         if (!response.ok) {
@@ -32,7 +32,7 @@ const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
         const result = await response.json();
         setIdValidation(Number(result) === 0);
       } catch (error) {
-        console.error("네트워크 또는 파싱 오류:", error);
+        console.error("알 수 없는 오류:", error);
         setIdValidation(false);
       }
     };

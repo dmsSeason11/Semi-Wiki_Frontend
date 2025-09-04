@@ -26,20 +26,23 @@ function BoardList({
 
     const fetchList = async () => {
       try {
-        const query = new URLSearchParams()
+        const query = new URLSearchParams();
 
         selectedCategories.forEach((v) => query.append("categories", v));
 
         query.append("orderBy", sort === "최신순" ? "recent" : "like");
-        query.append("offset", page - 1)
-        query.append("limit", pageSize)
+        query.append("offset", page - 1);
+        query.append("limit", pageSize);
 
-        const res = await fetch(`${API_BASE}/notice-board/list?${query.toString()}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `${API_BASE}/notice-board/list?${query.toString()}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await res.json();
 

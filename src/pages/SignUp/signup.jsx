@@ -1,5 +1,6 @@
 import "../../styles/reset.css";
 import { Link } from "react-router-dom";
+import React, { useStste } from "react";
 import check from "../../assets/signup_check.png";
 import error from "../../assets/signup_error.png";
 import {
@@ -15,6 +16,7 @@ import {
   SubText,
   LoginLink,
 } from "./signup.styles";
+import react from "@vitejs/plugin-react-swc";
 
 function SignUp({
   StNumber,
@@ -33,6 +35,7 @@ function SignUp({
   isMatch,
   passwordChangeHandler,
   confirmChangeHandler,
+  loading,
 }) {
   return (
     <Container>
@@ -126,7 +129,9 @@ function SignUp({
                 : "비밀번호가 일치하지 않습니다"}
             </PasswordSubText>
           )}
-          <Button type="submit">등록하기</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "로딩 중..." : "등록하기"}
+          </Button>
         </form>
         <SubText>
           이미 계정이 있으신가요? <LoginLink to={"/login"}>로그인</LoginLink>
