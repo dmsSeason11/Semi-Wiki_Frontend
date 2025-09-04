@@ -8,6 +8,8 @@ import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/postDetail";
 import Writeboard from "./pages/Write Board/Writeboard.jsx";
 import PostForm from "./pages/PostForm/PostForm.jsx";
+import PostEditForm from "./pages/PostEditForm/PostEditForm.jsx";
+import { GlobalEditorStyle } from "./pages/PostForm/PostForm.styles.js";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -56,7 +58,18 @@ function App() {
           path="/postform"
           element={
             <Layout>
+              <GlobalEditorStyle />
               <PostForm />
+            </Layout>
+          }
+        />
+        <Route
+          path="/posteditform"
+          /*:postId"*/
+          element={
+            <Layout>
+              <GlobalEditorStyle />
+              <PostEditForm />
             </Layout>
           }
         />

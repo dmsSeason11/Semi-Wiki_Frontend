@@ -1,24 +1,44 @@
 import React, { useEffect } from "react";
 
-const CheckId = ({ Id, setIdValidation }) => {
+const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
   useEffect(() => {
-    if (!Id) {
-      setIdValidation(null);
+    if (!checkId) {
       return;
     }
 
-    fetch(
-      `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/checkaccountid/${Id}`
-    )
-      .then((resp) => resp.json())
-      .then((result) => {
+    const checkIdValidation = async () => {
+      setCheckId(false);
+
+      if (!Id) {
+        setIdValidation(null);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/check/${Id}`
+        );
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            setIdValidation(true);
+          } else {
+            console.error("서버 오류 발생:", response.status);
+            setIdValidation(false);
+          }
+          return;
+        }
+
+        const result = await response.json();
         setIdValidation(Number(result) === 0);
-      })
-      .catch((e) => {
-        console.log(e);
+      } catch (error) {
+        console.error("네트워크 또는 파싱 오류:", error);
         setIdValidation(false);
-      });
-  }, [Id]);
+      }
+    };
+
+    checkIdValidation();
+  }, [Id, setIdValidation, checkId, setCheckId]);
 
   return null;
 };

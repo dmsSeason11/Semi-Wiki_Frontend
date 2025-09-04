@@ -1,7 +1,8 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { Editor } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+import "@toast-ui/editor/dist/toastui-editor.css";
 import {
   FormContainer,
   FormLayout,
@@ -22,10 +23,9 @@ import {
   StyledCheckbox,
   Categories,
   CategoryTag,
-} from "./PostForm.styles";
-import colors from "../../styles/color";
+} from "../PostForm/PostForm.styles";
 
-function PostForm() {
+function PostEditForm() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [body, setBody] = useState("");
@@ -45,7 +45,23 @@ function PostForm() {
     기타: false,
   }); // 카테고리 체크 상태
 
+  let postId; //게시물 페이지에서 받아와야함, 삭제 에정
   const editorRef = useRef();
+  const loacation = useLocation();
+  const postData = location.state?.post;
+
+  useEffect(() => {
+    setTitle(postData?.title);
+    setBody(postData?.body);
+
+    const newCheckItem = { ...checkItem };
+    postData?.selectedCategories.forEach((category) => {
+      if (newCheckItem.hasOwnProperty(category)) {
+        newCheckItem[category] = true;
+      }
+    });
+    setCheckItem(newCheckItem);
+  }, [postId]); // postId가 변경될 때마다 실행
 
   const handleCheckboxChange = (category) => {
     setCheckItem((prev) => ({
@@ -79,21 +95,27 @@ function PostForm() {
   }, []);
 
   const handleSubmit = async () => {
-    const postData = {
+    if (!title | !selectedCategories | !body) {
+      alert("모든 항목을 입력해주세요.");
+      return;
+    }
+
+    const updatedPostData = {
+      id: postId,
       title: title,
       categories: selectedCategories,
       content: body,
     };
 
-    console.log(postData);
+    console.log(updatedPostData);
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/post`,
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/put`,
         {
-          method: "POST",
+          method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postData),
+          body: JSON.stringify(updatedPostData),
         }
       );
 
@@ -104,9 +126,12 @@ function PostForm() {
         if (response.status === 401) {
           throw new Error("유효하지 않은 사용자입니다.");
         }
+        if (response.status === 401) {
+          throw new Error("수정하려는 게시물이 유효하지 않습니다.");
+        }
         if (response.status === 409) {
           throw new Error(
-            "이미 생성되었거나 동시 생성 요청이 발생한 게시물입니다."
+            "이미 삭제되었거나 동시 수정 요청이 발생한 게시물입니다."
           );
         }
         throw new Error(
@@ -114,7 +139,7 @@ function PostForm() {
         );
       }
     } catch (error) {
-      alert("게시물 생성을 실패했습니다. 다시 시도해주세요.");
+      alert("게시물 수정을 실패했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -186,4 +211,4 @@ function PostForm() {
   );
 }
 
-export default PostForm;
+export default PostEditForm;

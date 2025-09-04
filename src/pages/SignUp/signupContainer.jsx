@@ -11,7 +11,12 @@ function SignUpContainer() {
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [idValidation, setIdValidation] = useState(null);
   const [isMatch, setIsMatch] = useState(null);
+  const [checkId, setCheckId] = useState(false);
   const navigate = useNavigate();
+
+  const handleCheckClick = () => {
+    setCheckId(true);
+  };
 
   const passwordChangeHandler = (e) => {
     const value = e.target.value;
@@ -27,17 +32,17 @@ function SignUpContainer() {
     setIsMatch(value === "" ? null : Password === value);
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     if (!StNumber || !Name || !Id || !Password || !ConfirmPassword) {
       return alert("모든 항목을 입력해주세요.");
     }
     if (idValidation === false) {
-      return alert("이미 사용 중인 아이디입니다.");
+      return;
     }
     if (isMatch === false) {
-      return alert("비밀번호가 일치하지 않습니다.");
+      return;
     }
 
     let body = {
@@ -47,20 +52,31 @@ function SignUpContainer() {
       password: Password,
     };
 
-    fetch(`${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    })
-      .then((resp) => resp.text())
-      .then((result) => {
-        if (result === "success") {
-          alert("회원가입이 완료되었습니다.");
-          navigate("/login");
-        } else {
-          alert("회원가입이 실패했습니다. 다시 시도해주세요.");
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
         }
-      });
+      );
+
+      if (!response.ok) {
+        if (response.status === 400) throw new Error("잘못된 요청입니다.");
+        if (response.status === 409)
+          throw new Error("이미 존재하는 아이디 또는 비밀번호입니다.");
+        throw new Error(
+          `알 수 없는 오류가 발생했습니다. (상태 코드: ${response.status}`
+        );
+      }
+
+      const responseData = await response.json();
+      console.log("회원가입 성공:", responseData);
+      navigate("/login");
+    } catch (error) {
+      alert("회원가입이 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -77,12 +93,18 @@ function SignUpContainer() {
         ConfirmPassword={ConfirmPassword}
         setConfirmPassword={setConfirmPassword}
         onSubmitHandler={onSubmitHandler}
+        handleCheckClick={handleCheckClick}
         idValidation={idValidation}
         isMatch={isMatch}
         passwordChangeHandler={passwordChangeHandler}
         confirmChangeHandler={confirmChangeHandler}
       />
-      <CheckId Id={Id} setIdValidation={setIdValidation} />
+      <CheckId
+        Id={Id}
+        setIdValidation={setIdValidation}
+        checkId={checkId}
+        setCheckId={setCheckId}
+      />
     </>
   );
 }

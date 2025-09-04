@@ -13,12 +13,11 @@ import BoardItem from "../../components/boardItem/boardItem.jsx";
 function BoardList({
   sort,
   page,
-  pageSize = 2,
+  pageSize = 10,
   token,
   selectedCategories = [],
 }) {
-  const [items, setItems] = useState([]); //현재 게시글 배열\
-  const [error, setError] = useState(null);
+  const [items, setItems] = useState([]); //현재 게시글 배열
 
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
@@ -70,6 +69,7 @@ function BoardList({
         setItems([]);
       }
     };
+  }, []);
 
     if (token) fetchList();
   }, [page, sort, pageSize, token, API_BASE, selectedCategories]);
