@@ -9,6 +9,7 @@ import {
 } from "./Article.styles";
 
 function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
+  console.log(subSections);
   return (
     <Wrapper>
       <ArtcileTopWrapper>
@@ -25,8 +26,8 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
         <div>
           {subSections.map((sub) => (
             <Article
-              key={sub.number}
-              Numberprop={sub.number}
+              key={sub.id}
+              Numberprop={sub.headerNumber}
               Titleprop={sub.title}
               childrenprop={sub.contents}
               subSections={sub.children}

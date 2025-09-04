@@ -21,6 +21,7 @@ function Header() {
   const fetchBoardList = async () => {
     console.log("검색어:", searchTerm);
     console.log("선택 카테고리:", selectedCategories);
+  }
     return (
       <Container>
         <Link1 as={Link} to={"/"}>
@@ -57,7 +58,6 @@ function Header() {
       </Container>
     );
   };
-}
 
-export const search = searchTerm;
+
 export default Header;
