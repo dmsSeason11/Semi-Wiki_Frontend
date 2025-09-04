@@ -23,6 +23,7 @@ export const PageButton = styled.button`
   &:disabled {
     color: ${colors.gray[500]};
     cursor: not-allowed;
+    opacity: 0.4;
   }
 `;
 
@@ -33,4 +34,5 @@ export const ArrowButton = styled.button`
   background: none;
   font-size: 24px;
   color: ${colors.gray[50]};
+  cursor: pointer;
 `;

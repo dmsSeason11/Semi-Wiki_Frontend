@@ -28,37 +28,102 @@ function PostDetail() {
   const [post, setPost] = useState(null);
 
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+  const token = localStorage.getItem("accessToken");
 
-  const handleLoveClick = () => {
-    if (!isClicked) {
-      setLoveCount(loveCount + 1);
-      setIsClicked(true);
-    } else {
-      setLoveCount(loveCount - 1);
-      setIsClicked(false);
+  const handleLoveClick = async () => {
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      window.location.href = "/login";
+      return;
+    }
+    
+    try {
+      if (!isClicked) {
+        const res = await fetch(`${API_BASE}/like/${postId}`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.ok) {
+          setIsClicked(true);
+          setLoveCount((prev) => prev + 1);
+        }
+      } else {
+          const res = await fetch(`${API_BASE}/like/${postId}`, {
+          method: "DELETE",
+          headers: { 
+            Authorization: `Bearer ${token}` 
+          },
+        });
+        if (res.ok) {
+          setIsClicked(false);
+          setLoveCount((prev) => prev - 1);
+        }
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
   useEffect(() => {
+    if (!token) return; 
+
     const fetchPost = async () => {
       try {
-        const res = await fetch(`${API_BASE}/notice-board/${postId}`);
+        const res = await fetch(`${API_BASE}/notice-board/${postId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.status === 401) {
+          alert("로그인이 필요합니다.");
+          localStorage.removeItem("accessToken");
+          window.location.href = "/login";
+          return;
+        }
         const data = await res.json();
         setPost(data);
+
+        const countRes = await fetch(`${API_BASE}/like/${postId}/count`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (countRes.ok) {
+          const count = await countRes.json();
+          setLoveCount(count);
+        }
+
+        const likedRes = await fetch(`${API_BASE}/like/${postId}`, {
+          headers: { 
+            Authorization: `Bearer ${token}` 
+          },
+        });
+        
+        if (likedRes.ok) {
+          const liked = await likedRes.json();
+          setIsClicked(liked);
+        }
+
       } catch (err) {
         console.error(err);
       }
     };
     fetchPost();
-  }, [postId, API_BASE]);
+  }, [postId, API_BASE, token]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  if (!post) return <div>로딩 중...</div>; // 수정: null 안전 처리
+  if (!post) return <div>로딩 중...</div>;
 
-  const postSections = post.sections || []; // 수정: postSections 정의
+  const postSections = post.noticeBoardHeaders || [];
 
   return (
     <Content>
@@ -73,7 +138,7 @@ function PostDetail() {
         <CategoryTitle>카테고리</CategoryTitle>
         <Categorycontainer>
           <Categories>
-            {post.category.map((category) => (
+            {post.categories.map((category) => (
               <CategoryTag key={category}>{category}</CategoryTag>
             ))}
           </Categories>
@@ -85,19 +150,22 @@ function PostDetail() {
         </TableOfContentscontainer>
 
         <Contentcontainer>
-          {postSections.map((section) => (
+          {postSections.map((postSection) => (
             <Article
-              key={section.id}
-              Numberprop={section.headerNumber}
-              Titleprop={section.title}
-              childrenprop={section.contents}
-              subSections={section.children}
+              key={postSection.id}
+              Numberprop={postSection.headerNumber}
+              Titleprop={postSection.title}
+              childrenprop={postSection.contents}
+              subSections={postSection.children}
             />
           ))}
         </Contentcontainer>
       </BoardContainer>
 
-      <CategoryList>카테고리</CategoryList>
+      <CategoryList
+        selectedCategories={post.categories} // 게시글 카테고리만 체크됨
+        onSelectedCategories={() => {}}
+      >카테고리</CategoryList>
     </Content>
   );
 }

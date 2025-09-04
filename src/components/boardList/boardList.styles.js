@@ -4,6 +4,8 @@ import colors from "../../styles/color";
 // 게시판 리스트 컨테이너
 export const BoardListContainer = styled.div`
   display: flex;
+  position: relative;
+  bottom: 100px;
   flex-direction: column;
 
   width: 1044px;
@@ -24,6 +26,16 @@ export const BoardListHeader = styled.div`
   position: relative;
   bottom: 85px;
   right: 50px;
+`;
+
+// 게시판 줄
+export const Line = styled.div`
+  width: 964px;
+  border-style: solid;
+  border-color: ${colors.gray[700]};
+  border-radius: 0px;
+  
+  border-width: 2px 0px 1px 0px;
 `;
 
 // 게시판 리스트 제목

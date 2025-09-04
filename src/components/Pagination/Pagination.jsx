@@ -10,19 +10,30 @@ function Pagination({ currentPage, totalPages, onPageChange, groupSize = 10 }) {
   const safeTotal = Math.max(1, Number(totalPages) || 1);
 
   const groupStart = Math.floor((currentPage - 1) / groupSize) * groupSize + 1;
+  const groupEnd = Math.min(groupStart + groupSize - 1, safeTotal);
 
   const pages = Array.from({ length: groupSize }, (_, i) => groupStart + i);
 
   const canGoPrev = groupStart > 1;
-  const canGoNext = groupStart + groupSize <= safeTotal;
+  const canGoNext = groupEnd < safeTotal;
+
+  console.log("📌 Pagination 상태:", {
+    currentPage,
+    safeTotal,
+    groupStart,
+    groupEnd,
+    canGoPrev,
+    canGoNext,
+  });
 
   const goPrevGroup = () => {
     if (canGoPrev) onPageChange(groupStart - groupSize);
   };
 
   const goNextGroup = () => {
-    if (canGoNext) onPageChange(groupStart + groupSize);
+    if (canGoNext) onPageChange(groupEnd + 1);
   };
+  
 
   return (
     <PaginationContainer>

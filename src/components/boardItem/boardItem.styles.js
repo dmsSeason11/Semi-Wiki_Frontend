@@ -12,13 +12,12 @@ export const BoardItemContainer = styled.div`
   height: 53px;
 
   background: ${colors.gray[950]};
-  /* border-width: 0px 0px 1px 0px; */
   border-style: solid;
   border-color: ${colors.gray[700]};
   border-radius: 0px;
 
-  border-width: ${({ $isFirst }) => ($isFirst ? "2px 0px 1px 0px" : "0px 0px 1px 0px")};
-`;  
+  border-width: 0px 0px 1px 0px;
+`;
 
 //링크 스타일
 export const LinkStyle = styled(Link)`
@@ -28,11 +27,18 @@ export const LinkStyle = styled(Link)`
   font-size: 24px;
   color: ${colors.orange[50]};
   padding-left: 12px;
+
+  flex: 2.7; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 // 게시판 제목
 export const Title = styled.div`
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 // 게시판 카테고리
@@ -41,6 +47,9 @@ export const Categories = styled.div`
   display: flex;
   gap: 2px;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 // 게시판 카테고리 태그
@@ -55,7 +64,11 @@ export const CategoryTag = styled.span`
 // 게시판 수정자
 export const Modifier = styled.div`
   flex: 1.7;
+  min-width: 0;
   color: ${colors.orange[900]};
   font-size: 24px;
   cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
