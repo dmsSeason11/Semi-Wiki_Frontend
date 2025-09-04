@@ -18,7 +18,6 @@ function CategoryList({ selectedCategories = [], onSelectedCategories }) {
   ];
 
   const handleCategoryClick = (category) => {
-    console.log('카테고리 클릭:', category); // 디버깅용
     if (onSelectedCategories) {
       onSelectedCategories(category);
     }
