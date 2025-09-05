@@ -1,6 +1,6 @@
 import "../../styles/reset.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { BoardContainer, BoardTitle, Content } from "../Board/board.styles.js";
 import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import {
@@ -27,9 +27,14 @@ function PostDetail() {
   const [loveCount, setLoveCount] = useState(0);
   const [isClicked, setIsClicked] = useState(false);
   const [post, setPost] = useState(null);
+  const navigate = useNavigate();
 
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
   const token = localStorage.getItem("accessToken");
+
+  const handleModifyClick = () => {
+    navigate(`/posteditform/${postId}`);
+  };
 
   const handleLoveClick = async () => {
     if (!token) {
@@ -37,7 +42,7 @@ function PostDetail() {
       window.location.href = "/login";
       return;
     }
-    
+
     try {
       if (!isClicked) {
         const res = await fetch(`${API_BASE}/like/${postId}`, {
@@ -51,10 +56,10 @@ function PostDetail() {
           setLoveCount((prev) => prev + 1);
         }
       } else {
-          const res = await fetch(`${API_BASE}/like/${postId}`, {
+        const res = await fetch(`${API_BASE}/like/${postId}`, {
           method: "DELETE",
-          headers: { 
-            Authorization: `Bearer ${token}` 
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
         });
         if (res.ok) {
@@ -68,7 +73,7 @@ function PostDetail() {
   };
 
   useEffect(() => {
-    if (!token) return; 
+    if (!token) return;
 
     const fetchPost = async () => {
       try {
@@ -101,16 +106,15 @@ function PostDetail() {
         }
 
         const likedRes = await fetch(`${API_BASE}/like/${postId}`, {
-          headers: { 
-            Authorization: `Bearer ${token}` 
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
         });
-        
+
         if (likedRes.ok) {
           const liked = await likedRes.json();
           setIsClicked(liked);
         }
-
       } catch (err) {
         console.error(err);
       }
@@ -130,7 +134,7 @@ function PostDetail() {
     <Content>
       <BoardContainer>
         <BoardTitle>{post.title}</BoardTitle>
-        <Modify>수정</Modify>
+        <Modify onClick={handleModifyClick}>수정</Modify>
         <LoveLabel>
           <HiddenButton onClick={handleLoveClick} />
           <img src={Love} alt="좋아요" $isClick={isClicked} />
@@ -167,7 +171,9 @@ function PostDetail() {
       <CategoryList
         selectedCategories={post.categories} // 게시글 카테고리만 체크됨
         onSelectedCategories={() => {}}
-      >카테고리</CategoryList>
+      >
+        카테고리
+      </CategoryList>
     </Content>
   );
 }

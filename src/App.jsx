@@ -65,7 +65,7 @@ function App() {
           }
         />
         <Route
-          path="/posteditform"
+          path="/posteditform/:id"
           element={
             <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <GlobalEditorStyle />

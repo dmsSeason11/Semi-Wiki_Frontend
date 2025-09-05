@@ -24,7 +24,7 @@ function SignUp({
   confirmPassword,
   setConfirmPassword,
   handleChange,
-  onSubmitHandler,
+  handleSubmit,
   handleCheckClick,
   idValidation,
   isMatch,
@@ -34,7 +34,7 @@ function SignUp({
     <Container>
       <SignUpDiv>
         <SignUptitle>회원가입</SignUptitle>
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={handleSubmit}>
           <InputBox>
             <div>
               <Inputtext>학번</Inputtext>

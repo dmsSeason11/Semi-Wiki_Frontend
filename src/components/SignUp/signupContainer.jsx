@@ -34,7 +34,7 @@ function SignUpContainer() {
     setCheckId(true);
   };
 
-  const onSubmitHandler = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
     setLoading(true);
@@ -62,6 +62,7 @@ function SignUpContainer() {
       accountId: form.accountId,
       password: password,
     };
+
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signup`,
@@ -81,15 +82,14 @@ function SignUpContainer() {
             "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
           );
         throw new Error(
-          `알 수 없는 오류가 발생했습니다. (상태 코드 ${response.status}`
+          `알 수 없는 오류가 발생했습니다. (HTTP ${response.status})`
         );
       }
 
-      const responseData = await response.json();
-      console.log("회원가입 성공:", responseData);
       navigate("/login");
     } catch (error) {
-      alert(error.message);
+      alert(error.message + "\n잠시 후 다시 시도해주세요.");
+      console.error("회원가입 에러:", error);
     } finally {
       setLoading(false);
     }
@@ -104,7 +104,7 @@ function SignUpContainer() {
         confirmPassword={confirmPassword}
         setConfirmPassword={setConfirmPassword}
         handleChange={handleChange}
-        onSubmitHandler={onSubmitHandler}
+        handleSubmit={handleSubmit}
         handleCheckClick={handleCheckClick}
         idValidation={idValidation}
         isMatch={isMatch}

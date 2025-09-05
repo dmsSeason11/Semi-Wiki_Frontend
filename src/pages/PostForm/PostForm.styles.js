@@ -157,7 +157,7 @@ export const SubmitButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    color: ${colors.gray[500]};
+    color: ${colors.gray[50]};
   }
 `;
 
