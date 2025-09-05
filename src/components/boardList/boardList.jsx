@@ -27,6 +27,7 @@ function BoardList({
     const fetchList = async () => {
       try {
         const query = new URLSearchParams();
+
         selectedCategories.forEach((c) => query.append("categories", c));
         if (searchTerm) query.append("keyword", searchTerm);
 

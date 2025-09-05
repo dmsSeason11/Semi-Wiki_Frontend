@@ -54,12 +54,10 @@ function PostForm() {
     }));
 
     // 선택된 전공들을 selectedCategories에 업데이트
-    setSelectedMajors((prev) => {
+    setSelectedCategories((prev) => {
       const newSelectedCategories = prev.includes(category)
         ? prev.filter((m) => m !== category)
         : [...prev, category];
-
-      console.log("선택된 전공:", newSelectedCategories);
       return newSelectedCategories;
     });
   };
@@ -82,7 +80,7 @@ function PostForm() {
     const postData = {
       title: title,
       categories: selectedCategories,
-      content: body,
+      contents: body,
     };
 
     console.log(postData);

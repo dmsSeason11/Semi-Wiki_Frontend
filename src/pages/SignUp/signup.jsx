@@ -1,5 +1,6 @@
 import "../../styles/reset.css";
 import { Link } from "react-router-dom";
+import React, { useStste } from "react";
 import check from "../../assets/signup_check.png";
 import error from "../../assets/signup_error.png";
 import {
@@ -17,22 +18,17 @@ import {
 } from "./signup.styles";
 
 function SignUp({
-  StNumber,
-  setStNumber,
-  Name,
-  setName,
-  Id,
-  setId,
-  Password,
+  form,
+  password,
   setPassword,
-  ConfirmPassword,
+  confirmPassword,
   setConfirmPassword,
+  handleChange,
   onSubmitHandler,
   handleCheckClick,
   idValidation,
   isMatch,
-  passwordChangeHandler,
-  confirmChangeHandler,
+  loading,
 }) {
   return (
     <Container>
@@ -43,23 +39,23 @@ function SignUp({
             <div>
               <Inputtext>학번</Inputtext>
               <Input
-                name="stnumber"
+                name="studentNum"
                 type="text"
                 placeholder="학번을 입력해주세요"
                 style={{ width: "195px" }}
-                value={StNumber}
-                onChange={(e) => setStNumber(e.target.value)}
+                value={form.studentNum}
+                onChange={handleChange}
               />
             </div>
             <div>
               <Inputtext>이름</Inputtext>
               <Input
-                name="name"
+                name="username"
                 type="text"
                 placeholder="이름을 입력해주세요"
                 style={{ width: "195px" }}
-                value={Name}
-                onChange={(e) => setName(e.target.value)}
+                value={form.username}
+                onChange={handleChange}
               />
             </div>
           </InputBox>
@@ -67,7 +63,7 @@ function SignUp({
             <div style={{ position: "relative" }}>
               <Inputtext>아이디</Inputtext>
               <Input
-                name="id"
+                name="accountId"
                 type="text"
                 placeholder="아이디를 입력해주세요"
                 style={{
@@ -76,8 +72,8 @@ function SignUp({
                     idValidation !== null &&
                     (idValidation ? "1px solid #2ECC71" : "1px solid #FF645B"),
                 }}
-                value={Id}
-                onChange={(e) => setId(e.target.value)}
+                value={form.accountId}
+                onChange={handleChange}
               />
               {idValidation !== null &&
                 (idValidation ? (
@@ -99,16 +95,16 @@ function SignUp({
             name="password"
             type="password"
             placeholder="사용할 비밀번호를 입력해주세요"
-            value={Password}
-            onChange={passwordChangeHandler}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Inputtext>비밀번호 확인</Inputtext>
           <Input
-            name="confirmPassword"
+            username="confirmPassword"
             type="password"
             placeholder="비밀번호를 다시 입력해주세요"
-            value={ConfirmPassword}
-            onChange={confirmChangeHandler}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             style={{
               border:
                 isMatch !== null &&
@@ -126,7 +122,9 @@ function SignUp({
                 : "비밀번호가 일치하지 않습니다"}
             </PasswordSubText>
           )}
-          <Button type="submit">등록하기</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "로딩 중..." : "등록하기"}
+          </Button>
         </form>
         <SubText>
           이미 계정이 있으신가요? <LoginLink to={"/login"}>로그인</LoginLink>

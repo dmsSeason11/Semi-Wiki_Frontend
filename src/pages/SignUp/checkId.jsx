@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
+const CheckId = ({ accountId, setIdValidation, checkId, setCheckId }) => {
   useEffect(() => {
     if (!checkId) {
       return;
@@ -9,14 +9,14 @@ const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
     const checkIdValidation = async () => {
       setCheckId(false);
 
-      if (!Id) {
+      if (!accountId) {
         setIdValidation(null);
         return;
       }
 
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/check/${Id}`
+          `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/${accountId}`
         );
 
         if (!response.ok) {
@@ -32,13 +32,13 @@ const CheckId = ({ Id, setIdValidation, checkId, setCheckId }) => {
         const result = await response.json();
         setIdValidation(Number(result) === 0);
       } catch (error) {
-        console.error("네트워크 또는 파싱 오류:", error);
+        console.error("알 수 없는 오류:", error);
         setIdValidation(false);
       }
     };
 
     checkIdValidation();
-  }, [Id, setIdValidation, checkId, setCheckId]);
+  }, [accountId, setIdValidation, checkId, setCheckId]);
 
   return null;
 };

@@ -1,42 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SignUp from "./signup.jsx";
 import CheckId from "./checkId.jsx";
 import { useNavigate } from "react-router-dom";
 
 function SignUpContainer() {
-  const [StNumber, setStNumber] = useState("");
-  const [Name, setName] = useState("");
-  const [Id, setId] = useState("");
-  const [Password, setPassword] = useState("");
-  const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [form, setForm] = useState({
+    studentNum: "",
+    username: "",
+    accountId: "",
+  });
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [idValidation, setIdValidation] = useState(null);
   const [isMatch, setIsMatch] = useState(null);
   const [checkId, setCheckId] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    if (password === "" || confirmPassword === "") {
+      setIsMatch(null);
+    } else {
+      setIsMatch(password === confirmPassword);
+    }
+  }, [password, confirmPassword]);
 
   const handleCheckClick = () => {
     setCheckId(true);
   };
 
-  const passwordChangeHandler = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-
-    setIsMatch(ConfirmPassword === "" ? null : value === ConfirmPassword);
-  };
-
-  const confirmChangeHandler = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-
-    setIsMatch(value === "" ? null : Password === value);
-  };
-
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
+    setError("");
 
-    if (!StNumber || !Name || !Id || !Password || !ConfirmPassword) {
-      return alert("모든 항목을 입력해주세요.");
+    if (
+      !form.studentNum ||
+      !form.username ||
+      !form.accountId ||
+      !password ||
+      !confirmPassword
+    ) {
+      return;
     }
     if (idValidation === false) {
       return;
@@ -46,12 +57,11 @@ function SignUpContainer() {
     }
 
     let body = {
-      stNumber: StNumber,
-      name: Name,
-      id: Id,
-      password: Password,
+      studentNum: form.studentNum,
+      username: form.username,
+      accountId: form.accountId,
+      password: password,
     };
-
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/signup`,
@@ -65,9 +75,13 @@ function SignUpContainer() {
       if (!response.ok) {
         if (response.status === 400) throw new Error("잘못된 요청입니다.");
         if (response.status === 409)
-          throw new Error("이미 존재하는 아이디 또는 비밀번호입니다.");
+          throw new Error("이미 존재하는 회원 정보입니다.");
+        if (response.status === 500)
+          throw new Error(
+            "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+          );
         throw new Error(
-          `알 수 없는 오류가 발생했습니다. (상태 코드: ${response.status}`
+          `알 수 없는 오류가 발생했습니다. (상태 코드 ${response.status}`
         );
       }
 
@@ -75,32 +89,29 @@ function SignUpContainer() {
       console.log("회원가입 성공:", responseData);
       navigate("/login");
     } catch (error) {
-      alert("회원가입이 실패했습니다. 다시 시도해주세요.");
+      alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
       <SignUp
-        StNumber={StNumber}
-        setStNumber={setStNumber}
-        Name={Name}
-        setName={setName}
-        Id={Id}
-        setId={setId}
-        Password={Password}
+        form={form}
+        password={password}
         setPassword={setPassword}
-        ConfirmPassword={ConfirmPassword}
+        confirmPassword={confirmPassword}
         setConfirmPassword={setConfirmPassword}
+        handleChange={handleChange}
         onSubmitHandler={onSubmitHandler}
         handleCheckClick={handleCheckClick}
         idValidation={idValidation}
         isMatch={isMatch}
-        passwordChangeHandler={passwordChangeHandler}
-        confirmChangeHandler={confirmChangeHandler}
+        loading={loading}
       />
       <CheckId
-        Id={Id}
+        accountId={form.accountId}
         setIdValidation={setIdValidation}
         checkId={checkId}
         setCheckId={setCheckId}
