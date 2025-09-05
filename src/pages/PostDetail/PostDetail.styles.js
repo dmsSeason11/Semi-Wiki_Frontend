@@ -145,3 +145,26 @@ export const Contentcontainer = styled.div`
   border: 1px solid ${colors.gray[50]};
   border-radius: 24px;
 `;
+
+//수정 버튼
+export const Modify = styled.button`
+  position: absolute;
+  width: 60px;
+  height: 29px;
+  left: 906px;
+  top: 49px;
+
+  background: none;
+  border: none;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  text-decoration-line: underline;
+
+  color: #FF9E3D;
+
+  cursor: pointer;
+`;

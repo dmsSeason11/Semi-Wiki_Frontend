@@ -2,7 +2,6 @@ import {
   Number,
   Title,
   Wrapper,
-  Modify,
   ArticleContent,
   ArtcileTopWrapper,
   ArticleContentWrapper,
@@ -15,7 +14,6 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
       <ArtcileTopWrapper>
         <Number>{Numberprop}.</Number>
         <Title>{Titleprop}</Title>
-        <Modify>수정</Modify>
       </ArtcileTopWrapper>
 
       <ArticleContentWrapper>

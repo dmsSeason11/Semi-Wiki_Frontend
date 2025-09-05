@@ -14,6 +14,7 @@ import {
   Contentcontainer,
   CategoryTag,
   Categories,
+  Modify,
 } from "./PostDetail.styles.js";
 import Love from "../../assets/board/Love.svg";
 import Article from "../../components/Article/Article.jsx";
@@ -129,6 +130,7 @@ function PostDetail() {
     <Content>
       <BoardContainer>
         <BoardTitle>{post.title}</BoardTitle>
+        <Modify>수정</Modify>
         <LoveLabel>
           <HiddenButton onClick={handleLoveClick} />
           <img src={Love} alt="좋아요" $isClick={isClicked} />
