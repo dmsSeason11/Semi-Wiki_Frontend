@@ -102,6 +102,12 @@ export const Button = styled.button`
 
   &:hover {
     background-color: ${colors.gray[800]};
+    cursor: pointer;
+  }
+
+  &:disabled {
+    background-color: ${colors.gray[800]};
+    cursor: not-allowed;
   }
 `;
 
