@@ -38,21 +38,6 @@ export const Title = styled.h2`
   color: ${colors.gray[50]};
 `;
 
-//수정
-export const Modify = styled.h2`
-  margin-left: auto;
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  text-decoration-line: underline;
-
-  color: ${colors.orange[900]};
-
-  cursor: pointer;
-`;
-
 export const ArticleContentWrapper = styled.div`
   margin: 0 auto;
 `;

@@ -31,7 +31,7 @@ function BoardList({
         if (searchTerm) query.append("keyword", searchTerm);
 
         query.append("orderBy", sort === "최신순" ? "recent" : "like");
-        query.append("offset", (page - 1) * pageSize);
+        query.append("offset", page - 1);
         query.append("limit", pageSize);
 
         const url = accountId

@@ -57,6 +57,7 @@ function Board({ searchTerm }) {
 
         const total = (await res.json()) || 0;
         setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
+        console.log("Total count:", total);
       } catch (err) {
         console.error(err);
       }
