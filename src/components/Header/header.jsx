@@ -12,52 +12,48 @@ import logo from "../../assets/logo/logo.png";
 import user from "../../assets/user.png";
 import searchIcon from "../../assets/search_icon.png";
 
-function Header() {
+function Header({ onSearch }) {
+  const [inputValue, setInputValue] = useState(""); // 내부 입력 상태
   const accountId = localStorage.getItem("accountId");
-  const token = localStorage.getItem("accessToken");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const fetchBoardList = async () => {
-    console.log("검색어:", searchTerm);
-    console.log("선택 카테고리:", selectedCategories);
-    return (
-      <Container>
-        <Link1 as={Link} to={"/"}>
+  const handleSearch = () => {
+    onSearch(inputValue); // 상위(App)의 상태 업데이트
+  };
+
+  return (
+    <Container>
+      <Link1 as={Link} to={"/"}>
+        <img src={logo} alt="Logo" style={{ width: "231px", height: "72px" }} />
+      </Link1>
+
+      <Div>
+        <SearchBox>
+          <Button onClick={handleSearch}>
+            <img
+              src={searchIcon}
+              alt="icon"
+              style={{ width: "auto", height: "100%" }}
+            />
+          </Button>
+          <Input
+            type="text"
+            placeholder="검색어를 입력하세요"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Enter 키도 검색
+          />
+        </SearchBox>
+
+        <Link1 as={Link} to={`/mypage/${accountId}`}>
           <img
-            src={logo}
-            alt="Logo"
-            style={{ width: "231px", height: "72px" }}
+            src={user}
+            alt="user"
+            style={{ width: "48px", height: "48px" }}
           />
         </Link1>
-        <Div>
-          <SearchBox>
-            <Button onClick={fetchBoardList}>
-              <img
-                src={searchIcon}
-                alt="icon"
-                style={{ width: "auto", height: "100%" }}
-              />
-            </Button>
-            <Input
-              type="text"
-              placeholder="검색어를 입력하세요"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </SearchBox>
-          <Link1 as={Link} to={`/mypage/${accountId}`}>
-            <img
-              src={user}
-              alt="user"
-              style={{ width: "48px", height: "48px" }}
-            />
-          </Link1>
-        </Div>
-      </Container>
-    );
-  };
+      </Div>
+    </Container>
+  );
 }
 
-// export const search = searchTerm;
 export default Header;

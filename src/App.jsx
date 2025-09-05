@@ -1,23 +1,24 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
 import Layout from "./Layout";
 import Board from "./pages/Board/board";
 import Login from "./pages/Login/login";
 import SignUpContainer from "./pages/SignUp/signupContainer";
 import Mypage from "./pages/Mypage/mypage";
-import PostDetail from "./pages/PostDetail/postDetail";
+import PostDetail from "./pages/PostDetail/PostDetail.jsx";
 import PostForm from "./pages/PostForm/PostForm.jsx";
 import PostEditForm from "./pages/PostEditForm/PostEditForm.jsx";
-import { GlobalEditorStyle } from "./pages/PostForm/PostForm.styles.js";
 import MyBoard from "./pages/Write Board/writeboard.jsx";
+import { createGlobalStyle } from "styled-components";
+import { GlobalEditorStyle } from "./pages/PostForm/PostForm.styles.js";
 
 const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 `;
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+
   return (
     <>
       <GlobalStyle />
@@ -25,15 +26,15 @@ function App() {
         <Route
           path="/"
           element={
-            <Layout>
-              <Board />
+            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
+              <Board searchTerm={searchTerm} />
             </Layout>
           }
         />
         <Route
           path="/mypage/:accountId"
           element={
-            <Layout>
+            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <Mypage />
             </Layout>
           }
@@ -41,7 +42,7 @@ function App() {
         <Route
           path="/board/:id"
           element={
-            <Layout>
+            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <PostDetail />
             </Layout>
           }
@@ -49,7 +50,7 @@ function App() {
         <Route
           path="/mypage/:accountId/list"
           element={
-            <Layout>
+            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <MyBoard />
             </Layout>
           }
@@ -57,7 +58,7 @@ function App() {
         <Route
           path="/postform"
           element={
-            <Layout>
+            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <GlobalEditorStyle />
               <PostForm />
             </Layout>
@@ -65,9 +66,8 @@ function App() {
         />
         <Route
           path="/posteditform"
-          /*:postId"*/
           element={
-            <Layout>
+            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <GlobalEditorStyle />
               <PostEditForm />
             </Layout>

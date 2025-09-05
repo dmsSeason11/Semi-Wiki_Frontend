@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../../styles/reset.css";
 import {
   BoardListContainer,
   BoardListTitle,
@@ -8,7 +7,7 @@ import {
   BoardListHeader,
   Line,
 } from "./boardList.styles";
-import BoardItem from "../../components/boardItem/boardItem.jsx";
+import BoardItem from "../../components/boardItem/BoardItem.jsx";
 
 function BoardList({
   sort,
@@ -16,9 +15,10 @@ function BoardList({
   pageSize = 2,
   token,
   selectedCategories = [],
+  searchTerm = "",
+  accountId,
 }) {
-  const [items, setItems] = useState([]); //현재 게시글 배열
-
+  const [items, setItems] = useState([]);
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
   useEffect(() => {
@@ -28,45 +28,51 @@ function BoardList({
       try {
         const query = new URLSearchParams();
 
-        selectedCategories.forEach((v) => query.append("categories", v));
+        selectedCategories.forEach((c) => query.append("categories", c));
+        if (searchTerm) query.append("keyword", searchTerm);
 
         query.append("orderBy", sort === "최신순" ? "recent" : "like");
         query.append("offset", page - 1);
         query.append("limit", pageSize);
 
-        const res = await fetch(
-          `${API_BASE}/notice-board/list?${query.toString()}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const url = accountId
+          ? `${API_BASE}/user/${accountId}/list?${query.toString()}`
+          : `${API_BASE}/notice-board/list?${query.toString()}`;
 
-        const data = await res.json();
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         if (!res.ok) {
           if (res.status === 401) {
-            alert("로그인이 필요합니다. 다시 로그인해주세요.");
+            alert("로그인이 필요합니다.");
             localStorage.removeItem("accessToken");
             window.location.href = "/login";
             return;
           }
-          console.error("서버 오류:", text);
           setItems([]);
           return;
         }
 
-        setItems(data || []);
+        const data = await res.json();
+        setItems(Array.isArray(data) ? data : data.posts || []);
       } catch (err) {
-        console.error("데이터 fetch 중 오류:", err);
+        console.error(err);
         setItems([]);
       }
     };
 
-    if (token) fetchList();
-  }, [page, sort, pageSize, token, API_BASE, selectedCategories]);
+    fetchList();
+  }, [
+    page,
+    sort,
+    pageSize,
+    token,
+    selectedCategories,
+    searchTerm,
+    API_BASE,
+    accountId,
+  ]);
 
   return (
     <BoardListContainer>
@@ -76,7 +82,6 @@ function BoardList({
         <BoardListModifier>수정자</BoardListModifier>
       </BoardListHeader>
       <Line />
-
       {items.map((post) => (
         <BoardItem
           key={post.id}

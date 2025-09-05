@@ -1,10 +1,10 @@
 import Header from "./components/Header/header";
 import Footer from "./components/Footer/footer";
 
-function Layout({ children }) {
+function Layout({ children, searchTerm, setSearchTerm }) {
   return (
     <>
-      <Header />
+      <Header onSearch={setSearchTerm} />
       {children}
       <Footer />
     </>
