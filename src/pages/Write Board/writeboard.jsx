@@ -16,133 +16,105 @@ function MyBoard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [posts, setPosts] = useState([]);
 
   const pageSize = 10;
   const token = localStorage.getItem("accessToken");
   const accountId = localStorage.getItem("accountId");
+  const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
   console.log("현재 저장된 토큰:", token);
   console.log("현재 accountId:", accountId);
 
   const handleCategoryToggle = (category) => {
     setSelectedCategories((prev) => {
-      if (prev.includes(category)) {
-        console.log(`카테고리 제거: ${category}`);
-        return prev.filter((item) => item !== category);
-      } else {
-        console.log(`카테고리 추가: ${category}`);
-        return [...prev, category];
-      }
+      const newCategories = prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category];
+      setCurrentPage(1);
+      return newCategories;
     });
-    setCurrentPage(1);
   };
 
   useEffect(() => {
     if (!token || !accountId) return;
 
-    const fetchMyPosts = async () => {
+    const fetchTotalCount = async () => {
       try {
         const query = new URLSearchParams();
-
         selectedCategories.forEach((v) => query.append("categories", v));
 
-        query.append("orderBy", activeFilter === "최신순" ? "recent" : "like");
-        query.append("offset", (currentPage - 1) * pageSize);
-        query.append("limit", pageSize);
+        if (activeFilter)
+          query.append(
+            "orderBy",
+            activeFilter === "최신순" ? "recent" : "like"
+          );
 
         const res = await fetch(
-          `${
-            import.meta.env.VITE_REACT_APP_API_BASE_URL
-          }/user/${accountId}/list?${query.toString()}`,
+          `${API_BASE}/user/${accountId}/count?${query.toString()}`,
           {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
 
         if (res.status === 401) {
-          console.error("토큰이 만료되었거나 유효하지 않습니다.");
-          alert("로그인이 필요합니다. 다시 로그인해주세요.");
+          alert("로그인이 필요합니다.");
           localStorage.removeItem("accessToken");
           window.location.href = "/login";
           return;
         }
 
-        const data = await res.json();
-        console.log("내 글 목록:", data);
-
-        if (Array.isArray(data)) {
-          setPosts(data);
-          setTotalPages(Math.max(1, Math.ceil(data.length / pageSize)));
-        } else {
-          setPosts(data.posts || []);
-          setTotalPages(
-            Math.max(1, Math.ceil((data.totalCount || 0) / pageSize))
-          );
-        }
-      } catch (error) {
-        console.error(error);
-        setPosts([]);
-        setTotalPages(1);
+        const total = await res.json();
+        setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
+      } catch (err) {
+        console.error(err);
       }
     };
 
-    fetchMyPosts();
-  }, [
-    import.meta.env.VITE_REACT_APP_API_BASE_URL,
-    token,
-    accountId,
-    selectedCategories,
-    activeFilter,
-    currentPage,
-  ]);
+    fetchTotalCount();
+  }, [token, accountId, selectedCategories, activeFilter, API_BASE]);
 
   return (
-    <>
-      <Content>
-        <BoardContainer>
-          <BoardTitle>내가 작성한 글</BoardTitle>
+    <Content>
+      <BoardContainer>
+        <BoardTitle>내가 작성한 글</BoardTitle>
 
-          <Boardfiler>
-            {["최신순", "추천순"].map((filter) => (
-              <Boardfilertitle
-                key={filter}
-                $active={activeFilter === filter}
-                onClick={() => {
-                  setActiveFilter(filter);
-                  setCurrentPage(1);
-                }}
-              >
-                {filter}
-              </Boardfilertitle>
-            ))}
-          </Boardfiler>
+        <Boardfiler>
+          {["최신순", "추천순"].map((filter) => (
+            <Boardfilertitle
+              key={filter}
+              $active={activeFilter === filter}
+              onClick={() => {
+                setActiveFilter(filter);
+                setCurrentPage(1);
+              }}
+            >
+              {filter}
+            </Boardfilertitle>
+          ))}
+        </Boardfiler>
 
-          <BoardList
-            sort={activeFilter}
-            page={currentPage}
-            pageSize={pageSize}
-            token={token}
-            selectedCategories={selectedCategories}
-          />
-
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-            groupSize={10}
-          />
-        </BoardContainer>
-
-        <CategoryList
+        <BoardList
+          sort={activeFilter}
+          page={currentPage}
+          pageSize={pageSize}
+          token={token}
           selectedCategories={selectedCategories}
-          onSelectedCategories={handleCategoryToggle}
+          accountId={accountId}
         />
-      </Content>
-    </>
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+          groupSize={10}
+        />
+      </BoardContainer>
+
+      <CategoryList
+        selectedCategories={selectedCategories}
+        onSelectedCategories={handleCategoryToggle}
+      />
+    </Content>
   );
 }
 
