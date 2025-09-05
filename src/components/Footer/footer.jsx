@@ -33,11 +33,13 @@ const Footer = () => {
           alt="image"
           style={{ width: "78px", height: "52px" }}
         />
-        <Img
-          src={github}
-          alt="github"
-          style={{ width: "60px", height: "60px" }}
-        />
+        <a href="https://github.com/dmsSeason11" target="_blank" rel="noreferrer">
+          <Img
+            src={github}
+            alt="github"
+            style={{ width: "60px", height: "60px" }}
+          />
+        </a>
       </Div>
     </Container>
   );
