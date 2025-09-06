@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 import Board from "./pages/Board/board";
 import Login from "./pages/Login/login";
-import SignUpContainer from "./pages/SignUp/signupContainer";
+import SignUp from "./pages/SignUp/signup.jsx";
 import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/PostDetail.jsx";
 import PostForm from "./pages/PostForm/PostForm.jsx";
@@ -65,7 +65,7 @@ function App() {
           }
         />
         <Route
-          path="/posteditform"
+          path="/posteditform/:id"
           element={
             <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <GlobalEditorStyle />
@@ -74,7 +74,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUpContainer />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </>
   );

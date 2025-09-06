@@ -101,7 +101,7 @@ function Login() {
       navigate("/");
     } catch (err) {
       console.error("로그인 에러:", err);
-      setError(err.message);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
