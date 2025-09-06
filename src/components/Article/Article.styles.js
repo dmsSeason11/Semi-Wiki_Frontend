@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
+import { createGlobalStyle } from "styled-components";
+import { Viewer } from "@toast-ui/react-editor";
 
 //전체를 감싸는 래퍼
 export const Wrapper = styled.div`
@@ -9,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 //본문 위쪽 래퍼
-export const ArtcileTopWrapper = styled.div`
+export const ArticleTopWrapper = styled.div`
   display: flex;
   align-items: center;
   padding: 40px 20px 0 20px;
@@ -45,15 +47,25 @@ export const ArticleContentWrapper = styled.div`
 export const ArticleContent = styled.div`
   white-space: pre-line;
   border-top: 2px solid ${colors.gray[700]};
-
-  font-family: "Pretendard";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 21px;
-
-  color: ${colors.gray[50]};
-
   margin-top: 20px;
   padding-top: 20px;
+`;
+
+// Global 스타일 (올바른 클래스명으로 수정)
+export const GlobalViewerStyle = createGlobalStyle`
+  .toastui-editor-contents {
+    color: ${colors.gray[50]} !important;
+    font-family: 'Pretendard' !important;
+    font-size: 18px !important;
+    line-height: 1.7 !important;
+  }
+
+  .toastui-editor-contents * {
+    color: ${colors.gray[50]} !important;
+    font-family: 'Pretendard' !important;
+  }
+  .toastui-editor-contents ul li {
+    display: flex !important;
+    margin-bottom: 8px !important;
+  }
 `;
