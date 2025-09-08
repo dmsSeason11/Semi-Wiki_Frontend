@@ -6,7 +6,7 @@ import {
   ArticleContent,
   ArticleTopWrapper,
   ArticleContentWrapper,
-  GlobalViewerStyle, // GlobalViewerStyle 추가
+  GlobalViewerStyle,
 } from "./Article.styles";
 
 function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
@@ -15,7 +15,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
   
   return (
     <>
-      <GlobalViewerStyle /> {/* 글로벌 스타일 적용 */}
+      <GlobalViewerStyle />
       <Wrapper>
         <ArticleTopWrapper>
           <Number>{Numberprop}.</Number>
@@ -29,7 +29,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
         </ArticleContentWrapper>
 
         {subSections && subSections.length > 0 && (
-          <div>
+          <>
             {subSections.map((sub) => (
               <Article
                 key={sub.id}
@@ -39,7 +39,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
                 subSections={sub.children}
               />
             ))}
-          </div>
+          </>
         )}
       </Wrapper>
     </>
