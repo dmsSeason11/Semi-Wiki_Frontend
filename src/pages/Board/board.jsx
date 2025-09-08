@@ -44,7 +44,9 @@ function Board({ searchTerm }) {
         const res = await fetch(
           `${API_BASE}/notice-board/count?${query.toString()}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { 
+              Authorization: `Bearer ${token}` 
+            },
           }
         );
 

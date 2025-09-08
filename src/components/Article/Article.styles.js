@@ -51,7 +51,7 @@ export const ArticleContent = styled.div`
   padding-top: 20px;
 `;
 
-// Global 스타일 (올바른 클래스명으로 수정)
+//글로벌 스타일
 export const GlobalViewerStyle = createGlobalStyle`
   .toastui-editor-contents {
     color: ${colors.gray[50]} !important;
