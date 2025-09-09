@@ -56,12 +56,14 @@ export const Inputtext = styled.label`
 export const Input = styled.input`
   width: 400px;
   height: 50px;
-  padding: 10px;
   margin: 6px 0;
+  padding: 10px;
+
   border-radius: 8px;
   background-color: ${colors.gray[800]};
   border: none;
   outline: none;
+
   font-size: 20px;
   font-weight: 500;
   font-family: Pretendard, sans-serif;
@@ -69,22 +71,37 @@ export const Input = styled.input`
   &:focus {
     background-color: ${colors.gray[800]};
   }
+
+  &::placeholder {
+    color: ${colors.gray[600]};
+  }
 `;
 
-export const Icon = styled.img`
+export const IdStatusIcon = styled.img`
   width: 28px;
   height: 28px;
   position: absolute;
   right: 20px;
-  bottom: 17px;
+  bottom: 18px;
 `;
 
-export const PasswordSubText = styled.p`
+export const PwToggleBtn = styled.button`
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+
+  background: none;
+  border: none;
+`;
+
+export const InputSubText = styled.p`
   width: 400px;
   text-align: left;
   margin-top: 5px;
-  color: ${colors.gray[50]};
-  font-size: 15px;
+  color: ${colors.error};
+  font-size: 14px;
   font-family: Pretendard, sans-serif;
 `;
 
