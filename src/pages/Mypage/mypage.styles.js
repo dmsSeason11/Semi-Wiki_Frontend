@@ -2,6 +2,7 @@ import styled from "styled-components";
 import colors from "../../styles/color";
 
 export const Container = styled.div`
+  margin-top: 5px;
   display: flex;
   justify-content: center;
   align-items: center;

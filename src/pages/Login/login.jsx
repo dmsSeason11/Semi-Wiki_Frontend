@@ -3,6 +3,9 @@ import { useNavigate, Link } from "react-router-dom";
 import "../../styles/reset.css";
 import LogoImage from "../../assets/logo/logo_vertical.svg";
 import { startTokenAutoReissue } from "./Reissue";
+import EyeIcon from "../../assets/eyes.svg";
+import RedIcon from "../../assets/signup_error.png";
+
 import {
   Container,
   Loginarea,
@@ -12,7 +15,10 @@ import {
   LoginDiv,
   Logintitle,
   Inputtext,
+  ErrorIcon,
   Input,
+  ToggleButton,
+  EyeImage,
   Button,
   SubText,
   LinkText,
@@ -23,6 +29,17 @@ function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [fieldErrors, setFieldErrors] = useState({
+    accountId: false,
+    password: false,
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   // handleChange 정의 추가
   const handleChange = (e) => {
@@ -59,9 +76,19 @@ function Login() {
         switch (response.status) {
           case 400:
             throw new Error("잘못된 요청입니다.");
-          case 403:
+          case 401:
+            setFieldErrors({ accountId: false, password: true });
+            setTimeout(
+              () => setFieldErrors({ accountId: false, password: false }),
+              3000
+            );
             throw new Error("비밀번호가 잘못되었습니다.");
           case 404:
+            setFieldErrors({ accountId: true, password: false });
+            setTimeout(
+              () => setFieldErrors({ accountId: false, password: false }),
+              3000
+            );
             throw new Error("아이디를 찾을 수 없습니다.");
           case 500:
             throw new Error(
@@ -115,7 +142,9 @@ function Login() {
           <Slogan>
             <strong>SemiWiki</strong>에서 대마고의 모든 정보를
           </Slogan>
-          <Slogan>기록하고 공유하세요</Slogan>
+          <Slogan>
+            <strong>기록하고 공유</strong>하세요
+          </Slogan>
         </Left_area>
 
         <LoginDiv>
@@ -128,17 +157,27 @@ function Login() {
               value={form.accountId}
               onChange={handleChange}
               placeholder="아이디를 입력해주세요"
-              required
+              hasError={fieldErrors.accountId}
             />
+            {fieldErrors.accountId && (
+              <ErrorIcon src={RedIcon} alt="오류" top="405px" />
+            )}
+
             <Inputtext>비밀번호</Inputtext>
             <Input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               value={form.password}
               onChange={handleChange}
               placeholder="비밀번호를 입력해주세요"
-              required
+              hasError={fieldErrors.password}
             />
+            <ToggleButton type="button" onClick={togglePassword}>
+              <EyeImage src={EyeIcon} alt="비밀번호 보기" />
+            </ToggleButton>
+            {fieldErrors.password && (
+              <ErrorIcon src={RedIcon} alt="오류" top="505px" />
+            )}
             <Button type="submit" disabled={loading}>
               {loading ? "로딩 중..." : "로그인"}
             </Button>
