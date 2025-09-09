@@ -169,7 +169,7 @@ function PostDetail() {
       </BoardContainer>
 
       <CategoryList
-        selectedCategories={post.categories} // 게시글 카테고리만 체크됨
+        selectedCategories={post.categories}
         onSelectedCategories={() => {}}
       >
         카테고리

@@ -113,7 +113,12 @@ export default function MyPage() {
             <ProfileImage src={userData.profileImg} alt="프로필 이미지" />
 
             <ProfileText>
-              <IdText>아이디: {userData.accountId}</IdText>
+              <IdText>
+                아이디:{" "}
+                {userData.accountId.length > 14
+                  ? userData.accountId.slice(0, 14) + "..."
+                  : userData.accountId}
+              </IdText>
               <PostCount>
                 작성한 게시글 수 <span>{userData.noticeBoardCount}</span>
               </PostCount>

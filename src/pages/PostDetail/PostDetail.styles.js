@@ -101,7 +101,9 @@ export const CategoryTag = styled.span`
 //목차
 export const TableOfContentscontainer = styled.div`
   position: relative;
-  width: 200px;
+  display: inline-block;
+  min-width: 200px;
+  width: auto;
   min-height: 164px;
   height: auto;
 
@@ -111,6 +113,7 @@ export const TableOfContentscontainer = styled.div`
   border-radius: 12px;
 
   padding-bottom: 16px;
+  padding-right: 30px;
 
   bottom: 180px;
 `;
@@ -157,14 +160,14 @@ export const Modify = styled.button`
   background: none;
   border: none;
 
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
   text-decoration-line: underline;
 
-  color: #FF9E3D;
+  color: #ff9e3d;
 
   cursor: pointer;
 `;

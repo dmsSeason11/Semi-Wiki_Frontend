@@ -1,39 +1,48 @@
+import { Viewer } from "@toast-ui/react-editor";
 import {
   Number,
   Title,
   Wrapper,
   ArticleContent,
-  ArtcileTopWrapper,
+  ArticleTopWrapper,
   ArticleContentWrapper,
+  GlobalViewerStyle,
 } from "./Article.styles";
 
 function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
   console.log(subSections);
+  const markdown = childrenprop;
+  
   return (
-    <Wrapper>
-      <ArtcileTopWrapper>
-        <Number>{Numberprop}.</Number>
-        <Title>{Titleprop}</Title>
-      </ArtcileTopWrapper>
+    <>
+      <GlobalViewerStyle />
+      <Wrapper>
+        <ArticleTopWrapper>
+          <Number>{Numberprop}.</Number>
+          <Title>{Titleprop}</Title>
+        </ArticleTopWrapper>
 
-      <ArticleContentWrapper>
-        <ArticleContent>{childrenprop}</ArticleContent>
-      </ArticleContentWrapper>
+        <ArticleContentWrapper>
+          <ArticleContent>
+            <Viewer initialValue={markdown} />
+          </ArticleContent>
+        </ArticleContentWrapper>
 
-      {subSections && subSections.length > 0 && (
-        <div>
-          {subSections.map((sub) => (
-            <Article
-              key={sub.id}
-              Numberprop={sub.headerNumber}
-              Titleprop={sub.title}
-              childrenprop={sub.contents}
-              subSections={sub.children}
-            />
-          ))}
-        </div>
-      )}
-    </Wrapper>
+        {subSections && subSections.length > 0 && (
+          <>
+            {subSections.map((sub) => (
+              <Article
+                key={sub.id}
+                Numberprop={sub.headerNumber}
+                Titleprop={sub.title}
+                childrenprop={sub.contents}
+                subSections={sub.children}
+              />
+            ))}
+          </>
+        )}
+      </Wrapper>
+    </>
   );
 }
 

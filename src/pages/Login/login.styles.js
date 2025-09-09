@@ -78,6 +78,34 @@ export const Inputtext = styled.label`
   display: block;
 `;
 
+export const ErrorIcon = styled.img`
+  position: absolute;
+  right: 560px;
+  top: ${(props) => props.top || "505px"};
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+`;
+
+export const ToggleButton = styled.button`
+  position: absolute;
+  right: 560px;
+  top: 505px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: inline;
+  align-items: center;
+`;
+
+export const EyeImage = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
 export const Input = styled.input`
   width: 380px;
   height: 50px;
@@ -85,10 +113,20 @@ export const Input = styled.input`
   margin: 6px 0;
   border-radius: 8px;
   background-color: ${colors.gray[800]};
-  border: none;
+  border: ${(props) => (props.hasError ? `2px solid red` : "none")};
   outline: none;
   font-size: 20px;
   font-weight: 500;
+  color: ${colors.gray[50]};
+
+  &::placeholder {
+    color: ${colors.gray[600]};
+  }
+
+  &:focus {
+    border: ${(props) =>
+      props.hasError ? "2px solid red" : `2px solid ${colors.gray[700]}`};
+  }
 `;
 
 export const Button = styled.button`
