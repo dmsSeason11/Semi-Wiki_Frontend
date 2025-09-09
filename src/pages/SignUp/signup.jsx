@@ -13,7 +13,7 @@ import {
   Inputtext,
   Input,
   IdStatusIcon,
-  PwToggleBtn,
+  ToggleButton,
   InputSubText,
   Button,
   SubText,
@@ -222,9 +222,9 @@ function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <PwToggleBtn onClick={() => setPasswordVisible((prev) => !prev)}>
-              <img src={eyeIcon} alt="eye" />
-            </PwToggleBtn>
+            <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
+              <img src={eyeIcon} alt="비밀번호 보기" />
+            </ToggleButton>
           </div>
           <div style={{ position: "relative" }}>
             <Inputtext>비밀번호 확인</Inputtext>
@@ -242,9 +242,9 @@ function SignUp() {
                     : `1px solid ${colors.error}`),
               }}
             />
-            <PwToggleBtn onClick={() => setPasswordVisible((prev) => !prev)}>
-              <img src={eyeIcon} alt="eye" />
-            </PwToggleBtn>
+            <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
+              <img src={eyeIcon} alt="비밀번호 보기" />
+            </ToggleButton>
           </div>
           {isPasswordMatch !== null && (
             <InputSubText

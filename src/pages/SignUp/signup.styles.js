@@ -85,7 +85,7 @@ export const IdStatusIcon = styled.img`
   bottom: 18px;
 `;
 
-export const PwToggleBtn = styled.button`
+export const ToggleButton = styled.button`
   width: 28px;
   height: 28px;
   position: absolute;
@@ -137,10 +137,6 @@ export const SubText = styled.p`
 
 export const LoginLink = styled(Link)`
   color: ${colors.gray[50]};
-  text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
+  text-decoration: underline;
+  cursor: pointer;
 `;
