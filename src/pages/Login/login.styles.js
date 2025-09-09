@@ -85,7 +85,7 @@ export const ErrorIcon = styled.img`
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  pointer-events: none; // 클릭 방해 방지
+  pointer-events: none;
 `;
 
 export const ToggleButton = styled.button`
