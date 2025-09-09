@@ -6,7 +6,6 @@ export const PaginationContainer = styled.div`
   display: flex;
   gap: 4px;
   justify-content: center;
-  margin-top: 40px;
 `;
 
 //페이지 버튼

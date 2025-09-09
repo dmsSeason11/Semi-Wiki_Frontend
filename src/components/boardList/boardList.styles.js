@@ -19,6 +19,8 @@ export const BoardListContainer = styled.div`
   padding-left: 40px;
   padding-top: 89px;
   padding-bottom: 60px;
+
+  margin-bottom: -50px;
 `;
 
 // 게시판 리스트 헤더
