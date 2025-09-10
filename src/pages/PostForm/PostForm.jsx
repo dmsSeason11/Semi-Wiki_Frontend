@@ -51,20 +51,26 @@ function PostForm() {
   const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
 
-  const handleCheckboxChange = (category) => {
-    setCheckItem((prev) => ({
-      ...prev,
-      [category]: !prev[category],
-    }));
+  // 체크박스 변경 핸들러
+  const handleCheckboxChange = useCallback(
+    (category) => {
+      setCheckItem((prev) => {
+        // 3개 초과 선택 방지
+        const isAlreadyChecked = prev[category];
+        if (!isAlreadyChecked && selectedCategories.length >= 3) {
+          alert("카테고리는 3개까지만 선택할 수 있습니다.");
+          return prev;
+        }
 
-    // 선택된 전공들을 selectedCategories에 업데이트
-    setSelectedCategories((prev) => {
-      const newSelectedCategories = prev.includes(category)
-        ? prev.filter((m) => m !== category)
-        : [...prev, category];
-      return newSelectedCategories;
-    });
-  };
+        const newCheckItem = { ...prev, [category]: !isAlreadyChecked };
+        setSelectedCategories(
+          Object.keys(newCheckItem).filter((key) => newCheckItem[key])
+        );
+        return newCheckItem;
+      });
+    },
+    [selectedCategories]
+  );
 
   const handleEditorChange = useCallback(() => {
     try {
@@ -88,13 +94,16 @@ function PostForm() {
       navigate("/login");
       return;
     }
-    setLoading(true);
-    setError("");
 
     if (!title || selectedCategories.length === 0 || !body) {
-      alert("모든 항목을 입력해주세요.");
+      if (!title) alert("제목을 입력하세요.");
+      else if (selectedCategories.length === 0) alert("카테고리를 입력하세요.");
+      else if (!body) alert("본문을 입력하세요.");
       return;
     }
+
+    setLoading(true);
+    setError("");
 
     const postData = {
       title: title,

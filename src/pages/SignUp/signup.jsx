@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
+import colors from "../../styles/color";
 import checkIcon from "../../assets/signup_check.png";
 import errorIcon from "../../assets/signup_error.png";
+import eyeIcon from "../../assets/signup_eye.png";
 import {
   Container,
   SignUpDiv,
@@ -10,8 +12,9 @@ import {
   InputBox,
   Inputtext,
   Input,
-  Icon,
-  PasswordSubText,
+  IdStatusIcon,
+  ToggleButton,
+  InputSubText,
   Button,
   SubText,
   LoginLink,
@@ -26,18 +29,19 @@ function SignUp() {
   const { studentNum, username, accountId } = form;
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [idValidation, setIdValidation] = useState(null);
-  const [isMatch, setIsMatch] = useState(null);
+  const [isIdAvailable, setIdAvailable] = useState(null);
+  const [isPasswordMatch, setIsPasswordMatch] = useState(null);
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [idLoading, setIdLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const isSubmitDisabled = !idValidation || !isMatch || loading;
+  const isSubmitDisabled = !isIdAvailable || !isPasswordMatch || loading;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     if (e.target.name === "accountId") {
-      setIdValidation(null);
+      setIdAvailable(null);
     }
   };
 
@@ -46,7 +50,7 @@ function SignUp() {
     e.preventDefault();
     if (idLoading) return;
     if (!accountId) {
-      setIdValidation(null);
+      setIdAvailable(null);
       return;
     }
     setIdLoading(true);
@@ -58,20 +62,20 @@ function SignUp() {
 
       if (!response.ok) {
         if (response.status === 404) {
-          setIdValidation(true);
+          setIdAvailable(true);
         } else if (response.status === 409) {
-          setIdValidation(false);
+          setIdAvailable(false);
         } else {
-          setIdValidation(false);
+          setIdAvailable(false);
           throw new Error("서버 오류:", response.status);
         }
       } else {
         let data = await response.json();
-        setIdValidation(data);
+        setIdAvailable(data);
       }
     } catch (error) {
       console.error("알 수 없는 오류:", error);
-      setIdValidation(false);
+      setIdAvailable(false);
     } finally {
       setIdLoading(false);
     }
@@ -79,9 +83,9 @@ function SignUp() {
 
   useEffect(() => {
     if (password === "" || confirmPassword === "") {
-      setIsMatch(null);
+      setIsPasswordMatch(null);
     } else {
-      setIsMatch(password === confirmPassword);
+      setIsPasswordMatch(password === confirmPassword);
     }
   }, [password, confirmPassword]);
 
@@ -97,10 +101,10 @@ function SignUp() {
     ) {
       return;
     }
-    if (idValidation !== true) {
+    if (isIdAvailable !== true) {
       return;
     }
-    if (isMatch !== true) {
+    if (isPasswordMatch !== true) {
       return;
     }
     setLoading(true);
@@ -182,17 +186,19 @@ function SignUp() {
                 style={{
                   width: "285px",
                   border:
-                    idValidation !== null &&
-                    (idValidation ? "1px solid #2ECC71" : "1px solid #FF645B"),
+                    isIdAvailable !== null &&
+                    (isIdAvailable
+                      ? `1px solid ${colors.success}`
+                      : `1px solid ${colors.error}`),
                 }}
                 value={accountId}
                 onChange={handleChange}
               />
-              {idValidation !== null &&
-                (idValidation ? (
-                  <Icon src={checkIcon} alt="check" />
+              {isIdAvailable !== null &&
+                (isIdAvailable ? (
+                  <IdStatusIcon src={checkIcon} alt="check" />
                 ) : (
-                  <Icon src={errorIcon} alt="error" />
+                  <IdStatusIcon src={errorIcon} alt="error" />
                 ))}
             </div>
             <Button
@@ -204,37 +210,54 @@ function SignUp() {
               중복 확인
             </Button>
           </InputBox>
-          <Inputtext>비밀번호</Inputtext>
-          <Input
-            name="password"
-            type="password"
-            placeholder="사용할 비밀번호를 입력해주세요"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Inputtext>비밀번호 확인</Inputtext>
-          <Input
-            name="confirmPassword"
-            type="password"
-            placeholder="비밀번호를 다시 입력해주세요"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            style={{
-              border:
-                isMatch !== null &&
-                (isMatch ? "1px solid #2ECC71" : "1px solid #FF645B"),
-            }}
-          />
-          {isMatch !== null && (
-            <PasswordSubText
+          {isIdAvailable === false && (
+            <InputSubText>이미 사용중인 사용자 아이디 입니다</InputSubText>
+          )}
+          <div style={{ position: "relative" }}>
+            <Inputtext>비밀번호</Inputtext>
+            <Input
+              name="password"
+              type={passwordVisible ? "text" : "password"}
+              placeholder="사용할 비밀번호를 입력해주세요"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
+              <img src={eyeIcon} alt="비밀번호 보기" />
+            </ToggleButton>
+          </div>
+          <div style={{ position: "relative" }}>
+            <Inputtext>비밀번호 확인</Inputtext>
+            <Input
+              name="confirmPassword"
+              type={passwordVisible ? "text" : "password"}
+              placeholder="비밀번호를 다시 입력해주세요"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               style={{
-                color: isMatch ? "#2ECC71" : "#FF645B",
+                border:
+                  isPasswordMatch !== null &&
+                  (isPasswordMatch
+                    ? `1px solid ${colors.success}`
+                    : `1px solid ${colors.error}`),
+              }}
+            />
+            <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
+              <img src={eyeIcon} alt="비밀번호 보기" />
+            </ToggleButton>
+          </div>
+          {isPasswordMatch !== null && (
+            <InputSubText
+              style={{
+                color: isPasswordMatch
+                  ? `${colors.success}`
+                  : `${colors.error}`,
               }}
             >
-              {isMatch
+              {isPasswordMatch
                 ? "비밀번호가 일치합니다"
                 : "비밀번호가 일치하지 않습니다"}
-            </PasswordSubText>
+            </InputSubText>
           )}
           <Button type="submit" disabled={isSubmitDisabled}>
             {loading ? "로딩 중..." : "등록하기"}

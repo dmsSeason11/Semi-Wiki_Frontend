@@ -107,15 +107,26 @@ function PostEditForm() {
     }
   }, [post]);
 
-  const handleCheckboxChange = useCallback((category) => {
-    setCheckItem((prev) => {
-      const newCheckItem = { ...prev, [category]: !prev[category] };
-      setSelectedCategories(
-        Object.keys(newCheckItem).filter((key) => newCheckItem[key])
-      );
-      return newCheckItem;
-    });
-  }, []);
+  // 체크박스 변경 핸들러
+  const handleCheckboxChange = useCallback(
+    (category) => {
+      setCheckItem((prev) => {
+        // 3개 초과 선택 방지
+        const isAlreadyChecked = prev[category];
+        if (!isAlreadyChecked && selectedCategories.length >= 3) {
+          alert("카테고리는 3개까지만 선택할 수 있습니다.");
+          return prev;
+        }
+
+        const newCheckItem = { ...prev, [category]: !isAlreadyChecked };
+        setSelectedCategories(
+          Object.keys(newCheckItem).filter((key) => newCheckItem[key])
+        );
+        return newCheckItem;
+      });
+    },
+    [selectedCategories]
+  );
 
   const handleEditorChange = useCallback(() => {
     try {
@@ -139,13 +150,16 @@ function PostEditForm() {
       navigate("/login");
       return;
     }
-    setLoading(true);
-    setError("");
 
-    if (!title || selectedCategories.length === 0 || !contents) {
-      alert("모든 항목을 입력해주세요.");
+    if (!title || selectedCategories.length === 0 || !body) {
+      if (!title) alert("제목을 입력하세요.");
+      else if (selectedCategories.length === 0) alert("카테고리를 입력하세요.");
+      else if (!body) alert("본문을 입력하세요.");
       return;
     }
+
+    setLoading(true);
+    setError("");
 
     const updatedPostData = {
       title: title,
