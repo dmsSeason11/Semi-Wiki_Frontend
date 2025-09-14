@@ -24,8 +24,6 @@ export const LoveLabel = styled.label`
     height: 24px;
     left: 978px;
     top: 52px;
-
-    fill: ${($isClick) => ($isClick ? "#FF6600" : colors.gray[900])};
   }
 `;
 
