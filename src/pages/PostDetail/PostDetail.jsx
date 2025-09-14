@@ -17,6 +17,7 @@ import {
   Modify,
 } from "./PostDetail.styles.js";
 import Love from "../../assets/board/Love.svg";
+import LoveRed from "../../assets/board/Love_red.svg";
 import Article from "../../components/Article/Article.jsx";
 import TableOfContents from "../../components/TableOfContents/TableOfContents.jsx";
 
@@ -137,7 +138,7 @@ function PostDetail() {
         <Modify onClick={handleModifyClick}>수정</Modify>
         <LoveLabel>
           <HiddenButton onClick={handleLoveClick} />
-          <img src={Love} alt="좋아요" $isClick={isClicked} />
+          <img src={isClicked ? LoveRed : Love} />
           <Lovecount>{loveCount}</Lovecount>
         </LoveLabel>
 
