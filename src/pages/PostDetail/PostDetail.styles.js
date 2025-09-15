@@ -94,6 +94,7 @@ export const CategoryTag = styled.span`
   color: ${colors.orange[900]};
 
   font-family: "Pretendard";
+  font-weight: 500;  
 `;
 
 //목차
@@ -145,6 +146,9 @@ export const Contentcontainer = styled.div`
   background: ${colors.gray[950]};
   border: 1px solid ${colors.gray[50]};
   border-radius: 24px;
+
+  font-family: "Pretendard";
+  font-weight: 600;
 `;
 
 //수정 버튼

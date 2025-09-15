@@ -28,7 +28,6 @@ export const LinkStyle = styled(Link)`
   color: ${colors.orange[50]};
   padding-left: 12px;
 
-  flex: 2.7; 
   overflow: hidden;
   text-overflow: ellipsis;
 `;
@@ -39,17 +38,21 @@ export const Title = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: 'Pretendard';
+  font-weight: 500;
 `;
 
 // 게시판 카테고리
 export const Categories = styled.div`
-  flex: 1.7;
+  flex: 1.9;
   display: flex;
   gap: 2px;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: 'Pretendard';
+  font-weight: 500;
 `;
 
 // 게시판 카테고리 태그
@@ -63,7 +66,7 @@ export const CategoryTag = styled.span`
 
 // 게시판 수정자
 export const Modifier = styled.div`
-  flex: 1.7;
+  flex: 1.8;
   min-width: 0;
   color: ${colors.orange[900]};
   font-size: 24px;
@@ -71,4 +74,6 @@ export const Modifier = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-family: 'Pretendard';
+  font-weight: 500;
 `;

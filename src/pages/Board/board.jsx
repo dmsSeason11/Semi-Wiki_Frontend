@@ -17,7 +17,7 @@ function Board({ searchTerm }) {
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const pageSize = 2;
+  const pageSize = 10;
   const token = localStorage.getItem("accessToken");
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 

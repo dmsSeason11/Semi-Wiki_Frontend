@@ -54,7 +54,8 @@ export const CheckboxLabel = styled.label`
   color: ${({ $check }) => ($check ? colors.orange[50] : colors.orange[900])};
 
   font-size: 18px;
-  font-family: "PretendardsemiBold";
+  font-family: "Pretendard";
+  font-weight: 600;
 
   cursor: pointer;
   user-select: none;
