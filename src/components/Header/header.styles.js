@@ -19,7 +19,7 @@ export const SearchBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  margin: 0 13px;
+  margin: 0 10px;
 `;
 export const Button = styled.button`
   border: none;
@@ -36,6 +36,17 @@ export const Input = styled.input`
   padding: 10px 65px;
 `;
 
-export const Link1 = styled.div`
+export const LinkBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+  text-decoration: none;
   cursor: pointer;
+`;
+
+export const H2 = styled.p`
+  margin-left: 10px;
+  font-size: 32px;
+  font-weight: 500;
+  color: ${colors.gray[900]};
 `;

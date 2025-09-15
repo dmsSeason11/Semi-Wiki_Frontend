@@ -50,7 +50,6 @@ export const Inputtext = styled.label`
   margin: 10px 0 5px;
   width: 56%;
   display: block;
-  font-family: Pretendard, sans-serif;
 `;
 
 export const Input = styled.input`
@@ -66,7 +65,7 @@ export const Input = styled.input`
 
   font-size: 20px;
   font-weight: 500;
-  font-family: Pretendard, sans-serif;
+  color: ${colors.gray[50]};
 
   &:focus {
     background-color: ${colors.gray[800]};
@@ -102,7 +101,6 @@ export const InputSubText = styled.p`
   margin-top: 5px;
   color: ${colors.error};
   font-size: 14px;
-  font-family: Pretendard, sans-serif;
 `;
 
 export const Button = styled.button`
@@ -115,7 +113,6 @@ export const Button = styled.button`
   border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
-  font-family: Pretendard, sans-serif;
 
   &:hover {
     background-color: ${colors.gray[800]};
@@ -132,7 +129,6 @@ export const SubText = styled.p`
   color: ${colors.gray[50]};
   font-size: 16px;
   margin-top: 30px;
-  font-family: Pretendard, sans-serif;
 `;
 
 export const LoginLink = styled(Link)`
