@@ -17,12 +17,9 @@ export const TOCContents = styled.ul`
 export const TOCsubContents = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 5px;
 
-  margin-top: 5px;
   margin-left: 15px;
 `; 
-
 
 
 

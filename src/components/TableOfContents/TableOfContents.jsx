@@ -2,7 +2,7 @@ import { TOCContents, TOCsubContents } from "./TableOfContents.styles";
 
 function TableOfContentsItem({ section }) {
   return (
-    <li>
+    <li style={{ marginTop: "5px" }}>
       {section.headerNumber}. {section.title}
       {section.children && section.children.length > 0 && (
         <TOCsubContents>
