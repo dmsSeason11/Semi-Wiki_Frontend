@@ -81,7 +81,7 @@ export const Inputtext = styled.label`
 export const ErrorIcon = styled.img`
   position: absolute;
   right: 560px;
-  top: ${(props) => props.top || "505px"};
+  top: ${(props) => props.top || "520px"};
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
@@ -91,7 +91,7 @@ export const ErrorIcon = styled.img`
 export const ToggleButton = styled.button`
   position: absolute;
   right: 560px;
-  top: 505px;
+  top: 520px;
   transform: translateY(-50%);
   background: none;
   border: none;

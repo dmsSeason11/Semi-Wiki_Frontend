@@ -160,7 +160,7 @@ function Login() {
               hasError={fieldErrors.accountId}
             />
             {fieldErrors.accountId && (
-              <ErrorIcon src={RedIcon} alt="오류" top="405px" />
+              <ErrorIcon src={RedIcon} alt="오류" top="420px" />
             )}
 
             <Inputtext>비밀번호</Inputtext>
@@ -176,7 +176,7 @@ function Login() {
               <EyeImage src={EyeIcon} alt="비밀번호 보기" />
             </ToggleButton>
             {fieldErrors.password && (
-              <ErrorIcon src={RedIcon} alt="오류" top="505px" />
+              <ErrorIcon src={RedIcon} alt="오류" top="520px" />
             )}
             <Button type="submit" disabled={loading}>
               {loading ? "로딩 중..." : "로그인"}

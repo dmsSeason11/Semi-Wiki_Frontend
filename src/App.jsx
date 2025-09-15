@@ -11,6 +11,7 @@ import PostEditForm from "./pages/PostEditForm/PostEditForm.jsx";
 import MyBoard from "./pages/Write Board/writeboard.jsx";
 import { createGlobalStyle } from "styled-components";
 import { GlobalEditorStyle } from "./pages/PostForm/PostForm.styles.js";
+import "./styles/pretendard.css";
 
 const GlobalStyle = createGlobalStyle`
   * { box-sizing: border-box; }

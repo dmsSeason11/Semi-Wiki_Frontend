@@ -61,7 +61,7 @@ export const BoardListCategory = styled.h2`
   position: absolute;
   width: 86px;
   height: 29px;
-  left: 490px;
+  left: 465px;
   top: 40px;
 
   font-family: "Pretendard";

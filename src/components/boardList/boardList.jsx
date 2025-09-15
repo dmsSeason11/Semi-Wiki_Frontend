@@ -12,7 +12,7 @@ import BoardItem from "../../components/boardItem/BoardItem.jsx";
 function BoardList({
   sort,
   page,
-  pageSize = 2,
+  pageSize = 10,
   token,
   selectedCategories = [],
   searchTerm = "",
