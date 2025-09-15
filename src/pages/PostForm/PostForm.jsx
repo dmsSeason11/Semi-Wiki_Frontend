@@ -94,14 +94,6 @@ function PostForm() {
       navigate("/login");
       return;
     }
-
-    if (!title || selectedCategories.length === 0 || !body) {
-      if (!title) alert("제목을 입력하세요.");
-      else if (selectedCategories.length === 0) alert("카테고리를 입력하세요.");
-      else if (!body) alert("본문을 입력하세요.");
-      return;
-    }
-
     setLoading(true);
     setError("");
 
@@ -127,6 +119,12 @@ function PostForm() {
       if (!response.ok) {
         switch (response.status) {
           case 400:
+            if (!title || selectedCategories.length === 0 || !body) {
+              if (!title) throw new Error("제목을 입력하세요.");
+              else if (selectedCategories.length === 0)
+                throw new Error("카테고리를 입력하세요.");
+              else if (!body) throw new Error("본문을 입력하세요.");
+            }
             throw new Error("입력 정보를 다시 확인해 주세요.");
           case 401:
             localStorage.removeItem("accessToken");

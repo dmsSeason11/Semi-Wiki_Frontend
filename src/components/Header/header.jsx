@@ -6,7 +6,8 @@ import {
   SearchBox,
   Button,
   Input,
-  Link1,
+  LinkBox,
+  H2,
 } from "./header.styles";
 import logo from "../../assets/logo/logo.png";
 import user from "../../assets/user.png";
@@ -22,9 +23,9 @@ function Header({ onSearch }) {
 
   return (
     <Container>
-      <Link1 as={Link} to={"/"}>
+      <LinkBox as={Link} to={"/"}>
         <img src={logo} alt="Logo" style={{ width: "231px", height: "72px" }} />
-      </Link1>
+      </LinkBox>
 
       <Div>
         <SearchBox>
@@ -44,13 +45,14 @@ function Header({ onSearch }) {
           />
         </SearchBox>
 
-        <Link1 as={Link} to={`/mypage/${accountId}`}>
+        <LinkBox as={Link} to={`/mypage/${accountId}`}>
           <img
             src={user}
             alt="user"
             style={{ width: "48px", height: "48px" }}
           />
-        </Link1>
+          <H2>{accountId}</H2>
+        </LinkBox>
       </Div>
     </Container>
   );

@@ -211,7 +211,7 @@ function SignUp() {
             </Button>
           </InputBox>
           {isIdAvailable === false && (
-            <InputSubText>이미 시용중인 사용자 아이디 입니다</InputSubText>
+            <InputSubText>이미 사용중인 사용자 아이디 입니다</InputSubText>
           )}
           <div style={{ position: "relative" }}>
             <Inputtext>비밀번호</Inputtext>
