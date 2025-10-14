@@ -18,7 +18,7 @@ export async function reissueAccessToken() {
   if (!accountId || !refreshToken) {
     console.error("[토큰 재발급 실패] accountId 또는 refreshToken 없음.");
 
-    clearInterval(interval15min);
+    clearInterval(interval14min);
     // clearInterval(interval10sec);
 
     console.log("[토큰 재발급 종료] 로그아웃 완료.");
@@ -67,11 +67,11 @@ export async function reissueAccessToken() {
   }
 }
 
-let interval15min;
+let interval14min;
 // let interval10sec;
 
 export function startTokenAutoReissue() {
   reissueAccessToken();
-  interval15min = setInterval(reissueAccessToken, 15 * 60 * 1000); // 15분 간격
+  interval14min = setInterval(reissueAccessToken, 14 * 60 * 1000); // 15분 간격
   // interval10sec = setInterval(reissueAccessToken, 10 * 1000); // 10초 간격
 }
