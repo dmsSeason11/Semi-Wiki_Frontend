@@ -5,6 +5,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const FormContainer = styled.div`
   min-height: 100vh;
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   background-color: ${colors.gray[100]};

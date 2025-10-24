@@ -74,25 +74,19 @@ export const Inputtext = styled.label`
   color: ${colors.gray[50]};
   font-size: 22px;
   margin: 10px 0 5px;
+  padding-bottom: 8px;
   width: 84%;
   display: block;
 `;
 
 export const ErrorIcon = styled.img`
-  position: absolute;
-  right: 560px;
-  top: ${(props) => props.top || "505px"};
-  transform: translateY(-50%);
+  display: absolute;
   width: 20px;
   height: 20px;
   pointer-events: none;
 `;
 
 export const ToggleButton = styled.button`
-  position: absolute;
-  right: 560px;
-  top: 535px;
-  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
@@ -107,36 +101,24 @@ export const EyeImage = styled.img`
 `;
 
 export const Input = styled.input`
-  width: 380px;
+  width: 310px;
   height: 50px;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 8px;
   background-color: ${colors.gray[800]};
-  border: ${(props) => (props.hasError ? `2px solid red` : "none")};
   outline: none;
   font-size: 20px;
   font-weight: 500;
   color: ${colors.gray[50]};
-
-  &::placeholder {
-    color: ${colors.gray[600]};
-  }
-
-  &:focus {
-    border: ${(props) =>
-      props.hasError ? "2px solid red" : `2px solid ${colors.gray[700]}`};
-  }
+  border: none;
 `;
 
 export const Button = styled.button`
-  width: 380px;
+  width: 370px;
   height: 50px;
   margin-top: 40px;
   background-color: ${colors.gray[950]};
   color: ${colors.gray[50]};
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
 
@@ -155,4 +137,49 @@ export const LinkText = styled.a`
   color: ${colors.gray[50]};
   text-decoration: underline;
   cursor: pointer;
+`;
+
+export const Inputcontainer1 = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 370px;
+  height: 55px;
+  border-radius: 8px;
+  padding: 0 25px;
+  margin-bottom: 20px;
+  background-color: ${colors.gray[800]};
+  border: ${(props) =>
+    props.hasError ? `2px solid red` : `2px solid ${colors.gray[800]}`};
+
+  &::placeholder {
+    color: ${colors.gray[600]};
+  }
+
+  &:focus {
+    border: ${(props) =>
+      props.hasError ? "2px solid red" : `2px solid ${colors.gray[700]}`};
+  }
+`;
+
+export const Inputcontainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 370px;
+  height: 55px;
+  border-radius: 8px;
+  padding: 0 25px;
+  background-color: ${colors.gray[800]};
+  border: ${(props) =>
+    props.hasError ? `2px solid red` : `2px solid ${colors.gray[800]}`};
+
+  &::placeholder {
+    color: ${colors.gray[600]};
+  }
+
+  &:focus {
+    border: ${(props) =>
+      props.hasError ? "2px solid red" : `2px solid ${colors.gray[700]}`};
+  }
 `;

@@ -4,6 +4,7 @@ import "../../styles/reset.css";
 import LogoImage from "../../assets/logo/logo_vertical.svg";
 import { startTokenAutoReissue } from "./Reissue";
 import EyeIcon from "../../assets/eyes.svg";
+import EyeOpenIcon from "../../assets/eyes_open.svg";
 import RedIcon from "../../assets/signup_error.png";
 
 import {
@@ -22,6 +23,8 @@ import {
   Button,
   SubText,
   LinkText,
+  Inputcontainer,
+  Inputcontainer1,
 } from "./login.styles";
 
 function Login() {
@@ -151,33 +154,38 @@ function Login() {
           <Logintitle>로그인</Logintitle>
           <form onSubmit={handleSubmit}>
             <Inputtext>아이디</Inputtext>
-            <Input
-              type="text"
-              name="accountId"
-              value={form.accountId}
-              onChange={handleChange}
-              placeholder="아이디를 입력해주세요"
-              hasError={fieldErrors.accountId}
-            />
-            {fieldErrors.accountId && (
-              <ErrorIcon src={RedIcon} alt="오류" top="420px" />
-            )}
+            <Inputcontainer1 hasError={fieldErrors.accountId}>
+              <Input
+                type="text"
+                name="accountId"
+                value={form.accountId}
+                onChange={handleChange}
+                placeholder="아이디를 입력해주세요"
+                hasError={fieldErrors.accountId}
+              />
+              {fieldErrors.accountId && <ErrorIcon src={RedIcon} alt="오류" />}
+            </Inputcontainer1>
 
             <Inputtext>비밀번호</Inputtext>
-            <Input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              placeholder="비밀번호를 입력해주세요"
-              hasError={fieldErrors.password}
-            />
-            <ToggleButton type="button" onClick={togglePassword}>
-              <EyeImage src={EyeIcon} alt="비밀번호 보기" />
-            </ToggleButton>
-            {fieldErrors.password && (
-              <ErrorIcon src={RedIcon} alt="오류" top="520px" />
-            )}
+            <Inputcontainer hasError={fieldErrors.password}>
+              <Input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                placeholder="비밀번호를 입력해주세요"
+              />
+              {!fieldErrors.password && (
+                <ToggleButton type="button" onClick={togglePassword}>
+                  <EyeImage
+                    src={showPassword ? EyeOpenIcon : EyeIcon}
+                    alt="비밀번호 보기"
+                  />
+                </ToggleButton>
+              )}
+              {fieldErrors.password && <ErrorIcon src={RedIcon} alt="오류" />}
+            </Inputcontainer>
+
             <Button type="submit" disabled={loading}>
               {loading ? "로딩 중..." : "로그인"}
             </Button>
