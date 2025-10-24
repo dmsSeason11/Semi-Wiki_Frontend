@@ -24,7 +24,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
 
         <ArticleContentWrapper>
           <ArticleContent>
-            <Viewer initialValue={markdown} />
+            <Viewer initialValue={markdown} Viewer={true} />
           </ArticleContent>
         </ArticleContentWrapper>
 
