@@ -151,8 +151,9 @@ export const GlobalViewerStyle = createGlobalStyle`
   }
 
   /* 체크리스트 */
-  .toastui-editor-contents input[type="checkbox"] {
+  .toastui-editor-contents {
     margin-right: 0.5rem !important;
+    pointer-events: none !important;
   }
 
   /* 강조 / 기울임 / 취소선 */
