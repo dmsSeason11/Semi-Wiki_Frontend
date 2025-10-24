@@ -32,17 +32,22 @@ function PostEditForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [checkItem, setCheckItem] = useState({
-    전공: false,
-    기숙사: false,
-    학생: false,
-    선생님: false,
-    동아리: false,
-    논란: false,
-    프로젝트: false,
+    프론트엔드: false,
+    백엔드: false,
+    안드로이드: false,
+    IOS: false,
+    임베디드: false,
+    정보보안: false,
+    인공지능: false,
+    디자인: false,
+    게임: false,
+    DevOps: false,
+    전공동아리: false,
     창체동아리: false,
     자율동아리: false,
-    밴드부: false,
-    배구부: false,
+    기숙사: false,
+    학교: false,
+    DMS: false,
     기타: false,
   }); // 카테고리 체크 상태
 
