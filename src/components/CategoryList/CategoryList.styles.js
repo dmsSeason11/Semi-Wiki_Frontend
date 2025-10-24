@@ -3,11 +3,11 @@ import colors from "../../styles/color";
 
 // 카테고리 리스트 컨테이너
 export const CategoryListContainer = styled.div`
-  position: absolute;
   width: 300px;
   height: 463px;
-  left: 1380px;
-  top: 128px;
+  margin-top: 40px;
+  
+  padding: 20px;
 
   background: ${colors.gray[900]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -16,11 +16,8 @@ export const CategoryListContainer = styled.div`
 
 // 카테고리 리스트 제목
 export const CategoryListTitle = styled.h1`
-  position: absolute;
   width: 125px;
   height: 43px;
-  left: 20px;
-  top: 20px;
 
   font-family: "Pretendard";
   font-style: normal;
@@ -38,10 +35,10 @@ export const CategoryItem = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
-  height: 360px;
+  margin-top: 20px;
+  height: 370px;
 
-  gap: 20px;
-  margin: 80px 20px 0 20px;
+  gap: 1.2rem;
 `;
 
 // 체크박스 레이블
@@ -96,4 +93,9 @@ export const StyledCheckbox = styled.div`
     opacity: ${({ $check }) => ($check ? 1 : 0)}; 
     transition: 0.2s;
   }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  position: relative;
 `;
