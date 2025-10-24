@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 export const MypageCard = styled.div`
   display: flex;
-  background: ${colors.gray[900]};
+  background: #353535;
   border-radius: 12px;
   padding: 20px 120px;
   max-width: 1500px;
@@ -20,6 +20,7 @@ export const MypageCard = styled.div`
   height: 550px;
   color: ${colors.gray[50]};
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 35px solid ${colors.gray[900]};
 `;
 
 export const LeftBox = styled.div`
@@ -33,7 +34,7 @@ export const ProfileCard = styled.div`
   align-items: flex-start;
   background: ${colors.gray[950]};
   border-radius: 10px;
-  padding: 80px 50px;
+  padding: 100px 50px;
   width: 750px;
   height: 350px;
   border: 1px solid ${colors.gray[50]};
@@ -108,6 +109,7 @@ export const MenuItem = styled.div`
   font-size: 35px;
   font-weight: 500;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     text-decoration: underline;

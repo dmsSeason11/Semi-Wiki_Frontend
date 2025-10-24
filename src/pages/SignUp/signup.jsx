@@ -4,7 +4,8 @@ import "../../styles/reset.css";
 import colors from "../../styles/color";
 import checkIcon from "../../assets/signup_check.png";
 import errorIcon from "../../assets/signup_error.png";
-import eyeIcon from "../../assets/signup_eye.png";
+import EyeIcon from "../../assets/eyes.svg";
+import EyeOpenIcon from "../../assets/eyes_open.svg";
 import {
   Container,
   SignUpDiv,
@@ -223,7 +224,11 @@ function SignUp() {
               onChange={(e) => setPassword(e.target.value)}
             />
             <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
-              <img src={eyeIcon} alt="비밀번호 보기" />
+              <img
+                width="25px"
+                src={passwordVisible ? EyeOpenIcon : EyeIcon}
+                alt="비밀번호 보기"
+              />{" "}
             </ToggleButton>
           </div>
           <div style={{ position: "relative" }}>
@@ -243,7 +248,11 @@ function SignUp() {
               }}
             />
             <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
-              <img src={eyeIcon} alt="비밀번호 보기" />
+              <img
+                width="25px"
+                src={passwordVisible ? EyeOpenIcon : EyeIcon}
+                alt="비밀번호 보기"
+              />{" "}
             </ToggleButton>
           </div>
           {isPasswordMatch !== null && (
