@@ -7,11 +7,12 @@ export const BoardContainer = styled.div`
   width: 1100px;
   height: auto;
   min-height: 742px;
-  left: calc(50% - 1100px / 2 - 170px);
-  top: 40px;
-  bottom: 240px;
+
+  margin-top: 40px;
+  margin-left: 140px;
 
   padding-left: 28px;
+  padding-right: 28px;
   padding-top: 232px;
   padding-bottom: 50px;
 
@@ -96,4 +97,7 @@ export const Boardfilertitle = styled.h2`
 export const Content = styled.div`
   display: flex;
   margin-bottom: 120px;
+  justify-content: center;
+  gap: 3rem;
+  margin-right: 10rem;
 `;

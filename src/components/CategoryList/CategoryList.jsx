@@ -7,6 +7,7 @@ import {
   CheckboxLabel,
   HiddenCheckbox,
   StyledCheckbox,
+  Content,
 } from "./CategoryList.styles.js";
 
 function CategoryList({ selectedCategories = [], onSelectedCategories }) {
@@ -26,7 +27,7 @@ function CategoryList({ selectedCategories = [], onSelectedCategories }) {
   
 
   return (
-    <>
+    <Content>
       <CategoryListContainer>
         <CategoryListTitle>카테고리</CategoryListTitle>
 
@@ -54,7 +55,7 @@ function CategoryList({ selectedCategories = [], onSelectedCategories }) {
           })}
         </CategoryItem>
       </CategoryListContainer>
-    </>
+    </Content>
   );
 }
 
