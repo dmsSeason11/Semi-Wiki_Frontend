@@ -38,6 +38,7 @@ function SignUp() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const isSubmitDisabled = !isIdAvailable || !isPasswordMatch || loading;
+  const regexId = /admin/;
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,6 +53,11 @@ function SignUp() {
     if (idLoading) return;
     if (!accountId) {
       setIdAvailable(null);
+      return;
+    }
+    if (regexId.test(accountId) === true) {
+      setIdAvailable(null);
+      alert("admin이 포함된 아이디는 생성할 수 없습니다.");
       return;
     }
     setIdLoading(true);
