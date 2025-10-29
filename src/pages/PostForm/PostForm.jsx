@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
+import "@toast-ui/editor-plugin-chart";
 import {
   FormContainer,
   FormLayout,
@@ -76,6 +77,16 @@ function PostForm() {
     },
     [selectedCategories]
   );
+
+  const onUploadImage = async (blob, callback) => {
+    try {
+      const response = await axios.post();
+      callback(response.data.url, blob.name);
+    } catch (error) {
+      alert("이미지 업로드 실패");
+      console.log(error);
+    }
+  };
 
   const handleEditorChange = useCallback(() => {
     try {
@@ -174,7 +185,7 @@ function PostForm() {
               <TitleInput
                 name="title"
                 type="text"
-                placeholder="제목"
+                placeholder="제목을 입력해주세요"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -203,6 +214,9 @@ function PostForm() {
                   initialEditType="wysiwyg"
                   initialValue="본문을 추가해주세요"
                   height="577px"
+                  hooks={{
+                    addImageBlobHook: onUploadImage,
+                  }}
                   previewStyle="none"
                   hideModeSwitch={true} // 모드 전환 버튼 숨기기
                   useCommandShortcut={false} // 단축키 비활성화

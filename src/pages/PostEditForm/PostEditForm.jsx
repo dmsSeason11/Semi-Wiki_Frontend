@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
+import "@toast-ui/editor-plugin-chart";
 import {
   FormContainer,
   FormLayout,
@@ -233,7 +234,7 @@ function PostEditForm() {
               <TitleInput
                 name="title"
                 type="text"
-                placeholder="제목"
+                placeholder="제목을 입력해주세요"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -259,7 +260,7 @@ function PostEditForm() {
               <StyledBodyWrapper>
                 <Editor
                   ref={editorRef}
-                  initialEditType="wysiwyg"
+                  initialEditType="markdown"
                   initialValue="본문을 추가해주세요"
                   height="577px"
                   previewStyle="none"
