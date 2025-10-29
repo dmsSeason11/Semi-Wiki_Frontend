@@ -6,14 +6,18 @@ import checkIcon from "../../assets/signup_check.png";
 import errorIcon from "../../assets/signup_error.png";
 import EyeIcon from "../../assets/eyes.svg";
 import EyeOpenIcon from "../../assets/eyes_open.svg";
+import accountIcon from "../../assets/account.svg";
+import passwordIcon from "../../assets/password.svg";
 import {
   Container,
   SignUpDiv,
   SignUptitle,
   InputBox,
-  Inputtext,
+  InputTextBox,
+  InputText,
   Input,
   IdStatusIcon,
+  IdCheckButton,
   ToggleButton,
   InputSubText,
   Button,
@@ -157,130 +161,148 @@ function SignUp() {
   return (
     <Container>
       <SignUpDiv>
-        <SignUptitle>회원가입</SignUptitle>
-        <form onSubmit={handleSubmit}>
-          <InputBox>
-            <div>
-              <Inputtext>학번</Inputtext>
-              <Input
-                name="studentNum"
-                type="text"
-                placeholder="학번을 입력해주세요"
-                style={{ width: "195px" }}
-                value={studentNum}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <Inputtext>이름</Inputtext>
-              <Input
-                name="username"
-                type="text"
-                placeholder="이름을 입력해주세요"
-                style={{ width: "195px" }}
-                value={username}
-                onChange={handleChange}
-              />
-            </div>
-          </InputBox>
-          <InputBox>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "start",
+          }}
+        >
+          <SignUptitle>회원가입</SignUptitle>
+          <form onSubmit={handleSubmit}>
+            <InputBox>
+              <div>
+                <InputTextBox>
+                  <img src={accountIcon} />
+                  <InputText>학번</InputText>
+                </InputTextBox>
+                <Input
+                  name="studentNum"
+                  type="text"
+                  placeholder="학번을 입력해주세요"
+                  style={{ width: "240px" }}
+                  value={studentNum}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <InputTextBox>
+                  <img src={accountIcon} />
+                  <InputText>이름</InputText>
+                </InputTextBox>
+                <Input
+                  name="username"
+                  type="text"
+                  placeholder="이름을 입력해주세요"
+                  style={{ width: "240px" }}
+                  value={username}
+                  onChange={handleChange}
+                />
+              </div>
+            </InputBox>
+            <InputBox>
+              <div style={{ position: "relative" }}>
+                <InputTextBox>
+                  <img src={accountIcon} />
+                  <InputText>아이디</InputText>
+                </InputTextBox>
+                <Input
+                  name="accountId"
+                  type="text"
+                  placeholder="아이디를 입력해주세요"
+                  style={{
+                    width: "360px",
+                    border:
+                      isIdAvailable !== null &&
+                      (isIdAvailable
+                        ? `1px solid ${colors.success}`
+                        : `1px solid ${colors.error}`),
+                  }}
+                  value={accountId}
+                  onChange={handleChange}
+                />
+                {isIdAvailable !== null &&
+                  (isIdAvailable ? (
+                    <IdStatusIcon src={checkIcon} alt="check" />
+                  ) : (
+                    <IdStatusIcon src={errorIcon} alt="error" />
+                  ))}
+              </div>
+              <IdCheckButton onClick={handleCheckClick} disabled={idLoading}>
+                중복 확인
+              </IdCheckButton>
+            </InputBox>
+            {isIdAvailable === false && (
+              <InputSubText>이미 사용중인 사용자 아이디 입니다</InputSubText>
+            )}
             <div style={{ position: "relative" }}>
-              <Inputtext>아이디</Inputtext>
+              <InputTextBox>
+                <img src={passwordIcon} />
+                <InputText>비밀번호</InputText>
+              </InputTextBox>
               <Input
-                name="accountId"
-                type="text"
-                placeholder="아이디를 입력해주세요"
+                name="password"
+                type={passwordVisible ? "text" : "password"}
+                placeholder="사용할 비밀번호를 입력해주세요"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
+                <img
+                  width="25px"
+                  src={passwordVisible ? EyeOpenIcon : EyeIcon}
+                  alt="비밀번호 보기"
+                />{" "}
+              </ToggleButton>
+            </div>
+            <div style={{ position: "relative" }}>
+              <InputTextBox>
+                <img src={passwordIcon} />
+                <InputText>비밀번호 확인</InputText>
+              </InputTextBox>
+              <Input
+                name="confirmPassword"
+                type={passwordVisible ? "text" : "password"}
+                placeholder="비밀번호를 다시 입력해주세요"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 style={{
-                  width: "285px",
                   border:
-                    isIdAvailable !== null &&
-                    (isIdAvailable
+                    isPasswordMatch !== null &&
+                    (isPasswordMatch
                       ? `1px solid ${colors.success}`
                       : `1px solid ${colors.error}`),
                 }}
-                value={accountId}
-                onChange={handleChange}
               />
-              {isIdAvailable !== null &&
-                (isIdAvailable ? (
-                  <IdStatusIcon src={checkIcon} alt="check" />
-                ) : (
-                  <IdStatusIcon src={errorIcon} alt="error" />
-                ))}
+              <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
+                <img
+                  width="25px"
+                  src={passwordVisible ? EyeOpenIcon : EyeIcon}
+                  alt="비밀번호 보기"
+                />{" "}
+              </ToggleButton>
             </div>
-            <Button
-              style={{ width: "100px", marginTop: "36px" }}
-              type="button"
-              onClick={handleCheckClick}
-              disabled={idLoading}
-            >
-              중복 확인
+            {isPasswordMatch !== null && (
+              <InputSubText
+                style={{
+                  color: isPasswordMatch
+                    ? `${colors.success}`
+                    : `${colors.error}`,
+                }}
+              >
+                {isPasswordMatch
+                  ? "비밀번호가 일치합니다"
+                  : "비밀번호가 일치하지 않습니다"}
+              </InputSubText>
+            )}
+            <Button type="submit" disabled={isSubmitDisabled}>
+              {loading ? "로딩 중..." : "회원가입"}
             </Button>
-          </InputBox>
-          {isIdAvailable === false && (
-            <InputSubText>이미 사용중인 사용자 아이디 입니다</InputSubText>
-          )}
-          <div style={{ position: "relative" }}>
-            <Inputtext>비밀번호</Inputtext>
-            <Input
-              name="password"
-              type={passwordVisible ? "text" : "password"}
-              placeholder="사용할 비밀번호를 입력해주세요"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
-              <img
-                width="25px"
-                src={passwordVisible ? EyeOpenIcon : EyeIcon}
-                alt="비밀번호 보기"
-              />{" "}
-            </ToggleButton>
-          </div>
-          <div style={{ position: "relative" }}>
-            <Inputtext>비밀번호 확인</Inputtext>
-            <Input
-              name="confirmPassword"
-              type={passwordVisible ? "text" : "password"}
-              placeholder="비밀번호를 다시 입력해주세요"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              style={{
-                border:
-                  isPasswordMatch !== null &&
-                  (isPasswordMatch
-                    ? `1px solid ${colors.success}`
-                    : `1px solid ${colors.error}`),
-              }}
-            />
-            <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
-              <img
-                width="25px"
-                src={passwordVisible ? EyeOpenIcon : EyeIcon}
-                alt="비밀번호 보기"
-              />{" "}
-            </ToggleButton>
-          </div>
-          {isPasswordMatch !== null && (
-            <InputSubText
-              style={{
-                color: isPasswordMatch
-                  ? `${colors.success}`
-                  : `${colors.error}`,
-              }}
-            >
-              {isPasswordMatch
-                ? "비밀번호가 일치합니다"
-                : "비밀번호가 일치하지 않습니다"}
-            </InputSubText>
-          )}
-          <Button type="submit" disabled={isSubmitDisabled}>
-            {loading ? "로딩 중..." : "등록하기"}
-          </Button>
-        </form>
-        <SubText>
-          이미 계정이 있으신가요? <LoginLink to={"/login"}>로그인</LoginLink>
-        </SubText>
+          </form>
+          <SubText>
+            이미 계정이 있으신가요? <LoginLink to={"/login"}>로그인</LoginLink>
+          </SubText>
+        </div>
       </SignUpDiv>
     </Container>
   );

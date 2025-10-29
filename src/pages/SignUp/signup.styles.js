@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
 import { Link } from "react-router-dom";
+import { colors_dark } from "../../styles/color_table";
 
 export const Container = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const SignUpDiv = styled.div`
-  background-color: ${colors.gray[900]};
+  background-color: ${colors_dark.gray[700]};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,9 +30,9 @@ export const SignUpDiv = styled.div`
   }
 `;
 
-export const SignUptitle = styled.h2`
-  color: ${colors.gray[50]};
-  font-size: 48px;
+export const SignUptitle = styled.h1`
+  color: ${colors_dark.gray[100]};
+  font-size: 42px;
   margin-bottom: 30px;
   font-weight: 500;
   font-family: Pretendard, sans-serif;
@@ -41,26 +42,33 @@ export const InputBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
+
+  width: 500px;
 `;
 
-export const Inputtext = styled.label`
-  color: ${colors.gray[50]};
-  font-size: 22px;
-  margin: 10px 0 5px;
-  width: 56%;
+export const InputTextBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+export const InputText = styled.label`
   display: block;
+  margin-left: 8px;
+
+  color: ${colors_dark.gray[50]};
+  font-size: 20px;
 `;
 
 export const Input = styled.input`
-  width: 400px;
+  width: 500px;
   height: 50px;
-  margin: 6px 0;
+  margin: 10px 0;
   padding: 10px;
 
-  border-radius: 8px;
-  background-color: ${colors.gray[800]};
-  border: none;
+  border-radius: 10px;
+  background-color: ${colors_dark.gray[500]};
+  border: 1px solid ${colors_dark.gray[350]};
   outline: none;
 
   font-size: 20px;
@@ -68,11 +76,11 @@ export const Input = styled.input`
   color: ${colors.gray[50]};
 
   &:focus {
-    background-color: ${colors.gray[800]};
+    background-color: ${colors_dark.gray[600]};
   }
 
   &::placeholder {
-    color: ${colors.gray[600]};
+    color: ${colors_dark.gray[400]};
   }
 `;
 
@@ -84,12 +92,30 @@ export const IdStatusIcon = styled.img`
   bottom: 18px;
 `;
 
+export const IdCheckButton = styled.button`
+  width: 120px;
+  height: 50px;
+  margin-top: 45px;
+
+  border: 1px solid ${colors_dark.gray[150]};
+  border-radius: 10px;
+  background-color: ${colors_dark.transparent["gray20"]};
+
+  font-size: 20px;
+  color: ${colors_dark.gray[150]};
+
+  &:hover {
+    background-color: ${colors_dark.gray[500]};
+    cursor: pointer;
+  }
+`;
+
 export const ToggleButton = styled.button`
   width: 28px;
   height: 28px;
   position: absolute;
   right: 20px;
-  bottom: 18px;
+  bottom: 20px;
 
   background: none;
   border: none;
@@ -104,35 +130,38 @@ export const InputSubText = styled.p`
 `;
 
 export const Button = styled.button`
-  width: 400px;
-  height: 50px;
+  width: 500px;
+  height: 70px;
   margin-top: 40px;
-  background-color: ${colors.gray[950]};
-  color: ${colors.gray[50]};
-  border: none;
+
+  background-color: ${colors_dark.transparent["gray20"]};
+  border: 1px solid ${colors_dark.gray[250]};
+
   border-radius: 8px;
+  color: ${colors.gray[50]};
   font-size: 20px;
+
   cursor: pointer;
 
   &:hover {
-    background-color: ${colors.gray[800]};
+    background-color: ${colors_dark.gray[500]};
     cursor: pointer;
   }
 
   &:disabled {
-    background-color: ${colors.gray[800]};
-    cursor: not-allowed;
+    background-color: ${colors_dark.gray[500]};
+    cursor: default;
   }
 `;
 
 export const SubText = styled.p`
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[300]};
   font-size: 16px;
-  margin-top: 30px;
+  margin-top: 43px;
 `;
 
 export const LoginLink = styled(Link)`
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
   text-decoration: underline;
   cursor: pointer;
 `;
