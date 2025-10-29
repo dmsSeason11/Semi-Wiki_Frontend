@@ -31,7 +31,6 @@ export const BoardTitle = styled.h1`
   bottom: 210px;
   margin-bottom: 50px;
 
-
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
@@ -81,7 +80,8 @@ export const Boardfilertitle = styled.h2`
 
   &::after {
     content: "";
-    background-color: ${({ $active }) => ($active ? colors.gray[500] : "transparent")};
+    background-color: ${({ $active }) =>
+      $active ? colors.gray[500] : "transparent"};
 
     position: absolute;
     width: 51px;
