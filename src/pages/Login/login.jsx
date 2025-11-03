@@ -44,9 +44,17 @@ function Login() {
     setShowPassword((prev) => !prev);
   };
 
-  // handleChange 정의 추가
+  // 입력 제한 추가 (아이디: 영문, 숫자, _, 비밀번호: 영문, 숫자, !@#$%^&* 만)
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "accountId") {
+      const filtered = value.replace(/[^a-zA-Z0-9_]/g, "");
+      setForm((prev) => ({ ...prev, accountId: filtered }));
+    } else if (name === "password") {
+      const filtered = value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+      setForm((prev) => ({ ...prev, password: filtered }));
+    }
   };
 
   useEffect(() => {
@@ -131,7 +139,7 @@ function Login() {
       navigate("/");
     } catch (err) {
       console.error("로그인 에러:", err);
-      setError(error.message);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
