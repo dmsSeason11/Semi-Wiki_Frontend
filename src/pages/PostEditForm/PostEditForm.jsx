@@ -260,7 +260,7 @@ function PostEditForm() {
               <StyledBodyWrapper>
                 <Editor
                   ref={editorRef}
-                  initialEditType="markdown"
+                  initialEditType="wysiwyg"
                   initialValue="본문을 추가해주세요"
                   height="577px"
                   previewStyle="none"
