@@ -1,8 +1,7 @@
 import "../../styles/reset.css";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { BoardContainer, BoardTitle, Content } from "../Board/board.styles.js";
-import CategoryList from "../../components/CategoryList/CategoryList.jsx";
+import { Content } from "../Board/board.styles.js";
 import {
   HiddenButton,
   LoveLabel,
@@ -15,9 +14,15 @@ import {
   CategoryTag,
   Categories,
   Modify,
+  Topcontainer,
+  BoardContainer,
+  Posttitle,
+  Categorywrapper,
+  GlobalStyle,
 } from "./PostDetail.styles.js";
-import Love from "../../assets/board/Love.svg";
-import LoveRed from "../../assets/board/Love_red.svg";
+import pen from "../../assets/pen.svg";
+import Love from "../../assets/board/orangelove.svg";
+import Loveorange from "../../assets/board/fullorangelove.svg";
 import Article from "../../components/Article/Article.jsx";
 import TableOfContents from "../../components/TableOfContents/TableOfContents.jsx";
 
@@ -127,54 +132,51 @@ function PostDetail() {
     window.scrollTo(0, 0);
   }, []);
 
-  if (!post) return <div>로딩 중...</div>;
+  if (!post) return <div><GlobalStyle /></div>;
 
   const postSections = post.noticeBoardHeaders || [];
 
   return (
     <Content>
+      <GlobalStyle />
       <BoardContainer>
-        <BoardTitle>{post.title}</BoardTitle>
-        <Modify onClick={handleModifyClick}>수정</Modify>
-        <LoveLabel>
-          <HiddenButton onClick={handleLoveClick} />
-          <img src={isClicked ? LoveRed : Love} />
-          <Lovecount>{loveCount}</Lovecount>
-        </LoveLabel>
+        <Topcontainer>
+          <Posttitle>{post.title}</Posttitle>
+          <Modify onClick={handleModifyClick}><img src={pen} style={{width:"32px", height:"32px"}} /></Modify>
+          <LoveLabel>
+            <HiddenButton onClick={handleLoveClick} />
+            <img src={isClicked ? Loveorange : Love} />
+            <Lovecount>{loveCount}</Lovecount>
+          </LoveLabel>
+          <Categorywrapper>
+            <CategoryTitle>카테고리</CategoryTitle>
+            <Categorycontainer>
+                <Categories>
+                  {post.categories.map((category) => (
+                    <CategoryTag key={category}>{category}</CategoryTag>
+                  ))}
+                </Categories>
+              </Categorycontainer>
+            </Categorywrapper>
+          </Topcontainer>
 
-        <CategoryTitle>카테고리</CategoryTitle>
-        <Categorycontainer>
-          <Categories>
-            {post.categories.map((category) => (
-              <CategoryTag key={category}>{category}</CategoryTag>
+          <TableOfContentscontainer>
+            <TableOfContentsTitle>목차</TableOfContentsTitle>
+            <TableOfContents sections={postSections} />
+          </TableOfContentscontainer>
+
+          <Contentcontainer>
+            {postSections.map((postSection) => (
+              <Article
+                key={postSection.id}
+                Numberprop={postSection.headerNumber}
+                Titleprop={postSection.title}
+                childrenprop={postSection.contents}
+                subSections={postSection.children}
+              />
             ))}
-          </Categories>
-        </Categorycontainer>
-
-        <TableOfContentscontainer>
-          <TableOfContentsTitle>목차</TableOfContentsTitle>
-          <TableOfContents sections={postSections} />
-        </TableOfContentscontainer>
-
-        <Contentcontainer>
-          {postSections.map((postSection) => (
-            <Article
-              key={postSection.id}
-              Numberprop={postSection.headerNumber}
-              Titleprop={postSection.title}
-              childrenprop={postSection.contents}
-              subSections={postSection.children}
-            />
-          ))}
-        </Contentcontainer>
-      </BoardContainer>
-
-      <CategoryList
-        selectedCategories={post.categories}
-        onSelectedCategories={() => {}}
-      >
-        카테고리
-      </CategoryList>
+          </Contentcontainer>
+        </BoardContainer>
     </Content>
   );
 }
