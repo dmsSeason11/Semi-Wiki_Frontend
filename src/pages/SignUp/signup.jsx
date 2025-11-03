@@ -32,6 +32,7 @@ function SignUp() {
     accountId: "",
   });
   const { studentNum, username, accountId } = form;
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isIdAvailable, setIdAvailable] = useState(null);
@@ -40,18 +41,44 @@ function SignUp() {
   const [loading, setLoading] = useState(false);
   const [idLoading, setIdLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isComposing, setIsComposing] = useState(false);
   const navigate = useNavigate();
   const isSubmitDisabled = !isIdAvailable || !isPasswordMatch || loading;
   const regexId = /admin/;
 
+  // 입력 제한 적용
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    if (e.target.name === "accountId") {
+    const { name, value } = e.target;
+
+    if (name === "studentNum") {
+      const filtered = value.replace(/[^0-9]/g, "").slice(0, 4);
+      setForm((prev) => ({ ...prev, studentNum: filtered }));
+    } else if (name === "username") {
+      if (isComposing) {
+        setForm((prev) => ({ ...prev, username: value }));
+        return;
+      }
+      const filtered = value.replace(/[^\uAC00-\uD7A3]/g, "");
+      setForm((prev) => ({ ...prev, username: filtered }));
+    } else if (name === "accountId") {
+      const filtered = value.replace(/[^a-zA-Z0-9_]/g, "");
+      setForm((prev) => ({ ...prev, accountId: filtered }));
       setIdAvailable(null);
     }
   };
 
-  //아이디 중복 검사
+  // 비밀번호 입력 제한
+  const handlePasswordChange = (e) => {
+    const filtered = e.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+    setPassword(filtered);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const filtered = e.target.value.replace(/[^a-zA-Z0-9!@#$%^&*]/g, "");
+    setConfirmPassword(filtered);
+  };
+
+  // 아이디 중복 검사
   const handleCheckClick = async (e) => {
     e.preventDefault();
     if (idLoading) return;
@@ -59,33 +86,29 @@ function SignUp() {
       setIdAvailable(null);
       return;
     }
-    if (regexId.test(accountId) === true) {
+    if (regexId.test(accountId)) {
       setIdAvailable(null);
       alert("admin이 포함된 아이디는 생성할 수 없습니다.");
       return;
     }
     setIdLoading(true);
-
     try {
       const response = await fetch(
         `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/check/${accountId}`
       );
-
       if (!response.ok) {
-        if (response.status === 404) {
-          setIdAvailable(true);
-        } else if (response.status === 409) {
-          setIdAvailable(false);
-        } else {
+        if (response.status === 404) setIdAvailable(true);
+        else if (response.status === 409) setIdAvailable(false);
+        else {
           setIdAvailable(false);
           throw new Error("서버 오류:", response.status);
         }
       } else {
-        let data = await response.json();
+        const data = await response.json();
         setIdAvailable(data);
       }
-    } catch (error) {
-      console.error("알 수 없는 오류:", error);
+    } catch (err) {
+      console.error("알 수 없는 오류:", err);
       setIdAvailable(false);
     } finally {
       setIdLoading(false);
@@ -93,7 +116,7 @@ function SignUp() {
   };
 
   useEffect(() => {
-    if (password === "" || confirmPassword === "") {
+    if (!password || !confirmPassword) {
       setIsPasswordMatch(null);
     } else {
       setIsPasswordMatch(password === confirmPassword);
@@ -103,30 +126,14 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
-    if (
-      !form.studentNum ||
-      !form.username ||
-      !form.accountId ||
-      !password ||
-      !confirmPassword
-    ) {
+    if (!studentNum || !username || !accountId || !password || !confirmPassword)
       return;
-    }
-    if (isIdAvailable !== true) {
-      return;
-    }
-    if (isPasswordMatch !== true) {
-      return;
-    }
+    if (isIdAvailable !== true || isPasswordMatch !== true) return;
+
     setLoading(true);
     setError("");
 
-    let body = {
-      studentNum: form.studentNum,
-      username: form.username,
-      accountId: form.accountId,
-      password: password,
-    };
+    const body = { studentNum, username, accountId, password };
 
     try {
       const response = await fetch(
@@ -137,7 +144,6 @@ function SignUp() {
           body: JSON.stringify(body),
         }
       );
-
       if (!response.ok) {
         if (response.status === 400) throw new Error("잘못된 요청입니다.");
         if (response.status === 409)
@@ -151,13 +157,14 @@ function SignUp() {
         );
       }
       navigate("/login");
-    } catch (error) {
-      alert(error.message + "\n잠시 후 다시 시도해주세요.");
-      console.error("회원가입 에러:", error);
+    } catch (err) {
+      alert(err.message + "\n잠시 후 다시 시도해주세요.");
+      console.error("회원가입 에러:", err);
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <Container>
       <SignUpDiv>
@@ -173,7 +180,7 @@ function SignUp() {
             <InputBox>
               <div>
                 <InputTextBox>
-                  <img src={accountIcon} />
+                  <img src={accountIcon} alt="학번" />
                   <InputText>학번</InputText>
                 </InputTextBox>
                 <Input
@@ -187,7 +194,7 @@ function SignUp() {
               </div>
               <div>
                 <InputTextBox>
-                  <img src={accountIcon} />
+                  <img src={accountIcon} alt="이름" />
                   <InputText>이름</InputText>
                 </InputTextBox>
                 <Input
@@ -197,13 +204,23 @@ function SignUp() {
                   style={{ width: "240px" }}
                   value={username}
                   onChange={handleChange}
+                  onCompositionStart={() => setIsComposing(true)}
+                  onCompositionEnd={(e) => {
+                    setIsComposing(false);
+                    const filtered = e.target.value.replace(
+                      /[^\uAC00-\uD7A3]/g,
+                      ""
+                    );
+                    setForm((prev) => ({ ...prev, username: filtered }));
+                  }}
                 />
               </div>
             </InputBox>
+
             <InputBox>
               <div style={{ position: "relative" }}>
                 <InputTextBox>
-                  <img src={accountIcon} />
+                  <img src={accountIcon} alt="아이디" />
                   <InputText>아이디</InputText>
                 </InputTextBox>
                 <Input
@@ -213,10 +230,11 @@ function SignUp() {
                   style={{
                     width: "360px",
                     border:
-                      isIdAvailable !== null &&
-                      (isIdAvailable
-                        ? `1px solid ${colors.success}`
-                        : `1px solid ${colors.error}`),
+                      isIdAvailable !== null
+                        ? isIdAvailable
+                          ? `1px solid ${colors.success}`
+                          : `1px solid ${colors.error}`
+                        : undefined,
                   }}
                   value={accountId}
                   onChange={handleChange}
@@ -235,9 +253,10 @@ function SignUp() {
             {isIdAvailable === false && (
               <InputSubText>이미 사용중인 사용자 아이디 입니다</InputSubText>
             )}
+
             <div style={{ position: "relative" }}>
               <InputTextBox>
-                <img src={passwordIcon} />
+                <img src={passwordIcon} alt="비밀번호" />
                 <InputText>비밀번호</InputText>
               </InputTextBox>
               <Input
@@ -245,19 +264,20 @@ function SignUp() {
                 type={passwordVisible ? "text" : "password"}
                 placeholder="사용할 비밀번호를 입력해주세요"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
               />
               <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
                 <img
                   width="25px"
                   src={passwordVisible ? EyeOpenIcon : EyeIcon}
                   alt="비밀번호 보기"
-                />{" "}
+                />
               </ToggleButton>
             </div>
+
             <div style={{ position: "relative" }}>
               <InputTextBox>
-                <img src={passwordIcon} />
+                <img src={passwordIcon} alt="비밀번호 확인" />
                 <InputText>비밀번호 확인</InputText>
               </InputTextBox>
               <Input
@@ -265,13 +285,14 @@ function SignUp() {
                 type={passwordVisible ? "text" : "password"}
                 placeholder="비밀번호를 다시 입력해주세요"
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={handleConfirmPasswordChange}
                 style={{
                   border:
-                    isPasswordMatch !== null &&
-                    (isPasswordMatch
-                      ? `1px solid ${colors.success}`
-                      : `1px solid ${colors.error}`),
+                    isPasswordMatch !== null
+                      ? isPasswordMatch
+                        ? `1px solid ${colors.success}`
+                        : `1px solid ${colors.error}`
+                      : undefined,
                 }}
               />
               <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
@@ -279,15 +300,14 @@ function SignUp() {
                   width="25px"
                   src={passwordVisible ? EyeOpenIcon : EyeIcon}
                   alt="비밀번호 보기"
-                />{" "}
+                />
               </ToggleButton>
             </div>
+
             {isPasswordMatch !== null && (
               <InputSubText
                 style={{
-                  color: isPasswordMatch
-                    ? `${colors.success}`
-                    : `${colors.error}`,
+                  color: isPasswordMatch ? colors.success : colors.error,
                 }}
               >
                 {isPasswordMatch
@@ -295,10 +315,12 @@ function SignUp() {
                   : "비밀번호가 일치하지 않습니다"}
               </InputSubText>
             )}
+
             <Button type="submit" disabled={isSubmitDisabled}>
               {loading ? "로딩 중..." : "회원가입"}
             </Button>
           </form>
+
           <SubText>
             이미 계정이 있으신가요? <LoginLink to={"/login"}>로그인</LoginLink>
           </SubText>
