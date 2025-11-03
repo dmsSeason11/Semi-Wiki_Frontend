@@ -31,11 +31,14 @@ export async function reissueAccessToken() {
   );
 
   try {
-    const response = await fetch("http://54.180.153.221:8080/auth/reissue", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ accountId, refreshToken }),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/auth/reissue`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accountId, refreshToken }),
+      }
+    );
 
     if (!response.ok) {
       console.error(`[토큰 재발급 실패] HTTP ${response.status}`);
