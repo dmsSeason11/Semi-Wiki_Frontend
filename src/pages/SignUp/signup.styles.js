@@ -89,7 +89,7 @@ export const IdStatusIcon = styled.img`
   height: 28px;
   position: absolute;
   right: 20px;
-  bottom: 18px;
+  bottom: 21px;
 `;
 
 export const IdCheckButton = styled.button`
@@ -124,7 +124,7 @@ export const ToggleButton = styled.button`
 export const InputSubText = styled.p`
   width: 400px;
   text-align: left;
-  margin-top: 5px;
+  margin: 5px 95px 0 0;
   color: ${colors.error};
   font-size: 14px;
 `;

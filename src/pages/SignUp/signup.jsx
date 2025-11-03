@@ -38,6 +38,7 @@ function SignUp() {
   const [isIdAvailable, setIdAvailable] = useState(null);
   const [isPasswordMatch, setIsPasswordMatch] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmVisible, setConfirmVisidle] = useState(false);
   const [loading, setLoading] = useState(false);
   const [idLoading, setIdLoading] = useState(false);
   const [error, setError] = useState("");
@@ -115,6 +116,7 @@ function SignUp() {
     }
   };
 
+  // 비밀번호 일치 여부 검사
   useEffect(() => {
     if (!password || !confirmPassword) {
       setIsPasswordMatch(null);
@@ -172,7 +174,6 @@ function SignUp() {
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "start",
           }}
         >
           <SignUptitle>회원가입</SignUptitle>
@@ -251,7 +252,7 @@ function SignUp() {
               </IdCheckButton>
             </InputBox>
             {isIdAvailable === false && (
-              <InputSubText>이미 사용중인 사용자 아이디 입니다</InputSubText>
+              <InputSubText>이미 사용중인 아이디 입니다</InputSubText>
             )}
 
             <div style={{ position: "relative" }}>
@@ -282,7 +283,7 @@ function SignUp() {
               </InputTextBox>
               <Input
                 name="confirmPassword"
-                type={passwordVisible ? "text" : "password"}
+                type={confirmVisible ? "text" : "password"}
                 placeholder="비밀번호를 다시 입력해주세요"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
@@ -295,10 +296,10 @@ function SignUp() {
                       : undefined,
                 }}
               />
-              <ToggleButton onClick={() => setPasswordVisible((prev) => !prev)}>
+              <ToggleButton onClick={() => setConfirmVisidle((prev) => !prev)}>
                 <img
                   width="25px"
-                  src={passwordVisible ? EyeOpenIcon : EyeIcon}
+                  src={confirmVisible ? EyeOpenIcon : EyeIcon}
                   alt="비밀번호 보기"
                 />
               </ToggleButton>
