@@ -15,6 +15,7 @@ export const BoardListContainer = styled.div`
   background: ${colors_dark.gray[650]};
 
   padding-left: 40px;
+  padding-right: 40px;
   padding-top: 40px;
   padding-bottom: 60px;
 
@@ -24,7 +25,7 @@ export const BoardListContainer = styled.div`
 // 게시판 리스트 헤더
 export const BoardListHeader = styled.div`
   display: grid;
-  grid-template-columns: 2.6fr 2.5fr 2.3fr;
+  grid-template-columns: 335px 1fr 35px 1fr; 
   align-items: center;
   width: 100%;
   margin-bottom: 20px;
@@ -37,7 +38,7 @@ export const Line = styled.div`
   border-style: solid;
   border-color: ${colors_dark.gray[450]};
   border-radius: 0px;
-  
+
   border-width: 2px 0px 1px 0px;
 `;
 

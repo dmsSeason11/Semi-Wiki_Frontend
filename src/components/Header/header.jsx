@@ -21,6 +21,20 @@ function Header({ onSearch }) {
     onSearch(inputValue); // 상위(App)의 상태 업데이트
   };
 
+  function handlePageChange() {
+    if (localStorage.getItem("accountId")) {
+      if (confirm("로그아웃 하시겠습니까?")) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("accountId");
+        document.cookie = "accessTokenNumber=; expires=0; path=/";
+        window.location.href = "/";
+      }
+    } else {
+      window.location.href = "/login";
+    }
+  }
+
   return (
     <Container>
       <LinkBox as={Link} to={"/"}>
@@ -41,11 +55,11 @@ function Header({ onSearch }) {
             placeholder="검색어를 입력하세요"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Enter 키도 검색
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
         </SearchBox>
 
-        <LinkBox as={Link} to={`/mypage/${accountId}`}>
+        <LinkBox onClick={handlePageChange}>
           <img
             src={user}
             alt="user"

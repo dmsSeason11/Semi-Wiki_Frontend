@@ -6,6 +6,8 @@ import { startTokenAutoReissue } from "./Reissue";
 import EyeIcon from "../../assets/eyes.svg";
 import EyeOpenIcon from "../../assets/eyes_open.svg";
 import RedIcon from "../../assets/signup_error.png";
+import UserIcon from "../../assets/account.svg";
+import LockIcon from "../../assets/password.svg";
 
 import {
   Container,
@@ -161,7 +163,10 @@ function Login() {
         <LoginDiv>
           <Logintitle>로그인</Logintitle>
           <form onSubmit={handleSubmit}>
-            <Inputtext>아이디</Inputtext>
+            <Inputtext>
+              <img src={UserIcon} alt="" style={{ marginRight: "8px", width: "20px", height: "20px" }} />
+              아이디
+            </Inputtext>
             <Inputcontainer1 hasError={fieldErrors.accountId}>
               <Input
                 type="text"
@@ -174,7 +179,10 @@ function Login() {
               {fieldErrors.accountId && <ErrorIcon src={RedIcon} alt="오류" />}
             </Inputcontainer1>
 
-            <Inputtext>비밀번호</Inputtext>
+            <Inputtext>
+              <img src={LockIcon} alt="" style={{ marginRight: "8px", width: "20px", height: "20px" }} />
+              비밀번호
+            </Inputtext>
             <Inputcontainer hasError={fieldErrors.password}>
               <Input
                 type={showPassword ? "text" : "password"}
