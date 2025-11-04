@@ -1,27 +1,29 @@
 import "../../styles/reset.css";
 import React, { useState } from "react";
+import x from "/src/assets/category/x.svg";
 import {
   CategoryListContainer,
   CategoryListTitle,
   CategoryItem,
   CheckboxLabel,
   HiddenCheckbox,
-  StyledCheckbox,
   Content,
+  CategoryButton,
+  CategoryDeleteIcon,
 } from "./CategoryList.styles.js";
 
 function CategoryList({ selectedCategories = [], onSelectedCategories }) {
   const categories = [
-    "프론트엔드",
+    "게임",
     "백엔드",
-    "안드로이드",
     "IOS",
+    "안드로이드",
     "임베디드",
+    "DevOps",
     "정보보안",
     "인공지능",
+    "프론트엔드",
     "디자인",
-    "게임",
-    "DevOps",
     "전공동아리",
     "창체동아리",
     "자율동아리",
@@ -40,7 +42,7 @@ function CategoryList({ selectedCategories = [], onSelectedCategories }) {
   return (
     <Content>
       <CategoryListContainer>
-        <CategoryListTitle>카테고리</CategoryListTitle>
+        <CategoryListTitle>카테고리 추가</CategoryListTitle>
 
         <CategoryItem>
           {categories.map((category) => {
@@ -55,8 +57,8 @@ function CategoryList({ selectedCategories = [], onSelectedCategories }) {
                 }}
               >
                 <HiddenCheckbox type="checkbox" checked={isChecked} readOnly />
-                <span>{category}</span>
-                <StyledCheckbox $check={isChecked} />
+                <CategoryButton $check={isChecked} >{category}</CategoryButton>
+                {isChecked && <CategoryDeleteIcon src={x} />}
               </CheckboxLabel>
             );
           })}
