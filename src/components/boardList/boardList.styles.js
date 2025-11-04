@@ -13,8 +13,6 @@ export const BoardListContainer = styled.div`
   height: auto;
 
   background: ${colors.gray[950]};
-  border: 1px solid ${colors.gray[50]};
-  border-radius: 24px;
 
   padding-left: 40px;
   padding-top: 40px;
@@ -26,7 +24,7 @@ export const BoardListContainer = styled.div`
 // 게시판 리스트 헤더
 export const BoardListHeader = styled.div`
   display: grid;
-  grid-template-columns: 405px 1fr 15px 1fr; 
+  grid-template-columns: 2.6fr 2.5fr 2.3fr;
   align-items: center;
   width: 100%;
   margin-bottom: 20px;

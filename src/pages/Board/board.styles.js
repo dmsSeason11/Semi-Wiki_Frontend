@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
+import { createGlobalStyle } from "styled-components";  
 
 // 게시판 전체 컨테이너
 export const BoardContainer = styled.div`
@@ -16,7 +17,7 @@ export const BoardContainer = styled.div`
   padding-top: 232px;
   padding-bottom: 50px;
 
-  background: ${colors.gray[900]};
+  background: ${colors.gray[950]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 24px;
 `;
@@ -30,6 +31,7 @@ export const BoardTitle = styled.h1`
   min-height: 50px;
   bottom: 210px;
   margin-bottom: 50px;
+  margin-left: 25px;
 
   font-family: "Pretendard";
   font-style: normal;
@@ -48,10 +50,8 @@ export const Boardfiler = styled.div`
   width: 250px;
   height: 62px;
   left: 28px;
-  top: 118px;
+  top: 100px;
 
-  background: ${colors.gray[950]};
-  border: 1px solid ${colors.gray[500]};
   border-radius: 24px;
 `;
 
@@ -72,7 +72,7 @@ export const Boardfilertitle = styled.h2`
   font-size: 32px;
   line-height: 38px;
 
-  color: ${colors.gray[200]};
+  color: ${colors.gray[50]};
 
   &:first-child {
     margin-left: 24px;
@@ -81,16 +81,28 @@ export const Boardfilertitle = styled.h2`
   &::after {
     content: "";
     background-color: ${({ $active }) =>
-      $active ? colors.gray[500] : "transparent"};
+      $active ? colors.orange[50] : "transparent"};
 
     position: absolute;
-    width: 51px;
+    width: 83px;
     height: 4px;
-    left: 15px;
-    bottom: -7%;
+    left: 0px;
+    bottom: -9px;
 
     border-radius: 30px;
+    z-index: 10;
   }
+`;
+
+// 라인
+export const Line = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  left: 0px;
+  top: 162px;
+
+  background: ${colors.gray[700]};
 `;
 
 // 실제 콘텐츠 영역
@@ -100,4 +112,34 @@ export const Content = styled.div`
   justify-content: center;
   gap: 3rem;
   margin-right: 10rem;
+`;
+
+// 새 게시글 작성
+export const NewPostButton = styled.div`
+  position: absolute;
+  top: 34px;
+  right: 68px;
+
+  z-index: 20;
+
+  width: fit-content;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 38px;
+  text-decoration-line: underline;
+
+  color: #FF9E3D;
+`;
+
+export const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: ${colors.gray[950]};
+  }
 `;
