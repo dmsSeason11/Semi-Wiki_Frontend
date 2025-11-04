@@ -8,7 +8,8 @@ export const BoardItemContainer = styled.div`
   align-items: center;
   gap: 20px;
 
-  width: 964px;
+  width: 100%;
+  max-width: 964px;
   height: 53px;
 
   background: ${colors.gray[950]};
@@ -17,13 +18,15 @@ export const BoardItemContainer = styled.div`
   border-radius: 0px;
 
   border-width: 0px 0px 1px 0px;
+
+  
 `;
 
 //링크 스타일
 export const LinkStyle = styled(Link)`
   text-decoration: none;
   color: inherit;
-  flex: 2.7;
+  flex: 2.3;
   font-size: 24px;
   color: ${colors.orange[50]};
   padding-left: 12px;
@@ -44,8 +47,8 @@ export const Title = styled.div`
 
 // 게시판 카테고리
 export const Categories = styled.div`
-  flex: 1.9;
   display: flex;
+  flex: 2.2;
   gap: 2px;
   cursor: pointer;
   overflow: hidden;
@@ -66,7 +69,8 @@ export const CategoryTag = styled.span`
 
 // 게시판 수정자
 export const Modifier = styled.div`
-  flex: 1.8;
+  display: flex;
+  margin-right: 150px;
   min-width: 0;
   color: ${colors.orange[900]};
   font-size: 24px;

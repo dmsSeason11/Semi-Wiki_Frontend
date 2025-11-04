@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
 import {
   BoardContainer,
@@ -6,10 +7,14 @@ import {
   Boardfiler,
   Boardfilertitle,
   Content,
+  Line,
+  NewPostButton,  
+  GlobalStyle,
 } from "./board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
 import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import pen from "../../assets/pen.svg";
 
 function Board({ searchTerm }) {
   const [activeFilter, setActiveFilter] = useState("최신순");
@@ -68,9 +73,16 @@ function Board({ searchTerm }) {
     fetchTotalCount();
   }, [token, selectedCategories, searchTerm, API_BASE]);
 
+  const navigate = useNavigate();
+
   return (
+  <>
+    <GlobalStyle />
     <Content>
       <BoardContainer>
+        <NewPostButton onClick={() => {
+          navigate('/postform')
+        }} style={{cursor:"pointer"}} ><img src={pen} style={{width:"36px", height:"36px",marginRight: "10px", }} />새 게시글 작성</NewPostButton>
         <BoardTitle>게시판</BoardTitle>
 
         <Boardfiler>
@@ -87,6 +99,7 @@ function Board({ searchTerm }) {
             </Boardfilertitle>
           ))}
         </Boardfiler>
+        <Line />
 
         <BoardList
           sort={activeFilter}
@@ -110,6 +123,7 @@ function Board({ searchTerm }) {
         onSelectedCategories={handleCategoryToggle}
       />
     </Content>
+  </>
   );
 }
 
