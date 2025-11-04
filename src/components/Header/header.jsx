@@ -9,8 +9,8 @@ import {
   LinkBox,
   H2,
 } from "./header.styles";
-import logo from "../../assets/logo/logo.png";
-import user from "../../assets/user.png";
+import logo from "../../assets/logo/logo.svg";
+import user from "../../assets/user.svg";
 import searchIcon from "../../assets/search_icon.png";
 
 function Header({ onSearch }) {
