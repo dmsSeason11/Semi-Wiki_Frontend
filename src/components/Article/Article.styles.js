@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import { colors_dark } from "../../styles/color_table.js";
 import { createGlobalStyle } from "styled-components";
 
 //전체를 감싸는 래퍼
@@ -23,7 +23,7 @@ export const Number = styled.span`
   line-height: 29px;
   margin-left: 20px;
 
-  color: ${colors.orange[900]};
+  color: ${colors_dark.orange[100]};
 
   margin-right: 5px;
 `;
@@ -35,7 +35,7 @@ export const Title = styled.h2`
   font-weight: 600;
   font-size: 28px;
 
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;
 
 export const ArticleContentWrapper = styled.div`
@@ -44,7 +44,7 @@ export const ArticleContentWrapper = styled.div`
 
 export const ArticleContent = styled.div`
   white-space: pre-line;
-  border-top: 3px solid ${colors.gray[50]};
+  border-top: 3px solid ${colors_dark.gray[100]};
   margin-top: 20px;
   padding-top: 20px;
   padding-left: 24px;
@@ -54,7 +54,7 @@ export const ArticleContent = styled.div`
 export const GlobalViewerStyle = createGlobalStyle`
   /* 전체 마크다운 루트 */
   .toastui-editor-contents {
-    color: ${colors.gray[50]} !important;
+    color: ${colors_dark.gray[100]} !important;
     font-family: 'Pretendard' !important;
     font-size: 18px !important;
     line-height: 1.7 !important;
@@ -62,7 +62,7 @@ export const GlobalViewerStyle = createGlobalStyle`
   }
 
   .toastui-editor-contents * {
-    color: ${colors.gray[50]} !important;
+    color: ${colors_dark.gray[100]} !important;
     font-family: 'Pretendard' !important;
   }
 
@@ -108,7 +108,7 @@ export const GlobalViewerStyle = createGlobalStyle`
   .toastui-editor-contents blockquote {
     border-left: 4px solid rgba(255,255,255,0.3) !important;
     background: rgba(255,255,255,0.08) !important;
-    color: ${colors.gray[50]} !important;
+    color: ${colors_dark.gray[100]} !important;
     border-radius: 6px !important;
     margin: 0.3rem 0 !important;
     font-style: 'Pretendard' !important;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import { colors_dark } from "../../styles/color_table.js";
 import { createGlobalStyle } from "styled-components";
 
 // 버튼 숨김
@@ -10,17 +10,14 @@ export const HiddenButton = styled.button`
 //수정 버튼
 export const Modify = styled.div`
   position: absolute;
-  right: 190px;
-  bottom: 1017px;
-  display: flex;
-  flex-direction: row;
+  top: 16px;
+  right: 170px;
   padding: 15.5px 12px;
-  gap: 10px;
 
   width: 56px;
   height: 63px;
 
-  background: rgba(53, 53, 53, 0.3);
+  background: ${colors_dark.gray[650]};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
 
@@ -31,7 +28,8 @@ export const Modify = styled.div`
 export const LoveLabel = styled.label`
   cursor: pointer;
   position: absolute;
-  right: 40px;
+  top: 16px;
+  right: 20px;
 
   display: flex;
   flex-direction: column;
@@ -40,7 +38,7 @@ export const LoveLabel = styled.label`
   width: 133px;
   height: 60px;
 
-  background: rgba(53, 53, 53, 0.3);
+  background: ${colors_dark.gray[650]};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 12px;
 
@@ -64,30 +62,29 @@ export const Lovecount = styled.span`
   font-weight: 600;
   font-size: 24px;
 
-  color: ${colors.orange[900]};
+  color: ${colors_dark.orange[100]};
 
   user-select: none;
 `;
 
 //상단 컨테이너
 export const Topcontainer = styled.div`
-  display: flex;
-  flex-direction: row;
+  position: relative;
   margin-top: 67px;
   padding: 16px 12px;
 
   width: 1044px;
-  height: 160px;
+  min-height: 160px;
+  height: auto;
 
-  background: ${colors.gray[950]};
+  background: ${colors_dark.gray[650]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
 `;
 
 // 제목
 export const Posttitle = styled.h1`
-  width: 350px;
-  height: 50px;
+  max-width: 800px;
 
   font-family: "Pretendard";
   font-style: normal;
@@ -95,12 +92,14 @@ export const Posttitle = styled.h1`
   font-size: 42px;
   line-height: 50px;
 
-  color: ${colors.gray[50]};
+  margin-bottom: 20px;
+
+  color: ${colors_dark.gray[100]};
 `;
 
 // 카테고리 제목
 export const CategoryTitle = styled.h2`
-  width: 111px;
+  width: 130px;
   height: 38px;
 
   font-family: "Pretendard";
@@ -109,13 +108,11 @@ export const CategoryTitle = styled.h2`
   font-size: 32px;
   line-height: 38px;
 
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;
 
 // 카테고리 래퍼
 export const Categorywrapper = styled.div`
-  position: absolute;
-  margin-top: 80px;
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -142,10 +139,10 @@ export const Categories = styled.div`
 //카테코리 태그
 export const CategoryTag = styled.span`
   padding: 10px 7px;
-  border: 1px solid ${colors.gray[50]};
+  border: 1px solid ${colors_dark.gray[100]};
   border-radius: 8px;
   font-size: 18px;
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 
   font-family: "Pretendard";
   font-weight: 500;
@@ -166,7 +163,7 @@ export const TableOfContentscontainer = styled.div`
 
   bottom: 180px;
 
-  background: ${colors.gray[950]};
+  background: ${colors_dark.gray[650]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
 `;
@@ -185,7 +182,7 @@ export const TableOfContentsTitle = styled.h2`
   font-size: 18px;
   line-height: 21px;
 
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;
 
 //본문 컨테이너
@@ -195,13 +192,13 @@ export const Contentcontainer = styled.div`
 
   padding-bottom: 40px;
 
-  background: ${colors.gray[950]};
+  background: ${colors_dark.gray[650]};
   border-radius: 24px;
 
   font-family: "Pretendard";
   font-weight: 600;
 
-  background: #353535;
+  background: ${colors_dark.gray[650]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
 `;
@@ -222,6 +219,6 @@ export const BoardContainer = styled.div`
 
 export const GlobalStyle = createGlobalStyle`
   body {
-    background-color: ${colors.gray[950]};
+    background-color: ${colors_dark.gray[650]};
   }
 `;
