@@ -37,7 +37,7 @@ export const Line = styled.div`
   border-style: solid;
   border-color: ${colors_dark.gray[450]};
   border-radius: 0px;
-  
+
   border-width: 2px 0px 1px 0px;
 `;
 

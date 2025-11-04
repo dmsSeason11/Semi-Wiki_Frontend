@@ -4,7 +4,6 @@ import Layout from "./Layout";
 import Board from "./pages/Board/board";
 import Login from "./pages/Login/login";
 import SignUp from "./pages/SignUp/signup.jsx";
-import Mypage from "./pages/Mypage/mypage";
 import PostDetail from "./pages/PostDetail/PostDetail.jsx";
 import PostForm from "./pages/PostForm/PostForm.jsx";
 import PostEditForm from "./pages/PostEditForm/PostEditForm.jsx";
@@ -29,14 +28,6 @@ function App() {
           element={
             <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
               <Board searchTerm={searchTerm} />
-            </Layout>
-          }
-        />
-        <Route
-          path="/mypage/:accountId"
-          element={
-            <Layout searchTerm={searchTerm} setSearchTerm={setSearchTerm}>
-              <Mypage />
             </Layout>
           }
         />
