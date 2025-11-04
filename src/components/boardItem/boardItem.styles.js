@@ -6,10 +6,8 @@ import { colors_dark } from "../../styles/color_table.js";
 export const BoardItemContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
 
-  width: 100%;
-  max-width: 964px;
+  width: 964px;
   height: 53px;
 
   background: ${colors_dark.gray[650]};
@@ -18,15 +16,13 @@ export const BoardItemContainer = styled.div`
   border-radius: 0px;
 
   border-width: 0px 0px 1px 0px;
-
-  
 `;
 
 //링크 스타일
 export const LinkStyle = styled(Link)`
   text-decoration: none;
   color: inherit;
-  flex: 2.3;
+  flex: 2;
   font-size: 24px;
   color: ${colors_dark.orange[200]};
   padding-left: 12px;
@@ -47,8 +43,9 @@ export const Title = styled.div`
 
 // 게시판 카테고리
 export const Categories = styled.div`
+  flex: 1.9;
+  margin-left: 10px;
   display: flex;
-  flex: 2.2;
   gap: 2px;
   cursor: pointer;
   overflow: hidden;
@@ -69,9 +66,7 @@ export const CategoryTag = styled.span`
 
 // 게시판 수정자
 export const Modifier = styled.div`
-  display: flex;
-  margin-right: 150px;
-  min-width: 0;
+  flex: 2;
   color: ${colors_dark.orange[100]};
   font-size: 24px;
   cursor: pointer;
