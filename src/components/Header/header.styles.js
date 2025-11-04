@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import colors_dark from "../../styles/color_table";
 
 export const Container = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ export const Button = styled.button`
   height: 32px;
 `;
 export const Input = styled.input`
-  border: 1px solid ${colors.gray[500]};
+  border: 1px solid ${colors_dark.gray[500]};
   border-radius: 30px;
   font-size: 24px;
   padding: 10px 65px;
@@ -48,5 +48,5 @@ export const H2 = styled.p`
   margin-left: 10px;
   font-size: 32px;
   font-weight: 500;
-  color: ${colors.gray[900]};
+  color: ${colors_dark.orange[200]};
 `;

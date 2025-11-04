@@ -1,16 +1,17 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import colors_dark from "../../styles/color_table";
 
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${colors.gray[900]};
+  background-color: ${colors_dark.gray[700]};
   position: static;
   bottom: 0;
   margin: 0;
   width: 100%;
   height: 220px;
+  box-shadow: 0 0 8px ${colors_dark.gray[500]};
 `;
 export const Div = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ export const Member = styled.div`
   margin: 0 20px;
 `;
 export const P = styled.p`
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[50]};
   font-size: 17px;
   margin: 5px 0;
 `;
