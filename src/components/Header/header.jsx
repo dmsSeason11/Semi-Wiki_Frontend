@@ -41,11 +41,11 @@ function Header({ onSearch }) {
             placeholder="검색어를 입력하세요"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Enter 키도 검색
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
         </SearchBox>
 
-        <LinkBox as={Link} to={`/mypage/${accountId}`}>
+        <LinkBox>
           <img
             src={user}
             alt="user"
