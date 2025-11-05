@@ -7,7 +7,7 @@ import {
   BoardListHeader,
   Line,
 } from "./boardList.styles";
-import BoardItem from "../../components/boardItem/BoardItem.jsx";
+import BoardItem from "../../components/boardItem/boardItem.jsx";
 
 function BoardList({
   sort,
