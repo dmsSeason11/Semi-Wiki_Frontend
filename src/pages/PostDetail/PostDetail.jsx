@@ -25,6 +25,7 @@ import Love from "../../assets/board/orangelove.svg";
 import Loveorange from "../../assets/board/fullorangelove.svg";
 import Article from "../../components/Article/Article.jsx";
 import TableOfContents from "../../components/TableOfContents/TableOfContents.jsx";
+import CommentBox from "../../components/commentBox/commentBox.jsx";
 
 function PostDetail() {
   const { id } = useParams();
@@ -132,7 +133,12 @@ function PostDetail() {
     window.scrollTo(0, 0);
   }, []);
 
-  if (!post) return <div><GlobalStyle /></div>;
+  if (!post)
+    return (
+      <div>
+        <GlobalStyle />
+      </div>
+    );
 
   const postSections = post.noticeBoardHeaders || [];
 
@@ -142,7 +148,9 @@ function PostDetail() {
       <BoardContainer>
         <Topcontainer>
           <Posttitle>{post.title}</Posttitle>
-          <Modify onClick={handleModifyClick}><img src={pen} style={{width:"32px", height:"32px"}} /></Modify>
+          <Modify onClick={handleModifyClick}>
+            <img src={pen} style={{ width: "32px", height: "32px" }} />
+          </Modify>
           <LoveLabel>
             <HiddenButton onClick={handleLoveClick} />
             <img src={isClicked ? Loveorange : Love} />
@@ -151,32 +159,33 @@ function PostDetail() {
           <Categorywrapper>
             <CategoryTitle>카테고리</CategoryTitle>
             <Categorycontainer>
-                <Categories>
-                  {post.categories.map((category) => (
-                    <CategoryTag key={category}>{category}</CategoryTag>
-                  ))}
-                </Categories>
-              </Categorycontainer>
-            </Categorywrapper>
-          </Topcontainer>
+              <Categories>
+                {post.categories.map((category) => (
+                  <CategoryTag key={category}>{category}</CategoryTag>
+                ))}
+              </Categories>
+            </Categorycontainer>
+          </Categorywrapper>
+        </Topcontainer>
 
-          <TableOfContentscontainer>
-            <TableOfContentsTitle>목차</TableOfContentsTitle>
-            <TableOfContents sections={postSections} />
-          </TableOfContentscontainer>
+        <TableOfContentscontainer>
+          <TableOfContentsTitle>목차</TableOfContentsTitle>
+          <TableOfContents sections={postSections} />
+        </TableOfContentscontainer>
 
-          <Contentcontainer>
-            {postSections.map((postSection) => (
-              <Article
-                key={postSection.id}
-                Numberprop={postSection.headerNumber}
-                Titleprop={postSection.title}
-                childrenprop={postSection.contents}
-                subSections={postSection.children}
-              />
-            ))}
-          </Contentcontainer>
-        </BoardContainer>
+        <Contentcontainer>
+          {postSections.map((postSection) => (
+            <Article
+              key={postSection.id}
+              Numberprop={postSection.headerNumber}
+              Titleprop={postSection.title}
+              childrenprop={postSection.contents}
+              subSections={postSection.children}
+            />
+          ))}
+        </Contentcontainer>
+        <CommentBox />
+      </BoardContainer>
     </Content>
   );
 }
