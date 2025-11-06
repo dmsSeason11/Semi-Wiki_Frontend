@@ -21,7 +21,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
   const censorText = (text, badWords) => {
     let censored = text;
 
-    const SEP = "[!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?/\\\\s0-9ㄱ-ㅎㅏ-ㅣ]*";
+    const SEP = "[!@#$%^&*()\\-_=+\\[\\]{};:'\",.<>?/\\\\s0-9ㄱ-ㅎㅏ-ㅣ\\s]*";
 
     const wordPatterns = badWords
       .filter((w) => w && w.trim())

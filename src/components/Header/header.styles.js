@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import colors_dark from "../../styles/color_table";
 
 export const Container = styled.div`
   display: flex;
@@ -30,10 +30,14 @@ export const Button = styled.button`
   height: 32px;
 `;
 export const Input = styled.input`
-  border: 1px solid ${colors.gray[500]};
+  border: 1px solid ${colors_dark.gray[500]};
+  background-color: ${colors_dark.gray[550]};
   border-radius: 30px;
+  font-family: "Pretendard", sans-serif;
   font-size: 24px;
+  font-weight: 500;
   padding: 10px 65px;
+  color: ${colors_dark.gray[100]};
 `;
 
 export const LinkBox = styled.div`
@@ -46,7 +50,7 @@ export const LinkBox = styled.div`
 
 export const H2 = styled.p`
   margin-left: 10px;
-  font-size: 32px;
+  font-size: 31px;
   font-weight: 500;
-  color: ${colors.gray[900]};
+  color: ${colors_dark.orange[200]};
 `;

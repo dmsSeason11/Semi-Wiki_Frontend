@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import { colors_dark } from "../../styles/color_table.js";
 
 // 게시판 리스트 컨테이너
 export const BoardListContainer = styled.div`
@@ -12,9 +12,10 @@ export const BoardListContainer = styled.div`
   min-height: 470px;
   height: auto;
 
-  background: ${colors.gray[950]};
+  background: ${colors_dark.gray[650]};
 
   padding-left: 40px;
+  padding-right: 40px;
   padding-top: 40px;
   padding-bottom: 60px;
 
@@ -24,7 +25,7 @@ export const BoardListContainer = styled.div`
 // 게시판 리스트 헤더
 export const BoardListHeader = styled.div`
   display: grid;
-  grid-template-columns: 2.6fr 2.5fr 2.3fr;
+  grid-template-columns: 335px 1fr 35px 1fr; 
   align-items: center;
   width: 100%;
   margin-bottom: 20px;
@@ -35,9 +36,9 @@ export const BoardListHeader = styled.div`
 export const Line = styled.div`
   width: 964px;
   border-style: solid;
-  border-color: ${colors.gray[700]};
+  border-color: ${colors_dark.gray[450]};
   border-radius: 0px;
-  
+
   border-width: 2px 0px 1px 0px;
 `;
 
@@ -51,7 +52,7 @@ export const BoardListTitle = styled.h2`
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;
 
 // 게시판 리스트 카테고리
@@ -64,7 +65,7 @@ export const BoardListCategory = styled.h2`
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;
 
 // 게시판 리스트 수정자
@@ -77,5 +78,5 @@ export const BoardListModifier = styled.h2`
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;

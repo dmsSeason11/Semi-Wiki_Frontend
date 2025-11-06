@@ -1,22 +1,21 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import { colors_dark } from "../../styles/color_table.js";
 
 // 카테고리 리스트 컨테이너
 export const CategoryListContainer = styled.div`
   width: 300px;
   height: 463px;
   margin-top: 40px;
-  
   padding: 20px;
 
-  background: ${colors.gray[900]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 24px;
+  background: ${colors_dark.gray[650]};
 `;
 
 // 카테고리 리스트 제목
 export const CategoryListTitle = styled.h1`
-  width: 125px;
+  width: fit-content;
   height: 43px;
 
   font-family: "Pretendard";
@@ -25,30 +24,24 @@ export const CategoryListTitle = styled.h1`
   font-size: 36px;
   line-height: 43px;
 
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;
 
 // 카테고리 아이템을 감싸는 영역
 export const CategoryItem = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   flex-wrap: wrap;
-
+  gap: 6px;
   margin-top: 20px;
   height: 370px;
-
-  gap: 1.2rem;
 `;
 
 // 체크박스 레이블
 export const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: calc(50% - 10px); 
 
-  color: ${({ $check }) => ($check ? colors.orange[50] : colors.orange[900])};
+  color: ${({ $check }) => ($check ? colors_dark.gray[50] : colors_dark.orange[100])};
 
   font-size: 18px;
   font-family: "Pretendard";
@@ -65,37 +58,34 @@ export const HiddenCheckbox = styled.input`
   display: none;
 `;
 
-// 커스텀 체크박스 스타일
-export const StyledCheckbox = styled.div`
-  width: 18px;
-  height: 18px;
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: transparent;
-  border-radius: 4px;
-
-  border: 2px solid ${({ $check }) => ($check ? colors.orange[50] : colors.orange[900])};
-
-  &::after {
-    content: '';
-    position: absolute;
-    width: 3px;
-    height: 10px;
-    border: solid ${({ $check }) => ($check ? colors.orange[50] : colors.orange[900])};
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-
-    margin-bottom: 2px;
-
-    opacity: ${({ $check }) => ($check ? 1 : 0)}; 
-    transition: 0.2s;
-  }
-`;
 
 export const Content = styled.div`
   display: flex;
   position: relative;
+`;
+
+// 카테고리 추가 버튼
+export const CategoryButton = styled.div`
+  width: fit-content;
+  height: 37px;
+
+  padding: 9px 6px;
+
+  background-color: ${({ $check }) => ($check ? colors_dark.orange[100] : "transparent")};
+  border: 1px solid rgba(255, 158, 61, 0.5);
+  border-radius: 8px;
+
+  font-size: 20px;
+  font-family: "Pretendard";
+  font-weight: 500;
+`;
+
+// 카테고리 삭제 아이콘
+export const CategoryDeleteIcon = styled.img`
+  position: relative;
+  width: 20px;
+  height: 20px;
+  right: 10px;
+  bottom: 20px;
+  margin-right: -10px;
 `;

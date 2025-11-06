@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import { colors_dark } from "../../styles/color_table.js";
 import { createGlobalStyle } from "styled-components";  
 
 // 게시판 전체 컨테이너
@@ -17,7 +17,7 @@ export const BoardContainer = styled.div`
   padding-top: 232px;
   padding-bottom: 50px;
 
-  background: ${colors.gray[950]};
+  background: ${colors_dark.gray[650]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 24px;
 `;
@@ -39,7 +39,7 @@ export const BoardTitle = styled.h1`
   font-size: 42px;
   line-height: 50px;
 
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 `;
 
 // 게시판 필터
@@ -72,7 +72,7 @@ export const Boardfilertitle = styled.h2`
   font-size: 32px;
   line-height: 38px;
 
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
 
   &:first-child {
     margin-left: 24px;
@@ -81,7 +81,7 @@ export const Boardfilertitle = styled.h2`
   &::after {
     content: "";
     background-color: ${({ $active }) =>
-      $active ? colors.orange[50] : "transparent"};
+      $active ? colors_dark.orange[200] : "transparent"};
 
     position: absolute;
     width: 83px;
@@ -102,7 +102,7 @@ export const Line = styled.div`
   left: 0px;
   top: 162px;
 
-  background: ${colors.gray[700]};
+  background: ${colors_dark.gray[450]};
 `;
 
 // 실제 콘텐츠 영역
@@ -140,6 +140,6 @@ export const NewPostButton = styled.div`
 
 export const GlobalStyle = createGlobalStyle`
   body {
-    background-color: ${colors.gray[950]};
+    background-color: ${colors_dark.gray[650]};
   }
 `;

@@ -9,8 +9,8 @@ import {
   LinkBox,
   H2,
 } from "./header.styles";
-import logo from "../../assets/logo/logo.png";
-import user from "../../assets/user.png";
+import logo from "../../assets/logo/logo.svg";
+import user from "../../assets/user.svg";
 import searchIcon from "../../assets/search_icon.png";
 
 function Header({ onSearch }) {
@@ -20,6 +20,20 @@ function Header({ onSearch }) {
   const handleSearch = () => {
     onSearch(inputValue); // 상위(App)의 상태 업데이트
   };
+
+  function handlePageChange() {
+    if (localStorage.getItem("accountId")) {
+      if (confirm("로그아웃 하시겠습니까?")) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("accountId");
+        document.cookie = "accessTokenNumber=; expires=0; path=/";
+        window.location.href = "/";
+      }
+    } else {
+      window.location.href = "/login";
+    }
+  }
 
   return (
     <Container>
@@ -41,11 +55,11 @@ function Header({ onSearch }) {
             placeholder="검색어를 입력하세요"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Enter 키도 검색
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
         </SearchBox>
 
-        <LinkBox as={Link} to={`/mypage/${accountId}`}>
+        <LinkBox onClick={handlePageChange}>
           <img
             src={user}
             alt="user"
