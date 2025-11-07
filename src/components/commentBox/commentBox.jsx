@@ -10,7 +10,7 @@ function CommentBox({ boardId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [comments, setComments] = useState([]);
 
-  // 🧩 댓글 조회
+  // 댓글 조회
   useEffect(() => {
     if (!boardId) return;
 
@@ -59,7 +59,7 @@ function CommentBox({ boardId }) {
     fetchComments();
   }, [boardId]);
 
-  // ✅ 댓글 등록 요청
+  // 댓글 등록 요청
   async function submitComment() {
     const text = commentInput.trim();
     if (!text || isSubmitting) return;

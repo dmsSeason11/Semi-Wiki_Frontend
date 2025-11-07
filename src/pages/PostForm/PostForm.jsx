@@ -78,34 +78,10 @@ function PostForm() {
     [selectedCategories]
   );
 
-  // 이미지 업로드
   const onUploadImage = async (blob, callback) => {
     try {
-      if (!token) {
-        alert("로그인이 필요합니다.");
-        navigate("/login");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("image", blob, blob.name || "upload.png");
-
-      const response = await fetch(
-        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/notice-board/image`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
-
-      let imageUrl = await response.text();
-      if (!imageUrl.startsWith("http")) {
-        imageUrl = `http://192.168.1.94:9000${imageUrl}`;
-      }
-      callback(imageUrl, blob.name);
+      const response = await axios.post();
+      callback(response.data.url, blob.name);
     } catch (error) {
       alert("이미지 업로드 실패");
       console.log(error);
@@ -126,7 +102,6 @@ function PostForm() {
     }
   }, []);
 
-  // 글 생성
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
