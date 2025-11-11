@@ -4,11 +4,12 @@ import { colors_dark } from "../../styles/color_table.js";
 export const CommentContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: space-between;
+  justify-content: space-between;
+  align-items: center;
   gap: 11px;
   width: 100%;
 
-  font-family: "pretendard", sans-serif;
+  font-family: "Pretendard", sans-serif;
 `;
 
 export const Left = styled.div`
@@ -53,7 +54,10 @@ export const WriteDate = styled.div`
 export const Text = styled.div`
   font-size: 19px;
   font-weight: 600;
+  width: 95%;
   color: ${colors_dark.orange[100]};
   line-height: 24px;
   white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 `;
