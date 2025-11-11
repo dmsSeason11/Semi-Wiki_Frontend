@@ -15,14 +15,13 @@ export const CommentContainer = styled.div`
 export const Left = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  
+  justify-content: flex-start;
 `;
 
 export const Profile = styled.img`
   width: 48px;
   height: 48px;
-`;
+  `;
 
 export const Right = styled.div`
   display: flex;
