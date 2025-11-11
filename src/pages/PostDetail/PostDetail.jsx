@@ -184,7 +184,7 @@ function PostDetail() {
             />
           ))}
         </Contentcontainer>
-        <CommentBox />
+        <CommentBox boardId={id} />
       </BoardContainer>
     </Content>
   );
