@@ -16,6 +16,8 @@ export const BoardItemContainer = styled.div`
   border-radius: 0px;
 
   border-width: 0px 0px 1px 0px;
+
+  padding: 0 12px;
 `;
 
 //링크 스타일
@@ -25,7 +27,7 @@ export const LinkStyle = styled(Link)`
   flex: 2;
   font-size: 24px;
   color: ${colors_dark.orange[200]};
-  padding-left: 12px;
+  /* padding-left: 12px; */
 
   overflow: hidden;
   text-overflow: ellipsis;
