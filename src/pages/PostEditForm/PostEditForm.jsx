@@ -61,6 +61,7 @@ function PostEditForm() {
 
   useEffect(() => {
     if (!token) return;
+    console.log("postId:", postId);
 
     const fetchPost = async () => {
       try {
@@ -159,10 +160,14 @@ function PostEditForm() {
     setLoading(true);
     setError("");
 
+    const htmlContent = editorRef.current
+      .getInstance()
+      .getHTML()
+      .replace(/></g, ">\n<");
     const updatedPostData = {
       title: title,
       categories: selectedCategories,
-      contents: contents,
+      contents: htmlContent,
     };
 
     console.log("UpdateData:", updatedPostData);
@@ -242,7 +247,7 @@ function PostEditForm() {
 
             <CategoryContainer>
               <SectionTitle>카테고리</SectionTitle>
-              <CategoryInput>
+              <CategoryInput placeholder="# 검색 또는 카테고리 추가를 이용하여 작성하세요">
                 {selectedCategories.length > 0 ? (
                   <Categories>
                     {selectedCategories.map((category) => (
