@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
 import {
   BoardContainer,
@@ -6,10 +7,14 @@ import {
   Boardfiler,
   Boardfilertitle,
   Content,
+  Line,
+  NewPostButton,
+  GlobalStyle,
 } from "../Board/board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
 import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import pen from "../../assets/pen.svg";
 
 function MyBoard() {
   const [activeFilter, setActiveFilter] = useState("최신순");
@@ -24,6 +29,10 @@ function MyBoard() {
 
   console.log("현재 저장된 토큰:", token);
   console.log("현재 accountId:", accountId);
+
+  const handleModifyClick = (accountId) => {
+    navigate(`/mypage/${accountId}/list`);
+  };
 
   const handleCategoryToggle = (category) => {
     setSelectedCategories((prev) => {
@@ -74,47 +83,51 @@ function MyBoard() {
   }, [token, accountId, selectedCategories, activeFilter, API_BASE]);
 
   return (
-    <Content>
-      <BoardContainer>
-        <BoardTitle>내가 작성한 글</BoardTitle>
+    <>
+      <GlobalStyle />
+      <Content>
+        <BoardContainer>
+          <BoardTitle>내가 작성한 게시글</BoardTitle>
 
-        <Boardfiler>
-          {["최신순", "추천순"].map((filter) => (
-            <Boardfilertitle
-              key={filter}
-              $active={activeFilter === filter}
-              onClick={() => {
-                setActiveFilter(filter);
-                setCurrentPage(1);
-              }}
-            >
-              {filter}
-            </Boardfilertitle>
-          ))}
-        </Boardfiler>
+          <Boardfiler>
+            {["최신순", "추천순"].map((filter) => (
+              <Boardfilertitle
+                key={filter}
+                $active={activeFilter === filter}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setCurrentPage(1);
+                }}
+              >
+                {filter}
+              </Boardfilertitle>
+            ))}
+          </Boardfiler>
+          <Line />
 
-        <BoardList
-          sort={activeFilter}
-          page={currentPage}
-          pageSize={pageSize}
-          token={token}
+          <BoardList
+            sort={activeFilter}
+            page={currentPage}
+            pageSize={pageSize}
+            token={token}
+            selectedCategories={selectedCategories}
+            accountId={accountId}
+          />
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            groupSize={10}
+          />
+        </BoardContainer>
+
+        <CategoryList
           selectedCategories={selectedCategories}
-          accountId={accountId}
+          onSelectedCategories={handleCategoryToggle}
         />
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          groupSize={10}
-        />
-      </BoardContainer>
-
-      <CategoryList
-        selectedCategories={selectedCategories}
-        onSelectedCategories={handleCategoryToggle}
-      />
-    </Content>
+      </Content>
+    </>
   );
 }
 
