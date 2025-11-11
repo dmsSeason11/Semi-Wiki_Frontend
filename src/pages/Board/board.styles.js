@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { colors_dark } from "../../styles/color_table.js";
-import { createGlobalStyle } from "styled-components";  
+import { createGlobalStyle } from "styled-components";
 
 // 게시판 전체 컨테이너
 export const BoardContainer = styled.div`
@@ -10,7 +10,6 @@ export const BoardContainer = styled.div`
   min-height: 742px;
 
   margin-top: 40px;
-  margin-left: 140px;
 
   padding-left: 28px;
   padding-right: 28px;
@@ -81,7 +80,7 @@ export const Boardfilertitle = styled.h2`
   &::after {
     content: "";
     background-color: ${({ $active }) =>
-      $active ? colors_dark.orange[200] : "transparent"};
+    $active ? colors_dark.orange[200] : "transparent"};
 
     position: absolute;
     width: 83px;
@@ -108,10 +107,10 @@ export const Line = styled.div`
 // 실제 콘텐츠 영역
 export const Content = styled.div`
   display: flex;
+  margin-top: 15px;
   margin-bottom: 120px;
   justify-content: center;
-  gap: 3rem;
-  margin-right: 10rem;
+  gap: 50px;
 `;
 
 // 새 게시글 작성
