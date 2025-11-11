@@ -80,8 +80,31 @@ function PostForm() {
 
   const onUploadImage = async (blob, callback) => {
     try {
-      const response = await axios.post();
-      callback(response.data.url, blob.name);
+      if (!token) {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", blob, blob.name || "upload.png");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/notice-board/image`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      let imageUrl = await response.text();
+      if (!imageUrl.startsWith("http")) {
+        imageUrl = `http://10.15.200.159:9000${imageUrl}`;
+      }
+      callback(imageUrl, blob.name);
     } catch (error) {
       alert("이미지 업로드 실패");
       console.log(error);
@@ -113,6 +136,10 @@ function PostForm() {
     setLoading(true);
     setError("");
 
+    const htmlBody = editorRef.current
+      .getInstance()
+      .getHTML()
+      .replace(/></g, ">\n<");
     const postData = {
       title: title,
       categories: selectedCategories,
