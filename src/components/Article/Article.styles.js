@@ -4,7 +4,7 @@ import { createGlobalStyle } from "styled-components";
 
 //전체를 감싸는 래퍼
 export const Wrapper = styled.div`
-  padding: 16px 0 0 24px;
+  padding: 16px 0 0 ${(props) => (props.depth === 0 ? "24px" : "0px")};
   width: 964px;
 `;
 
@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
 export const ArticleTopWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 //숫자
@@ -43,9 +44,9 @@ export const ArticleContentWrapper = styled.div`
 `;
 
 export const ArticleContent = styled.div`
-  white-space: pre-line;
   border-top: 3px solid ${colors_dark.gray[100]};
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  margin-bottom: 40px;
   padding-top: 20px;
   padding-left: 24px;
 `;
@@ -100,7 +101,7 @@ export const GlobalViewerStyle = createGlobalStyle`
 
   /* 단락 */
   .toastui-editor-contents p {
-    margin: 0 0 0 !important;
+    /* margin: 0 0 -10px !important; */
     font-size: 18px !important;
   }
 
@@ -112,18 +113,19 @@ export const GlobalViewerStyle = createGlobalStyle`
     border-radius: 6px !important;
     margin: 0.3rem 0 !important;
     font-style: 'Pretendard' !important;
+    padding: 0.5rem 1rem !important;
   }
 
   /* 리스트 */
   .toastui-editor-contents ul,
   .toastui-editor-contents ol {
-    margin: -2.5rem 0 -2.5rem !important;
+    margin: 0.5rem 0 !important;
     padding-left: 1.2rem !important;
   }
   .toastui-editor-contents ul li,
   .toastui-editor-contents ol li {
     display: flex !important;
-    margin-bottom: -20px !important;
+    margin-bottom: 5px !important;
   }
 
   /* 테이블 */
@@ -160,7 +162,7 @@ export const GlobalViewerStyle = createGlobalStyle`
     font-weight: 700 !important;
   }
   .toastui-editor-contents em {
-    font-style: italic !important;
+    /* font-style: italic !important; */
   }
   .toastui-editor-contents del {
     text-decoration: line-through !important;
