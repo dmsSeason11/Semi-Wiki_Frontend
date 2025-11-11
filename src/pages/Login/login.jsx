@@ -164,7 +164,11 @@ function Login() {
           <Logintitle>로그인</Logintitle>
           <form onSubmit={handleSubmit}>
             <Inputtext>
-              <img src={UserIcon} alt="" style={{ marginRight: "8px", width: "20px", height: "20px" }} />
+              <img
+                src={UserIcon}
+                alt=""
+                style={{ marginRight: "8px", width: "20px", height: "20px" }}
+              />
               아이디
             </Inputtext>
             <Inputcontainer1 hasError={fieldErrors.accountId}>
@@ -180,7 +184,11 @@ function Login() {
             </Inputcontainer1>
 
             <Inputtext>
-              <img src={LockIcon} alt="" style={{ marginRight: "8px", width: "20px", height: "20px" }} />
+              <img
+                src={LockIcon}
+                alt=""
+                style={{ marginRight: "8px", width: "20px", height: "20px" }}
+              />
               비밀번호
             </Inputtext>
             <Inputcontainer hasError={fieldErrors.password}>
