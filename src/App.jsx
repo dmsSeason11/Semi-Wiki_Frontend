@@ -10,6 +10,10 @@ import PostEditForm from "./pages/PostEditForm/PostEditForm.jsx";
 import MyBoard from "./pages/Write Board/writeboard.jsx";
 import { createGlobalStyle } from "styled-components";
 import { GlobalEditorStyle } from "./pages/PostForm/PostForm.styles.js";
+import {
+  startTokenAutoReissue,
+  stopTokenAutoReissue,
+} from "./pages/Login/Reissue.jsx";
 import "./styles/pretendard.css";
 
 const GlobalStyle = createGlobalStyle`
@@ -19,6 +23,20 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [isBlocked, setIsBlocked] = useState(false);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const accountId = localStorage.getItem("accountId");
+
+    if (accessToken && refreshToken && accountId) {
+      startTokenAutoReissue();
+    }
+
+    return () => {
+      stopTokenAutoReissue();
+    };
+  }, []);
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem("visited");
