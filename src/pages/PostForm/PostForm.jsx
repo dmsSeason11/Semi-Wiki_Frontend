@@ -143,7 +143,7 @@ function PostForm() {
     const postData = {
       title: title,
       categories: selectedCategories,
-      contents: body,
+      contents: htmlBody,
     };
 
     try {
