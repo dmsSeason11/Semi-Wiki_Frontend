@@ -5,6 +5,7 @@ import { createGlobalStyle } from "styled-components";
 // 게시판 전체 컨테이너
 export const BoardContainer = styled.div`
   position: relative;
+  left: 140px;
   width: 1100px;
   height: auto;
   min-height: 742px;
@@ -20,6 +21,9 @@ export const BoardContainer = styled.div`
   background: ${colors_dark.gray[650]};
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 24px;
+
+  filter: ${({ isMenuOpen }) => (isMenuOpen ? `blur(2px)` : `none`)};
+  transition: filter 1s ease-out;
 `;
 
 // 게시판 제목
@@ -128,14 +132,14 @@ export const NewPostButton = styled.div`
   display: flex;
   align-items: center;
 
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
   font-size: 32px;
   line-height: 38px;
   text-decoration-line: underline;
 
-  color: #FF9E3D;
+  color: #ff9e3d;
 `;
 
 export const GlobalStyle = createGlobalStyle`

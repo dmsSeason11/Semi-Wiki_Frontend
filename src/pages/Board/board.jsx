@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
 import {
@@ -8,12 +8,12 @@ import {
   Boardfilertitle,
   Content,
   Line,
-  NewPostButton,  
+  NewPostButton,
   GlobalStyle,
 } from "./board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
-import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import Menu from "../../components/menu/menu.jsx";
 import pen from "../../assets/pen.svg";
 
 function Board({ searchTerm }) {
@@ -21,10 +21,15 @@ function Board({ searchTerm }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const pageSize = 10;
   const token = localStorage.getItem("accessToken");
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen((prev) => !prev);
+  }, []);
 
   // 카테고리 토글
   const handleCategoryToggle = (category) => {
@@ -49,8 +54,8 @@ function Board({ searchTerm }) {
         const res = await fetch(
           `${API_BASE}/notice-board/count?${query.toString()}`,
           {
-            headers: { 
-              Authorization: `Bearer ${token}` 
+            headers: {
+              Authorization: `Bearer ${token}`,
             },
           }
         );
@@ -76,54 +81,68 @@ function Board({ searchTerm }) {
   const navigate = useNavigate();
 
   return (
-  <>
-    <GlobalStyle />
-    <Content>
-      <BoardContainer>
-        <NewPostButton onClick={() => {
-          navigate('/postform')
-        }} style={{cursor:"pointer"}} ><img src={pen} style={{width:"36px", height:"36px",marginRight: "10px", }} />새 게시글 작성</NewPostButton>
-        <BoardTitle>게시판</BoardTitle>
+    <>
+      <GlobalStyle />
+      <Content>
+        <Menu
+          isMenuOpen={isMenuOpen}
+          toggleMenu={toggleMenu}
+          handleCategoryToggle={handleCategoryToggle}
+        />
+        <BoardContainer isMenuOpen={isMenuOpen}>
+          <NewPostButton
+            onClick={() => {
+              navigate("/postform");
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              src={pen}
+              style={{ width: "36px", height: "36px", marginRight: "10px" }}
+            />
+            새 게시글 작성
+          </NewPostButton>
+          <BoardTitle>게시판</BoardTitle>
 
-        <Boardfiler>
-          {["최신순", "추천순"].map((filter) => (
-            <Boardfilertitle
-              key={filter}
-              $active={activeFilter === filter}
-              onClick={() => {
-                setActiveFilter(filter);
-                setCurrentPage(1);
-              }}
-            >
-              {filter}
-            </Boardfilertitle>
-          ))}
-        </Boardfiler>
-        <Line />
+          <Boardfiler>
+            {["최신순", "추천순"].map((filter) => (
+              <Boardfilertitle
+                key={filter}
+                $active={activeFilter === filter}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setCurrentPage(1);
+                }}
+              >
+                {filter}
+              </Boardfilertitle>
+            ))}
+          </Boardfiler>
+          <Line />
 
-        <BoardList
-          sort={activeFilter}
-          page={currentPage}
-          pageSize={pageSize}
-          token={token}
+          <BoardList
+            sort={activeFilter}
+            page={currentPage}
+            pageSize={pageSize}
+            token={token}
+            selectedCategories={selectedCategories}
+            searchTerm={searchTerm}
+          />
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+            groupSize={10}
+          />
+        </BoardContainer>
+
+        <CategoryList
           selectedCategories={selectedCategories}
-          searchTerm={searchTerm}
+          onSelectedCategories={handleCategoryToggle}
         />
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          groupSize={10}
-        />
-      </BoardContainer>
-
-      <CategoryList
-        selectedCategories={selectedCategories}
-        onSelectedCategories={handleCategoryToggle}
-      />
-    </Content>
-  </>
+      </Content>
+    </>
   );
 }
 

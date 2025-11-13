@@ -1,14 +1,25 @@
 import styled from "styled-components";
 import colors from "../../styles/color";
+import colors_dark from "../../styles/color_table";
 import { Editor } from "@toast-ui/react-editor";
 import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
+body{
+  background-color: ${colors_dark.gray[650]};
+}
+
+.toastui-editor-contents[data-placeholder]::before {
+    content: none !important;
+}
+`;
 
 export const FormContainer = styled.div`
   min-height: 100vh;
   margin-top: 5px;
   display: flex;
   flex-direction: column;
-  background-color: ${colors.gray[100]};
+  background-color: ${colors_dark.gray[650]};
 `;
 
 export const FormLayout = styled.div`
@@ -26,7 +37,7 @@ export const FormMain = styled.div`
   flex-direction: column;
 
   box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: ${colors.gray[900]};
+  background-color: ${colors_dark.gray[650]};
   border-radius: 24px;
 
   padding: 25px;
@@ -80,11 +91,11 @@ export const CategoryInput = styled.div`
   width: 100%;
   min-height: 50px;
 
-  background-color: ${colors.gray[900]};
-  border: 1px solid ${colors.gray[50]};
+  background-color: transparent;
+  border: 1px solid ${colors_dark.gray[350]};
   border-radius: 24px;
 
-  color: ${colors.gray[500]};
+  color: ${colors_dark.gray[100]};
   font-size: 20px;
   font-family: "Pretendard";
 
@@ -104,15 +115,15 @@ export const StyledBodyWrapper = styled.div`
 
 export const GlobalEditorStyle = createGlobalStyle`
   .toastui-editor-defaultUI {
-    background-color: ${colors.gray[900]};
-    border: 1px solid ${colors.gray[50]};
+    background-color: ${colors_dark.gray[650]};
+    border: 1px solid ${colors_dark.gray[350]};
     border-radius: 24px;
   }
 
   .toastui-editor-main {
     border: none !important;
     border-radius: 0 0 24px 24px !important;
-    background-color: ${colors.gray[900]} !important;
+    background-color: ${colors_dark.gray[650]} !important;
   }
 
   .toastui-editor-ww-container{
@@ -121,13 +132,13 @@ export const GlobalEditorStyle = createGlobalStyle`
   }
 
   /* 툴바 스타일 */
-  .toastui-editor-defaultUI-toolbar {
-    background-color: ${colors.gray[50]} !important;
-    border: none !important;
-    border-radius: 24px 24px 0 0 !important;
+  .toastui-editor-defaultUI-toolbar:not(#_) {
+    background-color: ${colors_dark.gray[100]};
+    border: none;
+    border-radius: 24px 24px 0 0;
   }
 
-  /* 본문 입력 초기값 */
+  /* 본문 입력값 */
   .toastui-editor-contents h1,
   .toastui-editor-contents h2,
   .toastui-editor-contents h3,
@@ -135,10 +146,15 @@ export const GlobalEditorStyle = createGlobalStyle`
   .toastui-editor-contents h5,
   .toastui-editor-contents h6,
   .toastui-editor-contents p {
-    color: ${colors.gray[50]} !important;
+    color: ${colors_dark.gray[350]} !important;
     font-family: "Pretendard";
 
     margin: 0;
+  }
+
+  .placeholder.ProseMirror-widget:not(#_){
+    color: ${colors_dark.gray[350]};
+    font-size: 20px;
   }
 `;
 
@@ -150,7 +166,7 @@ export const SubmitButton = styled.button`
   border: none;
   border-radius: 8px;
 
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
   font-size: 30px;
   font-weight: 500;
 
@@ -158,96 +174,7 @@ export const SubmitButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    color: ${colors.gray[50]};
-  }
-`;
-
-export const Sidebar = styled.div`
-  width: 300px;
-  height: 463px;
-  position: relative;
-
-  background: ${colors.gray[900]};
-  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 24px;
-`;
-
-export const SidebarTitle = styled.p`
-  width: 100%;
-  position: absolute;
-  left: 20px;
-  top: 20px;
-
-  color: ${colors.gray[50]};
-  font-weight: 500;
-  font-size: 36px;
-  font-family: "Pretendard";
-`;
-
-export const CategoryItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-wrap: wrap;
-
-  height: 360px;
-
-  gap: 20px;
-  margin: 80px 20px 0 20px;
-`;
-
-// 체크박스 레이블
-export const CheckboxLabel = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: calc(50% - 10px);
-
-  color: ${({ check }) => (check ? colors.orange[50] : colors.orange[900])};
-
-  font-size: 18px;
-  font-family: "PretendardsemiBold";
-
-  cursor: pointer;
-  user-select: none;
-
-  transition: 0.1s;
-`;
-
-// 숨겨진 기본 체크박스
-export const HiddenCheckbox = styled.input`
-  display: none;
-`;
-
-// 커스텀 체크박스 스타일
-export const StyledCheckbox = styled.div`
-  width: 18px;
-  height: 18px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: transparent;
-  border-radius: 4px;
-
-  border: 2px solid
-    ${({ check }) => (check ? colors.orange[50] : colors.orange[900])};
-
-  &::after {
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 10px;
-    border: solid
-      ${({ check }) => (check ? colors.orange[50] : colors.orange[900])};
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-
-    margin-bottom: 2px;
-
-    opacity: ${({ check }) => (check ? 1 : 0)};
-    transition: 0.2s;
+    color: ${colors_dark.gray[100]};
   }
 `;
 
@@ -262,9 +189,9 @@ export const Categories = styled.div`
 export const CategoryTag = styled.span`
   background-color: transparent;
   border-radius: 8px;
-  border: 1px solid ${colors.orange[900]};
+  border: 1px solid ${colors_dark.orange[100]};
 
-  color: ${colors.orange[900]};
+  color: ${colors_dark.orange[100]};
   font-size: 18px;
   font-weight: 500;
   font-family: "Pretendard";
