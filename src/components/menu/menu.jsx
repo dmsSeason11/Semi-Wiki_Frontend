@@ -1,18 +1,3 @@
-<<<<<<< Updated upstream
-import React from "react";
-import {} from "./menu.styles";
-
-function Menu() {
-  return (
-    <MenuContainer>
-      <MainMenu>
-        <TitleBox></TitleBox>
-        <SectionBox></SectionBox>
-        <SectionBox></SectionBox>
-      </MainMenu>
-      <SideMenu></SideMenu>
-    </MenuContainer>
-=======
 import React, { useState } from "react";
 import { href, useNavigate } from "react-router-dom";
 import {
@@ -27,7 +12,7 @@ import {
   Service,
   ServiceTitle,
   ServiceItem,
-  SideMenu,
+  SubMenu,
   SubCatagoryItem,
 } from "./menu.styles";
 
@@ -95,7 +80,7 @@ function Menu({ isMenuOpen, toggleMenu, handleCategoryToggle }) {
             <ServiceItem onClick={link}>문의하기</ServiceItem>
           </Service>
         </MainMenu>
-        <SideMenu isClick={isMenuOpen}>
+        <SubMenu isClick={isMenuOpen}>
           {item.map((itemName) => (
             <SubCatagoryItem
               key={itemName}
@@ -107,9 +92,10 @@ function Menu({ isMenuOpen, toggleMenu, handleCategoryToggle }) {
               {itemName}
             </SubCatagoryItem>
           ))}
-        </SideMenu>
+        </SubMenu>
       </MenuContainer>
     </>
->>>>>>> Stashed changes
   );
 }
+
+export default Menu;

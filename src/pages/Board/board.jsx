@@ -136,11 +136,6 @@ function Board({ searchTerm }) {
             groupSize={10}
           />
         </BoardContainer>
-
-        <CategoryList
-          selectedCategories={selectedCategories}
-          onSelectedCategories={handleCategoryToggle}
-        />
       </Content>
     </>
   );
