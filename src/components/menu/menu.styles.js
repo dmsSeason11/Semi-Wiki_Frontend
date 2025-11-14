@@ -4,17 +4,18 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalMenuStyle = createGlobalStyle`
 body{
-  /* position: relative; */
+  position: relative;
+  background-color: ${colors_dark.gray[650]};
 }
 `;
 
 export const MenuContainer = styled.div`
   position: absolute;
-  top: 127px;
-  left: 170px;
   display: flex;
   width: 400px;
   height: 600px;
+  margin-top: 40px;
+  margin-right: 1000px;
   z-index: 100;
 
   color: ${colors_dark.gray[100]};
@@ -101,7 +102,7 @@ export const SubMenu = styled.div`
   z-index: -1;
 
   box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25), 4px 0 4px rgba(0, 0, 0, 0.25),
-    0px 4px 4px rgba(155, 105, 105, 0.25);
+    0px 4px 4px rgba(0, 0, 0, 0.25);
   background-color: ${colors_dark.gray[700]};
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
