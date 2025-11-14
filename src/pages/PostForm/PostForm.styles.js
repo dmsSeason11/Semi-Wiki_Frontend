@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
 import colors_dark from "../../styles/color_table";
 import { Editor } from "@toast-ui/react-editor";
-import createGlobalStyle from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 export const FormContainer = styled.div`
   min-height: 100vh;

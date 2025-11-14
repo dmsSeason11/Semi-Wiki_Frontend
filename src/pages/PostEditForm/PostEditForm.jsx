@@ -6,6 +6,7 @@ import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor-plugin-chart";
 import { GlobalStyle } from "../Board/board.styles";
+import { GlobalEditorStyle } from "../PostForm/PostForm.styles";
 import {
   FormContainer,
   FormLayout,
@@ -224,6 +225,7 @@ function PostEditForm() {
 
   return (
     <>
+      <GlobalEditorStyle />
       <GlobalStyle />
       <FormContainer>
         <FormLayout>
