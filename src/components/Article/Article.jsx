@@ -11,7 +11,7 @@ import {
 } from "./Article.styles";
 import badWords from "./badWords.json";
 
-function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
+function Article({ Numberprop, Titleprop, childrenprop, subSections, depth = 0 }) {
   console.log(subSections);
   let markdown = childrenprop;
 
@@ -46,7 +46,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
   return (
     <>
       <GlobalViewerStyle />
-      <Wrapper>
+      <Wrapper depth={depth}>
         <ArticleTopWrapper>
           <Number>{Numberprop}.</Number>
           <Title>{Titleprop}</Title>
@@ -58,7 +58,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
           </ArticleContent>
         </ArticleContentWrapper>
 
-        {subSections && subSections.length > 0 && (
+        {subSections && (
           <>
             {subSections.map((sub) => (
               <Article
@@ -67,6 +67,7 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections }) {
                 Titleprop={sub.title}
                 childrenprop={sub.contents}
                 subSections={sub.children}
+                depth={depth + 1} 
               />
             ))}
           </>

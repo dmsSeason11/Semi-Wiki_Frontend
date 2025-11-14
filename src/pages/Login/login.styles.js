@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors_dark from "../../styles/color_table";
+import { colors_dark } from "../../styles/color_table";
 
 export const Container = styled.div`
   display: flex;

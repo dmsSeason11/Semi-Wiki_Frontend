@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors from "../../styles/color";
+import colors_dark from "../../styles/color_table.js";
 
 //페이지네이션 컨테이너
 export const PaginationContainer = styled.div`
@@ -12,7 +12,7 @@ export const PaginationContainer = styled.div`
 export const PageButton = styled.button`
   border: none;
   background: none;
-  color: ${({ $active }) => ($active ? "#FF9E3D" : colors.gray[50])};
+  color: ${({ $active }) => ($active ? "#FF9E3D" : colors_dark.gray[100])};
   font-size: 24px;
   font-weight: 600;
   font-family: 'pretendard';
@@ -20,7 +20,7 @@ export const PageButton = styled.button`
   cursor: pointer;
 
   &:disabled {
-    color: ${colors.gray[500]};
+    color: ${colors_dark.gray[350]};
     cursor: not-allowed;
     opacity: 0.4;
   }
@@ -32,6 +32,6 @@ export const ArrowButton = styled.button`
   border: none;
   background: none;
   font-size: 24px;
-  color: ${colors.gray[50]};
+  color: ${colors_dark.gray[100]};
   cursor: pointer;
 `;

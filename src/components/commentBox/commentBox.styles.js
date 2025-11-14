@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import colors_dark from "../../styles/color_table";
+import { colors_dark } from "../../styles/color_table";
 
 export const Box = styled.div`
   width: 1044px;
@@ -35,23 +35,41 @@ export const Title = styled.h3`
     margin-bottom: 16px;
 `;
 
-export const InputArea = styled.input`
+export const InputArea = styled.textarea`
   width: 100%;
-  height: 46px;
+  min-height: 60px;
+  max-height: 205px;
   border: 1px solid ${colors_dark.gray[350]};
   border-radius: 12px;
-  padding-top: 4px;
-  padding-left: 9px;
+  padding: 16px 22px;
   box-sizing: border-box;
 
   color: ${colors_dark.gray[100]};
-  resize: none;
   background: ${colors_dark.gray[650]};
-
-  font-family: "Pretendard";
+  font-family: "Pretendard, sans-serif";
   font-weight: 600;
-  font-size: 16px;
+  font-size: 17px;
+  line-height: 1.5;
+
+  resize: none;
+  outline: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+
+  &::placeholder {
+    color: ${colors_dark.gray[300]};
+    font-weight: 500;
+  }
+
+  &:focus {
+    border-color: ${colors_dark.gray[200]};
+    background: ${colors_dark.gray[600]};
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
+
 
 export const ViewArea = styled.div`
   gap: 24px;

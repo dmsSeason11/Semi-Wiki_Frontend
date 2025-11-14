@@ -35,6 +35,8 @@ export const TitleBox = styled.div`
   padding-bottom: 25px;
   margin-bottom: 30px;
   border-bottom: 4px solid ${colors_dark.orange[200]};
+
+  margin-bottom: 50px;
 `;
 
 export const Title = styled.h1`
