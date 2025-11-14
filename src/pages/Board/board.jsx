@@ -9,6 +9,7 @@ import {
   Content,
   Line,
   NewPostButton,
+  NewPostButton,
   GlobalStyle,
 } from "./board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
