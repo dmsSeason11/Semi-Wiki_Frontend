@@ -8,12 +8,12 @@ import {
   Boardfilertitle,
   Content,
   Line,
-  GlobalStyle,
   NewPostButton,
 } from "../Board/board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
-import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import Menu from "../../components/menu/menu.jsx";
+import { GlobalStyle } from "../Board/board.styles.js";
 import pen from "../../assets/pen.svg";
 
 function MyBoard() {
@@ -103,31 +103,7 @@ function MyBoard() {
               </Boardfilertitle>
             ))}
           </Boardfiler>
-          <Line />
-          <Boardfiler>
-            {["최신순", "추천순"].map((filter) => (
-              <Boardfilertitle
-                key={filter}
-                $active={activeFilter === filter}
-                onClick={() => {
-                  setActiveFilter(filter);
-                  setCurrentPage(1);
-                }}
-              >
-                {filter}
-              </Boardfilertitle>
-            ))}
-          </Boardfiler>
-          <Line />
 
-          <BoardList
-            sort={activeFilter}
-            page={currentPage}
-            pageSize={pageSize}
-            token={token}
-            selectedCategories={selectedCategories}
-            accountId={accountId}
-          />
           <BoardList
             sort={activeFilter}
             page={currentPage}

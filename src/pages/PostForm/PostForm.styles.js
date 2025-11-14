@@ -2,17 +2,7 @@ import styled from "styled-components";
 import colors from "../../styles/color";
 import colors_dark from "../../styles/color_table";
 import { Editor } from "@toast-ui/react-editor";
-import { createGlobalStyle } from "styled-components";
-
-export const GlobalStyle = createGlobalStyle`
-body{
-  background-color: ${colors_dark.gray[650]};
-}
-
-.toastui-editor-contents[data-placeholder]::before {
-    content: none !important;
-}
-`;
+import createGlobalStyle from "styled-components";
 
 export const FormContainer = styled.div`
   min-height: 100vh;
