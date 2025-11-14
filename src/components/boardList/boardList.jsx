@@ -28,7 +28,8 @@ function BoardList({
       try {
         const query = new URLSearchParams();
 
-        selectedCategories.forEach((c) => query.append("categories", c));
+        if (selectedCategories.length > 0)
+          query.append("categories", selectedCategories[0]);
         if (searchTerm) query.append("keyword", searchTerm);
 
         query.append("orderBy", sort === "최신순" ? "recent" : "like");

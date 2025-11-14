@@ -33,7 +33,7 @@ function Menu({ isMenuOpen, toggleMenu, handleCategoryToggle }) {
       "게임",
       "DevOps",
     ],
-    동아리: ["전공동아리", "창제동아리", "자율동아리", "DMS"],
+    동아리: ["전공동아리", "창체동아리", "자율동아리", "DMS"],
     기타: ["학교", "기숙사", "기타"],
   };
 
