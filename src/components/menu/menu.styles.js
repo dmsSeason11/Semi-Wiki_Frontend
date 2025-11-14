@@ -4,7 +4,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalMenuStyle = createGlobalStyle`
 body{
-  position: relative;
+  /* position: relative; */
 }
 `;
 

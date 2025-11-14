@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
 import {
   BoardContainer,
@@ -9,16 +8,12 @@ import {
   Boardfilertitle,
   Content,
   Line,
-  NewPostButton,
   GlobalStyle,
-  Line,
   NewPostButton,
-  GlobalStyle,
 } from "../Board/board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
 import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
-import pen from "../../assets/pen.svg";
 import pen from "../../assets/pen.svg";
 
 function MyBoard() {
