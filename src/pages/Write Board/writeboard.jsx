@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
 import {
   BoardContainer,
@@ -10,10 +11,14 @@ import {
   Line,
   NewPostButton,
   GlobalStyle,
+  Line,
+  NewPostButton,
+  GlobalStyle,
 } from "../Board/board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
 import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import pen from "../../assets/pen.svg";
 import pen from "../../assets/pen.svg";
 
 function MyBoard() {
@@ -104,7 +109,30 @@ function MyBoard() {
             ))}
           </Boardfiler>
           <Line />
+          <Boardfiler>
+            {["최신순", "추천순"].map((filter) => (
+              <Boardfilertitle
+                key={filter}
+                $active={activeFilter === filter}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setCurrentPage(1);
+                }}
+              >
+                {filter}
+              </Boardfilertitle>
+            ))}
+          </Boardfiler>
+          <Line />
 
+          <BoardList
+            sort={activeFilter}
+            page={currentPage}
+            pageSize={pageSize}
+            token={token}
+            selectedCategories={selectedCategories}
+            accountId={accountId}
+          />
           <BoardList
             sort={activeFilter}
             page={currentPage}
@@ -121,11 +149,6 @@ function MyBoard() {
             groupSize={10}
           />
         </BoardContainer>
-
-        <CategoryList
-          selectedCategories={selectedCategories}
-          onSelectedCategories={handleCategoryToggle}
-        />
       </Content>
     </>
   );

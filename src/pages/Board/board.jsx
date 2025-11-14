@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/reset.css";
 import {
@@ -9,11 +9,12 @@ import {
   Content,
   Line,
   NewPostButton,
+  NewPostButton,
   GlobalStyle,
 } from "./board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
-import Menu from "../../components/menu/menu.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import Menu from "../../components/menu/menu.jsx";
 import pen from "../../assets/pen.svg";
 
 function Board({ searchTerm }) {
@@ -21,10 +22,15 @@ function Board({ searchTerm }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const pageSize = 10;
   const token = localStorage.getItem("accessToken");
   const API_BASE = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen((prev) => !prev);
+  }, []);
 
   // 카테고리 토글
   const handleCategoryToggle = (category) => {
@@ -79,8 +85,12 @@ function Board({ searchTerm }) {
     <>
       <GlobalStyle />
       <Content>
-        <Menu />
-        <BoardContainer>
+        <Menu
+          isMenuOpen={isMenuOpen}
+          toggleMenu={toggleMenu}
+          handleCategoryToggle={handleCategoryToggle}
+        />
+        <BoardContainer isMenuOpen={isMenuOpen}>
           <NewPostButton
             onClick={() => {
               navigate("/postform");
