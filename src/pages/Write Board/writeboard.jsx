@@ -9,11 +9,11 @@ import {
   Content,
   Line,
   NewPostButton,
-  GlobalStyle,
 } from "../Board/board.styles.js";
 import BoardList from "../../components/boardList/boardList.jsx";
-import CategoryList from "../../components/CategoryList/CategoryList.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
+import Menu from "../../components/menu/menu.jsx";
+import { GlobalStyle } from "../Board/board.styles.js";
 import pen from "../../assets/pen.svg";
 
 function MyBoard() {
@@ -103,7 +103,6 @@ function MyBoard() {
               </Boardfilertitle>
             ))}
           </Boardfiler>
-          <Line />
 
           <BoardList
             sort={activeFilter}
@@ -121,11 +120,6 @@ function MyBoard() {
             groupSize={10}
           />
         </BoardContainer>
-
-        <CategoryList
-          selectedCategories={selectedCategories}
-          onSelectedCategories={handleCategoryToggle}
-        />
       </Content>
     </>
   );

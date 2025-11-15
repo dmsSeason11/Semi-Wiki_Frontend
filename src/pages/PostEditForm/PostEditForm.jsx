@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Editor } from "@toast-ui/react-editor";
+import CategoryList from "../../components/CategoryList/CategoryList";
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "@toast-ui/editor-plugin-chart";
+import { GlobalStyle } from "../Board/board.styles";
+import { GlobalEditorStyle } from "../PostForm/PostForm.styles";
 import {
   FormContainer,
   FormLayout,
@@ -16,41 +19,16 @@ import {
   BodyContainer,
   StyledBodyWrapper,
   SubmitButton,
-  Sidebar,
-  SidebarTitle,
-  CategoryItem,
-  CheckboxLabel,
-  HiddenCheckbox,
-  StyledCheckbox,
   Categories,
   CategoryTag,
 } from "../PostForm/PostForm.styles";
 
 function PostEditForm() {
   const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]); // 선택한 전공들 상태
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [checkItem, setCheckItem] = useState({
-    프론트엔드: false,
-    백엔드: false,
-    안드로이드: false,
-    IOS: false,
-    임베디드: false,
-    정보보안: false,
-    인공지능: false,
-    디자인: false,
-    게임: false,
-    DevOps: false,
-    전공동아리: false,
-    창체동아리: false,
-    자율동아리: false,
-    기숙사: false,
-    학교: false,
-    DMS: false,
-    기타: false,
-  }); // 카테고리 체크 상태
+  const [checkItem, setCheckItem] = useState({}); // 카테고리 체크 상태
 
   const { id } = useParams();
   const postId = parseInt(id, 10);
@@ -97,7 +75,6 @@ function PostEditForm() {
   useEffect(() => {
     if (post) {
       setTitle(post.title || "");
-      setContents(post.contents || "");
       setSelectedCategories(post.categories || []);
 
       // 카테고리 체크박스 상태 업데이트
@@ -108,7 +85,7 @@ function PostEditForm() {
       setCheckItem(initialCheckItems);
 
       // 에디터 초기 값 설정
-      if (editorRef.current) {
+      if (editorRef.current && editorRef.current !== "본문을 추가해주세요") {
         editorRef.current.getInstance().setMarkdown(post.contents || "");
       }
     }
@@ -135,19 +112,35 @@ function PostEditForm() {
     [selectedCategories]
   );
 
-  const handleEditorChange = useCallback(() => {
+  const onUploadImage = async (blob, callback) => {
     try {
-      if (editorRef.current) {
-        const editorInstance = editorRef.current.getInstance();
-        if (editorInstance) {
-          const markdownContent = editorInstance.getMarkdown();
-          setContents(markdownContent);
-        }
+      if (!token) {
+        alert("로그인이 필요합니다.");
+        navigate("/login");
+        return;
       }
+
+      const formData = new FormData();
+      formData.append("image", blob, blob.name || "upload.png");
+
+      const response = await fetch(
+        `${import.meta.env.VITE_REACT_APP_API_BASE_URL}/notice-board/image`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      let imageUrl = await response.text();
+      callback(imageUrl, blob.name);
     } catch (error) {
-      console.error("Editor error: ", error);
+      alert("이미지 업로드 실패");
+      console.log(error);
     }
-  }, []);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -160,10 +153,10 @@ function PostEditForm() {
     setLoading(true);
     setError("");
 
-    const htmlContent = editorRef.current
-      .getInstance()
-      .getHTML()
-      .replace(/></g, ">\n<");
+    const editorInstance = editorRef.current.getInstance();
+    const htmlContent = editorInstance.getHTML().replace(/></g, ">\n<");
+    const markdownContent = editorInstance.getMarkdown().trim();
+
     const updatedPostData = {
       title: title,
       categories: selectedCategories,
@@ -190,11 +183,11 @@ function PostEditForm() {
       if (!response.ok) {
         switch (response.status) {
           case 400:
-            if (!title || selectedCategories.length === 0 || !contents) {
+            if (!title || selectedCategories.length === 0 || !markdownContent) {
               if (!title) throw new Error("제목을 입력하세요.");
               else if (selectedCategories.length === 0)
                 throw new Error("카테고리를 입력하세요.");
-              else if (!contents) throw new Error("본문을 입력하세요.");
+              else if (!markdownContent) throw new Error("본문을 입력하세요.");
             }
             throw new Error("입력 정보를 다시 확인해 주세요.");
           case 401:
@@ -231,75 +224,69 @@ function PostEditForm() {
   };
 
   return (
-    <FormContainer>
-      <FormLayout>
-        <form onSubmit={handleSubmit}>
-          <FormMain>
-            <TitleContainer>
-              <TitleInput
-                name="title"
-                type="text"
-                placeholder="제목을 입력해주세요"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </TitleContainer>
-
-            <CategoryContainer>
-              <SectionTitle>카테고리</SectionTitle>
-              <CategoryInput placeholder="# 검색 또는 카테고리 추가를 이용하여 작성하세요">
-                {selectedCategories.length > 0 ? (
-                  <Categories>
-                    {selectedCategories.map((category) => (
-                      <CategoryTag key={category}>{category}</CategoryTag>
-                    ))}
-                  </Categories>
-                ) : (
-                  "카테고리를 선택해주세요"
-                )}
-              </CategoryInput>
-            </CategoryContainer>
-
-            <BodyContainer>
-              <SectionTitle>본문</SectionTitle>
-              <StyledBodyWrapper>
-                <Editor
-                  ref={editorRef}
-                  initialEditType="wysiwyg"
-                  initialValue="본문을 추가해주세요"
-                  height="577px"
-                  previewStyle="none"
-                  hideModeSwitch={true} // 모드 전환 버튼 숨기기
-                  useCommandShortcut={false} // 단축키 비활성화
-                  onChange={handleEditorChange}
+    <>
+      <GlobalEditorStyle />
+      <GlobalStyle />
+      <FormContainer>
+        <FormLayout>
+          <form onSubmit={handleSubmit}>
+            <FormMain>
+              <TitleContainer>
+                <TitleInput
+                  name="title"
+                  type="text"
+                  placeholder="제목을 입력해주세요"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
-              </StyledBodyWrapper>
-            </BodyContainer>
+              </TitleContainer>
 
-            <SubmitButton type="submit" disabled={loading}>
-              {loading ? "수정 중..." : "완료"}
-            </SubmitButton>
-          </FormMain>
-        </form>
+              <CategoryContainer>
+                <SectionTitle>카테고리</SectionTitle>
+                <CategoryInput>
+                  {selectedCategories.length > 0 ? (
+                    <Categories>
+                      {selectedCategories.map((category) => (
+                        <CategoryTag key={category}>{category}</CategoryTag>
+                      ))}
+                    </Categories>
+                  ) : (
+                    "카테고리를 선택해주세요"
+                  )}
+                </CategoryInput>
+              </CategoryContainer>
 
-        <Sidebar>
-          <SidebarTitle>카테고리 수정</SidebarTitle>
-          <CategoryItem>
-            {Object.keys(checkItem).map((category) => (
-              <CheckboxLabel key={category} check={checkItem[category]}>
-                <HiddenCheckbox
-                  type="checkbox"
-                  checked={checkItem[category]}
-                  onChange={() => handleCheckboxChange(category)}
-                />
-                <span>{category}</span>
-                <StyledCheckbox check={checkItem[category]} />
-              </CheckboxLabel>
-            ))}
-          </CategoryItem>
-        </Sidebar>
-      </FormLayout>
-    </FormContainer>
+              <BodyContainer>
+                <SectionTitle>본문</SectionTitle>
+                <StyledBodyWrapper>
+                  <Editor
+                    ref={editorRef}
+                    initialEditType="wysiwyg"
+                    placeholder="본문을 추가해주세요"
+                    height="577px"
+                    hooks={{
+                      addImageBlobHook: onUploadImage,
+                    }}
+                    previewStyle="none"
+                    hideModeSwitch={true} // 모드 전환 버튼 숨기기
+                    useCommandShortcut={false} // 단축키 비활성화
+                  />
+                </StyledBodyWrapper>
+              </BodyContainer>
+
+              <SubmitButton type="submit" disabled={loading}>
+                {loading ? "수정 중..." : "완료"}
+              </SubmitButton>
+            </FormMain>
+          </form>
+
+          <CategoryList
+            selectedCategories={selectedCategories}
+            onSelectedCategories={handleCheckboxChange}
+          />
+        </FormLayout>
+      </FormContainer>
+    </>
   );
 }
 
