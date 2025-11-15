@@ -36,12 +36,19 @@ function Article({ Numberprop, Titleprop, childrenprop, subSections, depth = 0 }
     const alternation = wordPatterns.join("|");
     const fullPattern = `(?<![ㄱ-ㅎ가-힣a-zA-Z0-9])(?:(?:${alternation}))+?(?![ㄱ-ㅎ가-힣a-zA-Z0-9])`;
     const regex = new RegExp(fullPattern, "gi");
-    censored = censored.replace(regex, "\\*\\*\\*");
+    censored = censored.replace(regex, "***");
 
     return censored;
   };
 
-  markdown = censorText(markdown, badWord.words);
+  const censorHtmlText = (html, badWords) => {
+    return html.replace(/>([^<]+)</g, (match, text) => {
+      const censoredText = censorText(text, badWords);
+      return `>${censoredText}<`;
+    });
+  };
+
+  markdown = censorHtmlText(markdown, badWord.words);
 
   return (
     <>
