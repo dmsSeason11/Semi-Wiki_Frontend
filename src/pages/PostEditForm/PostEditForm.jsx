@@ -163,7 +163,12 @@ function PostEditForm() {
 
     htmlBody = htmlBody.replace(
       /<pre><code([\s\S]*?)<\/code><\/pre>/g,
-      (match) => match.replace(/\n{2,}/g, "\n")
+      (match) => {
+        return match
+          .replace(/\r\n/g, "\n")
+          .replace(/\n{2,}/g, "\n")
+          .replace(/<br\s*\/?>/g, "");
+      }
     );
 
     const updatedPostData = {
@@ -278,7 +283,6 @@ function PostEditForm() {
                     }}
                     previewStyle="none"
                     hideModeSwitch={true} // 모드 전환 버튼 숨기기
-                    useCommandShortcut={false} // 단축키 비활성화
                   />
                 </StyledBodyWrapper>
               </BodyContainer>
